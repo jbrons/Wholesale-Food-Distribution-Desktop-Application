@@ -7,12 +7,13 @@ package src;
     Handles the switching between GUI's / is the mediator between all?
  */
 
-import GUI.*;
-
-import javax.swing.*;
+import GUI.MainWindow.MainWindowGUI;
 
 public class Application {
+
     public static void main(String[] args) {
-        MainWindow mainWindow = new MainWindow();
+        // Initialized the database
+        UserDatabase database = UserDatabase.getInstance();
+        MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     }
 }

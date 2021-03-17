@@ -4,11 +4,11 @@ public class User implements IUser{
     private String userID;
     private String firstName;
     private String lastName;
-    private String password;
+    private char[] password;
     private EnumUserRoles role;
 
     public User(String userID, String firstName, String lastName,
-                String password, EnumUserRoles role)
+                char[] password, EnumUserRoles role)
     {
         this.userID = userID;
         this.firstName = firstName;
@@ -50,11 +50,11 @@ public class User implements IUser{
         return firstName.concat(" " + lastName);
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
@@ -64,5 +64,11 @@ public class User implements IUser{
 
     public EnumUserRoles getRole() {
         return role;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "UserID: " + userID + "\nRole: " + role;
     }
 }

@@ -14,8 +14,8 @@ public interface IUser {
     void setName(String firstName, String lastName);
     String getName();
 
-    void setPassword(String password);
-    String getPassword();
+    void setPassword(char[] password);
+    char[] getPassword();
 
     void setRole(EnumUserRoles role);
     EnumUserRoles getRole();

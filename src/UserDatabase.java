@@ -3,11 +3,25 @@ package src;
 import java.util.HashMap;
 
 public class UserDatabase implements IUserDatabase{
+
+    private static UserDatabase databaseInstance = null;
     HashMap<String, User> database;
 
-    public UserDatabase()
+    private static User currentUser = null;
+
+    private UserDatabase()
     {
         database = new HashMap<>();
+        addUser(new User("Owner", "", "",
+                "pass1234".toCharArray(), EnumUserRoles.OWNER));
+    }
+
+    public static UserDatabase getInstance()
+    {
+        if(databaseInstance == null)
+            databaseInstance = new UserDatabase();
+
+        return databaseInstance;
     }
 
     public boolean addUser(User user) {
@@ -31,4 +45,10 @@ public class UserDatabase implements IUserDatabase{
     public User getUser(String userID) {
         return database.get(userID);
     }
+
+    public void setCurrentUser(User user)
+    {
+        currentUser = user;
+    }
+    public User getCurrentUser() { return currentUser; }
 }
