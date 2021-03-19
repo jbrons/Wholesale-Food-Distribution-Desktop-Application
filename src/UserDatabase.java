@@ -37,13 +37,21 @@ public class UserDatabase implements IUserDatabase{
         return database.remove(user.getUserID(), user);
     }
 
-    public boolean updateUser(User user) {
+    public boolean updateUser(User oldUser, User newUser)
+    {
+        boolean wasDeleted = deleteUser(oldUser);
+        boolean wasAdded = addUser(newUser);
 
-        return database.replace(user.getUserID(), user) != null;
+        return wasDeleted && wasAdded;
     }
 
     public User getUser(String userID) {
         return database.get(userID);
+    }
+
+    public User[] getAllUsers()
+    {
+        return database.values().toArray(new User[0]);
     }
 
     public void setCurrentUser(User user)

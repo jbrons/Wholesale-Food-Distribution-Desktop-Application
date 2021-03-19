@@ -19,4 +19,6 @@ public interface IUser {
 
     void setRole(EnumUserRoles role);
     EnumUserRoles getRole();
+
+    int getPermissionLevel();
 }

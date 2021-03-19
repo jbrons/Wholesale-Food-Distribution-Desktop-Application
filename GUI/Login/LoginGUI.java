@@ -5,6 +5,11 @@ import java.util.Arrays;
 
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
+import GUI.PasswordChange.PasswordChangeGUI;
+import com.sun.tools.javac.Main;
+import src.EnumUserRoles;
+import src.User;
+import src.UserDatabase;
 
 public class LoginGUI {
     private JPanel rootPanel;
@@ -38,8 +43,15 @@ public class LoginGUI {
             {
                 Arrays.fill(password, '0');
 
+                User currentUser = UserDatabase.getInstance().getCurrentUser();
                 MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
-                mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
+
+                boolean isNormalUser = currentUser.getPermissionLevel() < EnumUserRoles.ADMINISTRATOR.getPermissionLevel();
+
+                if(currentUser.getFirstLogin() && isNormalUser)
+                    mainWindowGUI.setJPanel(new PasswordChangeGUI().getPanel());
+                else
+                    mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
 
                 System.out.println("Success!");
             }

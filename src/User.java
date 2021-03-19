@@ -6,6 +6,7 @@ public class User implements IUser{
     private String lastName;
     private char[] password;
     private EnumUserRoles role;
+    boolean firstLogin = true;
 
     public User(String userID, String firstName, String lastName,
                 char[] password, EnumUserRoles role)
@@ -15,6 +16,17 @@ public class User implements IUser{
         this.lastName = lastName;
         this.password = password;
         this.role = role;
+    }
+
+    public User(String userID, String firstName, String lastName,
+                char[] password, EnumUserRoles role, boolean firstLogin)
+    {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.role = role;
+        this.firstLogin = firstLogin;
     }
 
     public void setUserID(String userID) {
@@ -66,9 +78,20 @@ public class User implements IUser{
         return role;
     }
 
+    public int getPermissionLevel()
+    {
+        return role.getPermissionLevel();
+    }
+
+    public boolean getFirstLogin() { return firstLogin; }
+    public void setFirstLogin(boolean firstLogin) { this.firstLogin = firstLogin; }
+
     @Override
     public String toString()
     {
-        return "UserID: " + userID + "\nRole: " + role;
+        return "UserID: " + userID
+                + " First Name: " + firstName
+                + " Last Name: "+ lastName
+                + " Role: " + role;
     }
 }

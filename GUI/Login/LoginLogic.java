@@ -13,6 +13,7 @@ public class LoginLogic implements ILoginLogic{
     public LoginLogic()
     {
         database = UserDatabase.getInstance();
+        database.setCurrentUser(null);
     }
 
     public boolean validateLogin(String userID, char[] password) {
