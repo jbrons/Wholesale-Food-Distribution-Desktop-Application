@@ -1,5 +1,5 @@
 package GUI.ItemManagement;
-
+import GUI.Login.LoginGUI;
 import src.Item.ItemsArray;
 import src.Item.ItemsValidation;
 import GUI.MainWindow.MainWindowGUI;
@@ -11,7 +11,8 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.util.Random;
-
+import src.Vendor.VendorList;
+import src.Vendor.Vendor;
 
 public class AddItemsGUI implements FocusListener {
     private JFrame frame;
@@ -28,9 +29,12 @@ public class AddItemsGUI implements FocusListener {
     private JComboBox categoryCombo;
     private JComboBox unitCombo;
     private JFormattedTextField expirationFormattedText;
+    private JComboBox vendorCombo;
+    private JButton logoutButton;
     private JTextField focused = iNameField;
 
     MainWindowGUI mainWindowGUI;
+    VendorList vendorList = VendorList.getInstance();
 
     NumberFormat nf = new DecimalFormat();
 
@@ -46,13 +50,14 @@ public class AddItemsGUI implements FocusListener {
 
     private void setupGUI()
     {
+
         expirationFormattedText.setFormatterFactory(new DefaultFormatterFactory(format("##/##/####")));
         Random r = new Random();
         id+= r.nextInt(10)+1;
         iIDField.setText(String.valueOf(id));
         iIDField.addFocusListener(this);
         iNameField.addFocusListener(this);
-        vIDField.addFocusListener(this);
+
         sPriceField.addFocusListener(this);
         expirationFormattedText.addFocusListener(this);
         pPriceField.addFocusListener(this);
@@ -64,6 +69,8 @@ public class AddItemsGUI implements FocusListener {
         DefaultComboBoxModel<String> unitModel = new DefaultComboBoxModel<>(unit);
         unitCombo.setModel(unitModel);
 
+        vendorCombo.setModel(new DefaultComboBoxModel(vendorList.getIdList()));
+
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 closeItemEdit();
@@ -72,9 +79,9 @@ public class AddItemsGUI implements FocusListener {
             public void actionPerformed(ActionEvent evt) {
                 ItemsValidation val = new ItemsValidation();
                 try {
-                    if(val.validation(id,iNameField.getText(),Integer.parseInt(vIDField.getText()),Double.parseDouble(sPriceField.getText()),expirationFormattedText.getText(),
+                    if(val.validation(id,iNameField.getText(),(int)vendorCombo.getSelectedItem(),Double.parseDouble(sPriceField.getText()),expirationFormattedText.getText(),
                             Double.parseDouble(pPriceField.getText()),Integer.parseInt(quantityField.getText()))){
-                        new ItemsArray(id, Integer.parseInt(vIDField.getText()), iNameField.getText(), Double.parseDouble(sPriceField.getText()), (String) categoryCombo.getSelectedItem(),
+                        new ItemsArray(id, (int)vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceField.getText()), (String) categoryCombo.getSelectedItem(),
                                 expirationFormattedText.getText(), Double.parseDouble(pPriceField.getText()), (String) unitCombo.getSelectedItem(), Integer.parseInt(quantityField.getText()));
                     }
                 }
@@ -84,6 +91,10 @@ public class AddItemsGUI implements FocusListener {
                 closeItemEdit();
 
             }});
+        logoutButton.addActionListener(e ->
+        {
+            mainWindowGUI.setJPanel(new LoginGUI().getPanel());
+        });
     }
 
     public void closeItemEdit(){
