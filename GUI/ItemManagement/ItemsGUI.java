@@ -1,0 +1,120 @@
+package GUI.ItemManagement;
+
+import GUI.Login.LoginGUI;
+import GUI.MainMenu.MainMenuGUI;
+import com.sun.tools.javac.Main;
+import src.Item.Items;
+import src.Item.ItemsArray;
+
+import javax.swing.*;
+import java.awt.event.*;
+import java.text.NumberFormat;
+import java.text.DecimalFormat;
+import java.awt.event.FocusListener;
+import java.util.ArrayList;
+
+import GUI.MainWindow.MainWindowGUI;
+
+public class ItemsGUI  implements FocusListener{
+
+    private JFrame frame;
+    private JPanel rootPanel;
+
+    private JTextField searchField;
+    private JButton searchButton;
+    private JButton addButton;
+    private JButton displayButton;
+    private JButton leaveButton;
+    private JButton logoutButton;
+    private JList iList;
+    private JLabel guiLabel;
+    private JTextField focused = searchField;
+    private ArrayList<Items> itemsListCopy;
+
+    private MainWindowGUI mainWindowGUI;
+
+    NumberFormat nf = new DecimalFormat();
+
+    public ItemsGUI(){
+        mainWindowGUI = MainWindowGUI.getInstance();
+
+        setupGUI();
+    }
+
+    public void setupGUI()
+    {
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                String searchedItem = searchField.getText();
+                itemsListCopy = ItemsArray.getItemsList();
+                ArrayList<Items> itemsListFinal = new ArrayList<Items>();
+                boolean found = false;
+
+                for(int i=0;i< itemsListCopy.size();i++){
+                    if(String.valueOf(itemsListCopy.get(i).getId()).equals(searchedItem) ||
+                            itemsListCopy.get(i).getName().equals(searchedItem) ||
+                            itemsListCopy.get(i).getExpirationDate().equals(searchedItem)){
+                        itemsListFinal.add(itemsListCopy.get(i));
+                        found = true;
+                    }
+                }
+                if(!found){
+                    JOptionPane.showMessageDialog(null, searchedItem + " not found");
+                }
+                displayCatalog(itemsListFinal);
+            }});
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                mainWindowGUI.setJPanel(new AddItemsGUI().getPanel());
+            }});
+
+        leaveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                closeCatalog();
+            }});
+        displayButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                displayCatalog(ItemsArray.getItemsList());
+            }});
+
+        iList.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent evt) {
+                JList jList = (JList)evt.getSource();
+                if (evt.getClickCount() == 2) {
+                    int index = iList.locationToIndex(evt.getPoint());
+                    ItemDisplayGUI dis = new ItemDisplayGUI(index);
+                    mainWindowGUI.setJPanel(dis.getPanel());
+                }
+            }
+        });
+
+        logoutButton.addActionListener(e ->
+        {
+            mainWindowGUI.setJPanel(new LoginGUI().getPanel());
+        });
+    }
+
+    public void displayCatalog(ArrayList<Items> itemsListFinal) {
+        iList.setListData(ItemsArray.itemsListToArray(itemsListFinal));
+    }
+
+    public void closeCatalog(){
+        mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
+    }
+
+    //methods required for implementing focus
+    public void focusGained(FocusEvent e) {
+        if (e.getSource() instanceof JTextField) {
+            focused = (JTextField) e.getSource();
+        }
+    }
+    public void focusLost(FocusEvent e) {
+    }
+
+    public JPanel getPanel()
+    {
+        return rootPanel;
+    }
+
+
+}

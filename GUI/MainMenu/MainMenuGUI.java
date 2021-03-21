@@ -1,5 +1,6 @@
 package GUI.MainMenu;
 
+import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.UserManagement.UserManagementGUI;
@@ -11,9 +12,10 @@ import javax.swing.*;
 
 public class MainMenuGUI {
     private JPanel rootPanel;
-    private JButton btnManageUser;
-    private JButton button2;
-    private JButton btnLogout;
+    private JButton userManagementButton;
+    private JButton customerManagementButton;
+    private JButton logoutButton;
+    private JButton itemManagementButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -22,21 +24,26 @@ public class MainMenuGUI {
     {
         if (database.getCurrentUser().getPermissionLevel() < EnumUserRoles.ADMINISTRATOR.getPermissionLevel())
         {
-            btnManageUser.setEnabled(false);
-            btnManageUser.setVisible(false);
+            userManagementButton.setEnabled(false);
+            userManagementButton.setVisible(false);
         }
 
-        btnManageUser.addActionListener(e->
+        userManagementButton.addActionListener(e->
                 mainWindowGUI.setJPanel(new UserManagementGUI().getPanel()));
 
-        button2.addActionListener(e -> {
+        customerManagementButton.addActionListener(e -> {
             if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER)
                 mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel());
             else
                 JOptionPane.showMessageDialog(null, "You are not OWNER user.");
         });
 
-        btnLogout.addActionListener(e ->
+        itemManagementButton.addActionListener((e ->
+        {
+            mainWindowGUI.setJPanel(new ItemsGUI().getPanel());
+        }));
+
+        logoutButton.addActionListener(e ->
                 mainWindowGUI.setJPanel(new LoginGUI().getPanel()));
     }
 
