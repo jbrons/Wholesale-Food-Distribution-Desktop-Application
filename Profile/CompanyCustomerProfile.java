@@ -1,9 +1,11 @@
 package Profile;
 
 public class CompanyCustomerProfile implements CustomerProfile {
-    // Static ID for unique per each profile
+    /** Static ID for unique per each profile
+    */
     public static int ID = 100000;
-    // State list in us
+    /** State list in us
+    */
     public static String[] STATES = new String[] {
             "AL",
             "AK",
@@ -62,7 +64,8 @@ public class CompanyCustomerProfile implements CustomerProfile {
             "WI",
             "WY" };
 
-    // Properties of profile
+    /** Properties of profile
+    */
     private int customerID;
     private String customerName;
     private String streetAddress;
@@ -73,7 +76,8 @@ public class CompanyCustomerProfile implements CustomerProfile {
     private float lastPaidAmount;
     private String lastOrderDate;
 
-    // Constructor
+    /** Constructor
+    */
     public CompanyCustomerProfile(String customerName, String streetAddress, String city, String state, String phone, float balance, float lastPaidAmount, String lastOrderDate) {
         this.customerID = ++ID;
         this.customerName = customerName;
@@ -86,7 +90,8 @@ public class CompanyCustomerProfile implements CustomerProfile {
         this.lastOrderDate = lastOrderDate;
     }
 
-    // Get methods
+    /**Get methods
+    */
     public int getCustomerID() {
         return customerID;
     }
@@ -123,7 +128,8 @@ public class CompanyCustomerProfile implements CustomerProfile {
         return lastOrderDate;
     }
 
-    // Set Methods
+    /** Set Methods
+    */
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
@@ -156,7 +162,8 @@ public class CompanyCustomerProfile implements CustomerProfile {
         this.lastOrderDate = lastOrderDate;
     }
 
-    // Make string for listview
+    /** Make string for listview
+    */
     @Override
     public String toString() {
         return "" + customerName +
