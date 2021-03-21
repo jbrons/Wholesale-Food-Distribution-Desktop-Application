@@ -97,7 +97,12 @@ public class ItemsGUI implements FocusListener{
             }});
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                displayCatalog(ItemsArray.getItemsList());
+                if (dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER) {
+                    displayCatalog(ItemsArray.getItemsList());
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Only Owners can view a list of all items in the system");
+                }
             }});
 
         iList.addMouseListener(new MouseAdapter(){
