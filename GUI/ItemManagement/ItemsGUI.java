@@ -7,6 +7,7 @@ import src.Item.Items;
 import src.Item.ItemsArray;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
@@ -96,6 +97,7 @@ public class ItemsGUI  implements FocusListener{
 
     public void displayCatalog(ArrayList<Items> itemsListFinal) {
         iList.setListData(ItemsArray.itemsListToArray(itemsListFinal));
+        iList.setFont(new Font("Arial",Font.BOLD,10));
     }
 
     public void closeCatalog(){

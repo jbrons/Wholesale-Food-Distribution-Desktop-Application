@@ -6,7 +6,8 @@ import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import src.User.UserDatabase;
+import src.User.EnumUserRoles;
 
 public class ItemDisplayGUI {
     private JFrame frame;
@@ -21,6 +22,7 @@ public class ItemDisplayGUI {
     private int index;
 
     private MainWindowGUI mainWindowGUI;
+    UserDatabase dataBase = UserDatabase.getInstance();
 
     public ItemDisplayGUI(int i){
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -34,8 +36,13 @@ public class ItemDisplayGUI {
         contentLabel.setText(ItemsArray.itemsListToArray(ItemsArray.getItemsList())[index]);
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                EditItemsGUI edit = new EditItemsGUI(index);
-                mainWindowGUI.setJPanel(edit.getPanel());
+                if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
+                    EditItemsGUI edit = new EditItemsGUI(index);
+                    mainWindowGUI.setJPanel(edit.getPanel());
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "You must be a owner or purchase user");
+                }
             }});
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

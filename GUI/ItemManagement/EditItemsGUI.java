@@ -10,6 +10,8 @@ import java.awt.event.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
+import src.User.UserDatabase;
+import src.User.EnumUserRoles;
 
 import GUI.MainWindow.MainWindowGUI;
 
@@ -45,6 +47,7 @@ public class EditItemsGUI implements FocusListener {
 
     public void setupGUI()
     {
+
         DefaultComboBoxModel<String> catModel = new DefaultComboBoxModel<>(cat);
         categoryCombo.setModel(catModel);
 
@@ -78,6 +81,7 @@ public class EditItemsGUI implements FocusListener {
         });
         editItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+
                 ItemsValidation val = new ItemsValidation();
                 //try block ensures the user doesn't enter an invalid number for numerical inputs
                 try {
@@ -100,6 +104,7 @@ public class EditItemsGUI implements FocusListener {
                 catch(NumberFormatException n){
                     JOptionPane.showMessageDialog(null, "Make sure you have entered correct numerical values");}
             }
+            
 
         });
     }
