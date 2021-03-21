@@ -6,6 +6,7 @@ import GUI.MainWindow.MainWindowGUI;
 import GUI.UserManagement.UserManagementGUI;
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
 
+import GUI.VendorManagement.VendorUI;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
 import javax.swing.*;
@@ -16,6 +17,7 @@ public class MainMenuGUI {
     private JButton customerManagementButton;
     private JButton logoutButton;
     private JButton itemManagementButton;
+    private JButton vendorManagementButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -36,6 +38,11 @@ public class MainMenuGUI {
                 mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel());
             else
                 JOptionPane.showMessageDialog(null, "You are not OWNER user.");
+        });
+
+        vendorManagementButton.addActionListener(e->
+        {
+            mainWindowGUI.setJPanel(new VendorUI().getPanel());
         });
 
         itemManagementButton.addActionListener((e ->
