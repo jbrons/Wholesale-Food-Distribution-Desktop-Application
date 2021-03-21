@@ -1,8 +1,16 @@
+/*
+ * Name:Zachary Nicolai
+ * Class Name: ItemsGUI
+ * Class Description: This class controls the ItemsGUI. it gives instructions for all of the buttons and text fields. It
+ * allows users to double click an item to access ItemDisplayGUI, access addItemsGUI if the add button is pressed, or search
+ * for an Item. it ensures that only the correct types of users can do specific tasks.
+ * */
+
+
 package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
-import com.sun.tools.javac.Main;
 import src.Item.Items;
 import src.Item.ItemsArray;
 import src.User.UserDatabase;
@@ -19,9 +27,8 @@ import java.util.ArrayList;
 
 
 
-public class ItemsGUI  implements FocusListener{
+public class ItemsGUI implements FocusListener{
 
-    private JFrame frame;
     private JPanel rootPanel;
 
     private JTextField searchField;
@@ -34,20 +41,20 @@ public class ItemsGUI  implements FocusListener{
     private JLabel guiLabel;
     private JTextField focused = searchField;
     private ArrayList<Items> itemsListCopy;
-
     private MainWindowGUI mainWindowGUI;
-    UserDatabase dataBase = UserDatabase.getInstance();
 
+
+    UserDatabase dataBase = UserDatabase.getInstance();
     NumberFormat nf = new DecimalFormat();
 
     public ItemsGUI(){
         mainWindowGUI = MainWindowGUI.getInstance();
-
         setupGUI();
     }
 
     public void setupGUI()
     {
+        //button actions
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
@@ -84,7 +91,6 @@ public class ItemsGUI  implements FocusListener{
                 }
             }
             });
-
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 closeCatalog();
@@ -98,13 +104,13 @@ public class ItemsGUI  implements FocusListener{
             public void mouseClicked(MouseEvent evt) {
                 JList jList = (JList)evt.getSource();
                 if (evt.getClickCount() == 2) {
+                    //index of selected jList is stored and then ItemsGUI displays selectedIndex
                     int index = iList.locationToIndex(evt.getPoint());
                     ItemDisplayGUI dis = new ItemDisplayGUI(index);
                     mainWindowGUI.setJPanel(dis.getPanel());
                 }
             }
         });
-
         logoutButton.addActionListener(e ->
         {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
@@ -120,7 +126,7 @@ public class ItemsGUI  implements FocusListener{
         mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
     }
 
-    //methods required for implementing focus
+    //methods required for implementing focusListener
     public void focusGained(FocusEvent e) {
         if (e.getSource() instanceof JTextField) {
             focused = (JTextField) e.getSource();
@@ -133,6 +139,4 @@ public class ItemsGUI  implements FocusListener{
     {
         return rootPanel;
     }
-
-
 }

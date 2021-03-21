@@ -1,8 +1,17 @@
+/*
+ * Name:Zachary Nicolai
+ * Class Name: ItemDisplayGUI
+ * Class Description: This class controls the ItemDisplayGUI. it gives instructions for all of the buttons and
+ * labels. The GUI allows users view the item they selected and then choose to edit or delete it. It ensures only
+ * correct users can edit or delete an item
+ */
+
+
 package GUI.ItemManagement;
+
 import GUI.Login.LoginGUI;
 import src.Item.ItemsArray;
 import GUI.MainWindow.MainWindowGUI;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +19,6 @@ import src.User.UserDatabase;
 import src.User.EnumUserRoles;
 
 public class ItemDisplayGUI {
-    private JFrame frame;
     private JButton editButton;
     private JButton leaveButton;
     private JButton deleteButton;
@@ -34,7 +42,9 @@ public class ItemDisplayGUI {
 
     private void setupGUI()
     {
+        //sets label to the index of selected item
         contentLabel.setText(ItemsArray.itemsListToArray(ItemsArray.getItemsList())[index]);
+        //button actions
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {

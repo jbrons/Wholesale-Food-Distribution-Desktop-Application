@@ -1,4 +1,13 @@
+/*
+ * Name:Zachary Nicolai
+ * Class Name: EditItemsGUI
+ * Class Description: This class controls the EditItemsGUI. it gives instructions for all of the buttons text fields, and
+ * combo boxes. The GUI allows users to edit current Item profiles. It will show information about selected item when editing.
+ */
+
+
 package GUI.ItemManagement;
+
 import GUI.Login.LoginGUI;
 import src.Item.Items;
 import src.Item.ItemsArray;
@@ -12,20 +21,15 @@ import java.awt.event.FocusListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import src.User.UserDatabase;
-import src.User.EnumUserRoles;
 import src.Vendor.VendorList;
-import src.Vendor.Vendor;
-
 import GUI.MainWindow.MainWindowGUI;
 
 
 public class EditItemsGUI implements FocusListener {
-    private JFrame frame;
     private JPanel rootPanel;
 
     private JTextField iIDField;
     private JTextField iNameField;
-    private JTextField vIDField;
     private JTextField sPriceField;
     private JTextField pPriceField;
     private JTextField quantityField;
@@ -41,7 +45,7 @@ public class EditItemsGUI implements FocusListener {
     private JTextField focused = iNameField;
 
     private String[] cat = new String[]{"Vegetables", "Fruits", "Nuts", "Dairy", "Meat", "Snacks", "Soda", "Juice", "Bakery Products"};
-    private String[] unit = new String[]{"Pound","Gallon","Dozen"};
+    private String[] unit = new String[]{"Pound","Gallon","Dozen","Ounce","Per Unit"};
     UserDatabase dataBase = UserDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
     VendorList vendorList = VendorList.getInstance();
@@ -54,26 +58,27 @@ public class EditItemsGUI implements FocusListener {
 
     public void setupGUI()
     {
-
+        //setting combo boxes
         DefaultComboBoxModel<String> catModel = new DefaultComboBoxModel<>(cat);
         categoryCombo.setModel(catModel);
-
         DefaultComboBoxModel<String> unitModel = new DefaultComboBoxModel<>(unit);
         unitCombo.setModel(unitModel);
-
+        //putting current vendor ids in combo box
         vendorCombo.setModel(new DefaultComboBoxModel(vendorList.getIdList()));
 
-
         expFormattedText.setFormatterFactory(new DefaultFormatterFactory(format("##/##/####")));
+
+        //setting focus listeners
         iIDField.addFocusListener(this);
         iNameField.addFocusListener(this);
-
         sPriceField.addFocusListener(this);
         expFormattedText.addFocusListener(this);
         pPriceField.addFocusListener(this);
         quantityField.addFocusListener(this);
 
+        //setting text fields based on current item profile details
         DecimalFormat df = new DecimalFormat("#.00");
+        //getting current itemsList
         itemsListCopy = ItemsArray.getItemsList();
         iIDField.setText(String.valueOf(itemsListCopy.get(this.index).getId()));
         iNameField.setText(itemsListCopy.get(this.index).getName());
@@ -84,6 +89,8 @@ public class EditItemsGUI implements FocusListener {
         pPriceField.setText(String.valueOf(df.format(itemsListCopy.get(this.index).getPurchasePrice())));
         unitCombo.setSelectedItem(itemsListCopy.get(this.index).getUnit());
         quantityField.setText(String.valueOf(itemsListCopy.get(this.index).getQuantity()));
+
+        //button actions
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 closeItemEdit();
@@ -98,6 +105,7 @@ public class EditItemsGUI implements FocusListener {
                     //validation method ensures all other inputs arent invalid
                     if(val.validation(Integer.parseInt(iIDField.getText()),iNameField.getText(),(int)vendorCombo.getSelectedItem(),Double.parseDouble(sPriceField.getText()),
                             expFormattedText.getText(),Double.parseDouble(pPriceField.getText()),Integer.parseInt(quantityField.getText()))) {
+                        //setting item information
                         ItemsArray.setIndexID(getIndex(), Integer.parseInt(iIDField.getText()));
                         ItemsArray.setIndexName(getIndex(), iNameField.getText());
                         ItemsArray.setIndexVId(getIndex(), (int)vendorCombo.getSelectedItem());
@@ -138,6 +146,8 @@ public class EditItemsGUI implements FocusListener {
     public void setIndex(int i){
         this.index = i;
     }
+
+    //methods required for implementing focus listener
     public void focusGained(FocusEvent e) {
         if (e.getSource() instanceof JTextField) {
             focused = (JTextField) e.getSource();
