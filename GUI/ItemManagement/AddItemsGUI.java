@@ -11,7 +11,8 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.util.Random;
-
+import src.Vendor.VendorList;
+import src.Vendor.Vendor;
 
 public class AddItemsGUI implements FocusListener {
     private JFrame frame;
@@ -28,9 +29,11 @@ public class AddItemsGUI implements FocusListener {
     private JComboBox categoryCombo;
     private JComboBox unitCombo;
     private JFormattedTextField expirationFormattedText;
+    private JComboBox vendorCombo;
     private JTextField focused = iNameField;
 
     MainWindowGUI mainWindowGUI;
+    VendorList vendorList = VendorList.getInstance();
 
     NumberFormat nf = new DecimalFormat();
 
@@ -46,6 +49,7 @@ public class AddItemsGUI implements FocusListener {
 
     private void setupGUI()
     {
+
         expirationFormattedText.setFormatterFactory(new DefaultFormatterFactory(format("##/##/####")));
         Random r = new Random();
         id+= r.nextInt(10)+1;
@@ -63,6 +67,8 @@ public class AddItemsGUI implements FocusListener {
 
         DefaultComboBoxModel<String> unitModel = new DefaultComboBoxModel<>(unit);
         unitCombo.setModel(unitModel);
+
+        
 
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
+
 import GUI.MainWindow.MainWindowGUI;
 
 public class ItemsGUI  implements FocusListener{
