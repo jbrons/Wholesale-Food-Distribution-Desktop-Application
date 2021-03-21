@@ -1,6 +1,7 @@
 package Profile;
 
-// Interface of Profile
+/** Interface of Profile
+*/
 public interface CustomerProfile {
 
     int getCustomerID();
