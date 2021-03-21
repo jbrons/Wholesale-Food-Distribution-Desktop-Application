@@ -8,6 +8,17 @@ import src.UserDatabase;
 
 import javax.swing.*;
 
+/**
+ * UserManagement is the class that handles all the GUI for the
+ * UserManagement.form file. This class will handle redirecting users
+ * to the AddUser GUI,  redirecting to the UpdateUser GUI, deleting a user
+ * and searching for a user.
+ *
+ * This class also displays to the current user the list of all the users in
+ * the system's database.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class UserManagementGUI {
     JPanel rootPanel;
     private JPanel buttonPanel;
@@ -111,11 +122,21 @@ public class UserManagementGUI {
         });
     }
 
+    /**
+     * Sets the JList data equal to an array of users in the database
+     */
     private void initializeList()
     {
         userSearchList.setListData(database.getAllUsers());
     }
 
+    /**
+     * Returns the specified user profile in a new page,
+     *
+     * If not found, user is shown an error dialog box
+     *
+     * @param userID Specified user being searched for.
+     */
     private void searchList(String userID)
     {
         User[] list = new User[1];
@@ -130,9 +151,6 @@ public class UserManagementGUI {
         UserInformationGUI userInformationGUI = new UserInformationGUI(list[0]);
         userInformationGUI.userSearch();
         mainWindowGUI.setJPanel(userInformationGUI.getPanel());
-
-
-        userSearchList.setListData(list);
     }
 
     public JPanel getPanel()
@@ -140,6 +158,11 @@ public class UserManagementGUI {
         return rootPanel;
     }
 
+    /**
+     * Displays an error dialog box with a specified message.
+     *
+     * @param errorMessage Specified error message
+     */
     private void displayError(String errorMessage)
     {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), errorMessage);
