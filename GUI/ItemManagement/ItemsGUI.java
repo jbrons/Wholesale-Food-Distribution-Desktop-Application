@@ -113,7 +113,7 @@ public class ItemsGUI  implements FocusListener{
 
     public void displayCatalog(ArrayList<Items> itemsListFinal) {
         iList.setListData(ItemsArray.itemsListToArray(itemsListFinal));
-        iList.setFont(new Font("Arial",Font.BOLD,10));
+        iList.setFont(new Font("Arial",Font.BOLD,12));
     }
 
     public void closeCatalog(){

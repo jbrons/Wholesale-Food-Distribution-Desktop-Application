@@ -17,6 +17,7 @@
           </grid>
         </constraints>
         <properties>
+          <foreground color="-16777216"/>
           <text value="Search"/>
         </properties>
       </component>
@@ -29,15 +30,16 @@
           </grid>
         </constraints>
         <properties>
+          <foreground color="-16777216"/>
           <text value="Leave"/>
         </properties>
       </component>
       <component id="86646" class="javax.swing.JList" binding="iList">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="700" height="350"/>
-            <preferred-size width="700" height="350"/>
-            <maximum-size width="700" height="350"/>
+            <minimum-size width="900" height="350"/>
+            <preferred-size width="900" height="350"/>
+            <maximum-size width="900" height="350"/>
           </grid>
         </constraints>
         <properties>
@@ -77,6 +79,7 @@
           </grid>
         </constraints>
         <properties>
+          <foreground color="-16777216"/>
           <text value="Show Catalog"/>
         </properties>
       </component>
@@ -89,6 +92,7 @@
           </grid>
         </constraints>
         <properties>
+          <foreground color="-16777216"/>
           <text value="Add"/>
         </properties>
       </component>
@@ -101,6 +105,7 @@
           </grid>
         </constraints>
         <properties>
+          <foreground color="-16777216"/>
           <text value="Logout"/>
         </properties>
       </component>
