@@ -10,7 +10,8 @@ public class CustomerProfileManagerGUI {
 
     CustomerProfileDatabase database;
 
-    // UI Components
+    /** UI Components
+    */
     private JPanel panel1;
     private JButton editProfileButton;
     private JButton deleteProfileButton;
