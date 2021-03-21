@@ -3,6 +3,7 @@ package GUI.VendorManagement;
 import javax.swing.*;
 
 import GUI.Login.LoginGUI;
+import GUI.MainMenu.MainMenuGUI;
 import src.Vendor.StateAbbrs;
 import src.Vendor.Vendor;
 import src.Vendor.VendorList;
@@ -35,6 +36,7 @@ public class VendorUI implements ActionListener {
     private JButton btnDelete;
     private JList<Vendor> lstDisplay;
     private JButton btnLogOut;
+    private JButton btnMainMenu;
 
     private VendorCreation vendorCreation = new VendorCreation();
     VendorList vendorList = VendorList.getInstance();
@@ -103,6 +105,8 @@ public class VendorUI implements ActionListener {
 
         } else if (userAction == btnLogOut) {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
+        } else if (userAction == btnMainMenu) {
+            mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
         }
     }
 
@@ -129,5 +133,6 @@ public class VendorUI implements ActionListener {
         btnViewProfiles.addActionListener(this);
         btnLogOut.addActionListener(this);
         txtSearchBar.addActionListener(this);
+        btnMainMenu.addActionListener(this);
     }
 }

@@ -99,10 +99,6 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         return rootPanel;
     }
 
-    public void createVendor() {
-        //createWindow(400, 400);
-    }
-
     /**
      * Invoked to add an ActionListener and a KeyListener to JTextFields, JFormattedTextFields,
      * and an ActionListener to Jbuttons
@@ -176,9 +172,6 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         DateValidator validator = new DateValidator(dateFormat);
 
-        System.out.println(txtPhoneNum.getText());
-        System.out.println(txtPhoneNum.getValue());
-
         if (txtFullName.getText().isEmpty()) {
             displayError("Full Name" + message);
             return false;
@@ -220,7 +213,7 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
             balance = 0 ;
         }
         if (!txtLastPaidAmount.getText().isEmpty()) {
-            lastPaidAmount =  getNumber(txtLastPaidAmount.getText());
+            lastPaidAmount = getNumber(txtLastPaidAmount.getText());
             if (lastPaidAmount == -1) {
                 return false;
             }
@@ -253,13 +246,13 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         return true;
     }
 
-    private double getNumber(String number) {
+    private double getNumber(String numStr) {
         try {
-            return (double) numberFormat.parse(number);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            Number number = numberFormat.parse(numStr);
+            return number.doubleValue();
+        } catch (ParseException  e) {
+            return -1;
         }
-        return -1;
     }
 
     private void displayError(String message)
