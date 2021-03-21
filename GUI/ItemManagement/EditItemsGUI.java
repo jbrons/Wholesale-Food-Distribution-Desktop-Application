@@ -36,7 +36,7 @@ public class EditItemsGUI implements FocusListener {
 
     private String[] cat = new String[]{"Vegetables", "Fruits", "Nuts", "Dairy", "Meat", "Snacks", "Soda", "Juice", "Bakery Products"};
     private String[] unit = new String[]{"Pound","Gallon","Dozen"};
-
+    UserDatabase dataBase = UserDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
 
     public EditItemsGUI(int i) {
@@ -104,7 +104,8 @@ public class EditItemsGUI implements FocusListener {
                 catch(NumberFormatException n){
                     JOptionPane.showMessageDialog(null, "Make sure you have entered correct numerical values");}
             }
-            
+
+
 
         });
     }

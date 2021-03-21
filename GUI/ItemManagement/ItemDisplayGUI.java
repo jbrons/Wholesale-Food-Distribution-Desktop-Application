@@ -46,8 +46,14 @@ public class ItemDisplayGUI {
             }});
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                ItemsArray.remove(index);
-                closeItemEdit();
+                if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
+                    ItemsArray.remove(index);
+                    closeItemEdit();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "You must be a owner or purchase user");
+                }
+
             }});
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

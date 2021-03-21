@@ -5,6 +5,8 @@ import GUI.MainMenu.MainMenuGUI;
 import com.sun.tools.javac.Main;
 import src.Item.Items;
 import src.Item.ItemsArray;
+import src.User.UserDatabase;
+import src.User.EnumUserRoles;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +35,7 @@ public class ItemsGUI  implements FocusListener{
     private ArrayList<Items> itemsListCopy;
 
     private MainWindowGUI mainWindowGUI;
+    UserDatabase dataBase = UserDatabase.getInstance();
 
     NumberFormat nf = new DecimalFormat();
 
@@ -46,28 +49,40 @@ public class ItemsGUI  implements FocusListener{
     {
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                String searchedItem = searchField.getText();
-                itemsListCopy = ItemsArray.getItemsList();
-                ArrayList<Items> itemsListFinal = new ArrayList<Items>();
-                boolean found = false;
+                if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
+                    String searchedItem = searchField.getText();
+                    itemsListCopy = ItemsArray.getItemsList();
+                    ArrayList<Items> itemsListFinal = new ArrayList<Items>();
+                    boolean found = false;
 
-                for(int i=0;i< itemsListCopy.size();i++){
-                    if(String.valueOf(itemsListCopy.get(i).getId()).equals(searchedItem) ||
-                            itemsListCopy.get(i).getName().equals(searchedItem) ||
-                            itemsListCopy.get(i).getExpirationDate().equals(searchedItem)){
-                        itemsListFinal.add(itemsListCopy.get(i));
-                        found = true;
+                    for (int i = 0; i < itemsListCopy.size(); i++) {
+                        if (String.valueOf(itemsListCopy.get(i).getId()).equals(searchedItem) ||
+                                itemsListCopy.get(i).getName().equals(searchedItem) ||
+                                itemsListCopy.get(i).getExpirationDate().equals(searchedItem)) {
+                            itemsListFinal.add(itemsListCopy.get(i));
+                            found = true;
+                        }
                     }
+                    if (!found) {
+                        JOptionPane.showMessageDialog(null, searchedItem + " not found");
+                    }
+                    displayCatalog(itemsListFinal);
                 }
-                if(!found){
-                    JOptionPane.showMessageDialog(null, searchedItem + " not found");
+                else{
+                    JOptionPane.showMessageDialog(null,  "Must be Owner user or Purchase user");
                 }
-                displayCatalog(itemsListFinal);
             }});
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                mainWindowGUI.setJPanel(new AddItemsGUI().getPanel());
-            }});
+                if (dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER || dataBase.getCurrentUser().getRole() ==
+                        EnumUserRoles.PURCHASER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.INVENTORY_MANAGER) {
+                    mainWindowGUI.setJPanel(new AddItemsGUI().getPanel());
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "You must be a Owner, Purchaser, or Inventory Manager");
+                }
+            }
+            });
 
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
