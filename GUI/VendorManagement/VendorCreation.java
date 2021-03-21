@@ -51,13 +51,17 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
     VendorList vendorList = VendorList.getInstance();
     //DefaultFormatterFactory formatterFactory = new DefaultFormatterFactory(dataFormatter);
     DisplayList displayList = DisplayList.getInstance();
+    private Vendor vendor = null;
 
+    private boolean update = false;
     private String name, streetAddress, city, phoneNum;
     private StateAbbrs state;
     private double balance, lastPaidAmount;
     private LocalDate lastOrderDate, seasonalDiscDate;
     NumberFormat numberFormat = NumberFormat.getInstance();
     NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
+    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    DateValidator validator = new DateValidator(dateFormat);
 
     MainWindowGUI mainWindowGUI;
 
@@ -68,32 +72,35 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
     }
     public VendorCreation(Vendor vendor) {
         this();
+        this.vendor = vendor;
         initializeInputs(vendor);
+        update = true;
     }
 
     private void setUpGUI() {
         String phoneFormat = "###-###-####";
         String dateFormat = "##/##/####";
 
+        cboState.setEditable(false);
         txtPhoneNum.setFormatterFactory(new DefaultFormatterFactory(formatter(phoneFormat, ' ')));
         txtBalance.setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
         txtLastPaidAmount.setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
-        //txtLastOrderDate.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(new SimpleDateFormat("mm/dd/yyyy"))));
         txtLastOrderDate.setFormatterFactory(new DefaultFormatterFactory(formatter(dateFormat, '-')));
         txtSeasonalDiscDate.setFormatterFactory(new DefaultFormatterFactory(formatter(dateFormat, '-')));
         cboState.setModel(new DefaultComboBoxModel(StateAbbrs.values()));
     }
 
     private void initializeInputs(Vendor vendor) {
+        btnCreate.setText("Update");
         txtFullName.setText(vendor.getName());
         txtStreetAddress.setText(vendor.getStreetAddress());
         txtCity.setText(vendor.getCity());
         cboState.setSelectedItem(vendor.getState());
         txtPhoneNum.setText(vendor.getPhoneNum());
-        txtBalance.setValue(String.valueOf(vendor.getBalance()));
+        txtBalance.setText(String.valueOf(vendor.getBalance()));
         txtLastPaidAmount.setText(String.valueOf(vendor.getLastPaidAmount()));
-        txtLastOrderDate.setText(String.valueOf(vendor.getLastOrderDate()));
-        txtSeasonalDiscDate.setText(String.valueOf(vendor.getSeasonalDiscDate()));
+        txtLastOrderDate.setText(vendor.getLastOrderDate().format(dateFormat));
+        txtSeasonalDiscDate.setText(vendor.getSeasonalDiscDate().format(dateFormat));
         txtFullName.requestFocusInWindow();
     }
 
@@ -158,10 +165,16 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         } else if (userAction == txtSeasonalDiscDate) {
         } else if (userAction == btnCreate) {
             if (getInputs()) {
-                Vendor vendor = new Vendor(name, streetAddress, city, state, phoneNum, balance,
-                        lastPaidAmount, lastOrderDate, seasonalDiscDate);
-                vendorList.addVendor(vendor);
-                displayList.addVendor(vendor);
+                if (update) {
+                    vendorList.updateVendor(vendor);  // pass id to new constructor
+                    System.out.println(vendorList.searchVendorList(vendor.getId()));
+                    displayList.updateVendor(vendor, vendorList.searchVendorList(vendor.getId()));
+                } else {
+                    vendor = new Vendor(name, streetAddress, city, state, phoneNum, balance,
+                            lastPaidAmount, lastOrderDate, seasonalDiscDate);
+                    vendorList.addVendor(vendor);
+                    displayList.addVendor(vendor);
+                }
                 mainWindowGUI.setJPanel(new VendorUI().getPanel());
             }
         } else if (userAction == btnCancel) {
@@ -171,8 +184,6 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
 
     private boolean getInputs() {
         String message = " cannot be blank.";
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateValidator validator = new DateValidator(dateFormat);
 
         if (txtFullName.getText().isEmpty()) {
             displayError("Full Name" + message);
@@ -197,6 +208,13 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
             return false;
         } else {
             city = txtCity.getText();
+        }
+
+        if (cboState.getSelectedIndex() == 0) {
+            displayError("State" + message);
+            return false;
+        } else {
+            state = (StateAbbrs) cboState.getSelectedItem();
         }
 
         if (!txtPhoneNum.isEditValid()) {

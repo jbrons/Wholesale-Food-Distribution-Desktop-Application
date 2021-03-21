@@ -64,7 +64,7 @@ public class VendorList {
             }
         }
         return -1;
-        }
+    }
 
     public int searchVendorList(String name) {
         for (Vendor vendor : vendorList) {

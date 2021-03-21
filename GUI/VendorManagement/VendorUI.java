@@ -39,7 +39,6 @@ public class VendorUI implements ActionListener {
     private JList<Vendor> lstDisplay;
     private JButton btnLogOut;
     private JButton btnMainMenu;
-    private JComboBox<Integer> comboBox1;
 
     VendorList vendorList = VendorList.getInstance();
     DisplayList displayList = DisplayList.getInstance();
@@ -53,7 +52,6 @@ public class VendorUI implements ActionListener {
         lstDisplay.setModel(displayList.getDisplayListModel());
         lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
         txtSearchBar.requestFocusInWindow();
-        comboBox1.setModel(new DefaultComboBoxModel(vendorList.getIdList()));
 
         if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
            btnViewProfiles.setEnabled(false);
