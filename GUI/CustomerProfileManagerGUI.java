@@ -168,21 +168,25 @@ public class CustomerProfileManagerGUI {
             updateView();
         });
 
-        // Exit button clicked, close program
+        /** Exit button clicked, close program
+        */
         exitButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
         });
     }
 
-    // Update list from saved profiles
+    /**Update list from saved profiles
+    */
     public void updateView() {
-        // If profiles are empty, show empty list
+        /**If profiles are empty, show empty list
+        */
         CustomerProfile[] profiles = database.getAllProfiles();
         if (profiles.length == 0) {
             String[] result = new String[]{};
             list1.setListData(result);
         } else {
-            // Get string of profile (Name, phone, balance, lastpaidamount) from profile list
+            /** Get string of profile (Name, phone, balance, lastpaidamount) from profile list
+            */
             String[] result = new String[profiles.length];
             for (int i = 0; i < result.length; i++)
                 result[i] = profiles[i].toString();
