@@ -1,23 +1,9 @@
-import java.util.ArrayList;
-import java.util.List;
-/**
- * Feature #2 : Customer Profile
- * implements Profile Interface.
- *
- * @Author : Joyshree Chowdhury
- *
- *
- */
+package Profile;
 
-public class CustomerProfile extends Object implements Profile {
-    /** Static ID for unique per each profile
-     *
-     */
+public class CompanyCustomerProfile implements CustomerProfile {
+    // Static ID for unique per each profile
     public static int ID = 100000;
-    /** State list in United States.
-     *
-     * State can be selected from a list.
-     */
+    // State list in us
     public static String[] STATES = new String[] {
             "AL",
             "AK",
@@ -76,14 +62,7 @@ public class CustomerProfile extends Object implements Profile {
             "WI",
             "WY" };
 
-    /** Profile list to save
-     *
-     */
-    public static List<Profile> profiles = new ArrayList<>();
-
-    /** Properties of the customer profile
-     *
-     */
+    // Properties of profile
     private int customerID;
     private String customerName;
     private String streetAddress;
@@ -94,22 +73,8 @@ public class CustomerProfile extends Object implements Profile {
     private float lastPaidAmount;
     private String lastOrderDate;
 
-    /** Constructor with Parameters :
-     *
-     * @param customerName
-     * @param streetAddress
-     * @param city
-     * @param state
-     * @param phone
-     * @param balance
-     * @param lastPaidAmount
-     * @param lastOrderDate
-     */
-    public CustomerProfile(String customerName, String streetAddress, String city,
-                           String state, String phone, float balance, float lastPaidAmount, String lastOrderDate) {
-        /**
-         * customer ID is auto generated and unique every time.
-         */
+    // Constructor
+    public CompanyCustomerProfile(String customerName, String streetAddress, String city, String state, String phone, float balance, float lastPaidAmount, String lastOrderDate) {
         this.customerID = ++ID;
         this.customerName = customerName;
         this.streetAddress = streetAddress;
@@ -121,10 +86,7 @@ public class CustomerProfile extends Object implements Profile {
         this.lastOrderDate = lastOrderDate;
     }
 
-    /** Getter methods
-     *
-     * @return
-     */
+    // Get methods
     public int getCustomerID() {
         return customerID;
     }
@@ -161,10 +123,7 @@ public class CustomerProfile extends Object implements Profile {
         return lastOrderDate;
     }
 
-    /** Setter Methods
-     *
-     * @param customerName
-     */
+    // Set Methods
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
@@ -197,10 +156,7 @@ public class CustomerProfile extends Object implements Profile {
         this.lastOrderDate = lastOrderDate;
     }
 
-    /** Make string for listview
-     * Override toString().
-     * @return
-     */
+    // Make string for listview
     @Override
     public String toString() {
         return "" + customerName +
@@ -209,4 +165,4 @@ public class CustomerProfile extends Object implements Profile {
                 ", " + lastPaidAmount;
     }
 
-}//end of class
+}

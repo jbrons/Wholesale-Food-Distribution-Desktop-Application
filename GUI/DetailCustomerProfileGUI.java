@@ -1,9 +1,8 @@
-/**
- *
- * @Author : Joyshree Chowdhury
- *
- *
- */
+package GUI;
+
+import Profile.CompanyCustomerProfile;
+import Profile.CustomerProfile;
+import Profile.CustomerProfileDatabase;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
@@ -16,11 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomerProfileDetail {
-    /** GUI components
-     *
-     */
-    public JPanel panel1;
+public class DetailCustomerProfileGUI {
+    // UI components
+    private JPanel panel1;
     private JPanel Buttons;
     private JButton OKButton;
     private JButton cancelButton;
@@ -34,56 +31,38 @@ public class CustomerProfileDetail {
     private JFormattedTextField txtLastPaidAmount;
     private JFormattedTextField txtLastOrderDate;
 
-    /** flag for create or edit profile
-     *
-     */
+    // flag for create or edit profile
     boolean isCreate = true;
+    MainWindowGUI mainWindowGUI;
+    CustomerProfileDatabase database;
 
-    /** Parent view
-     *
-     */
-    TestCustomerProfile view;
-
-    /** Constructor
-     *
-     * to create a customer profile
-     *
-     * @param parent
-     */
-    CustomerProfileDetail(TestCustomerProfile parent) {
+    // Constructor for create profile
+    DetailCustomerProfileGUI() {
+        mainWindowGUI = MainWindowGUI.getInstance();
+        database = CustomerProfileDatabase.getInstance();
         initialize(null);
-        view = parent;
     }
 
-    /** Constructor for editing
-     * customer profile
-     *
-     * @param parent
-     * @param profile
-     */
-    CustomerProfileDetail(TestCustomerProfile parent, Profile profile)
+    // Constructor for edit profile
+    DetailCustomerProfileGUI(CustomerProfile profile)
     {
+        mainWindowGUI = MainWindowGUI.getInstance();
+        database = CustomerProfileDatabase.getInstance();
         initialize(profile);
-        view = parent;
     }
 
-    /**Initializing all the GUI components with profile
-     *
-     * @param profile
-     */
-    private void initialize(Profile profile) {
-        /**Set states to select state
-         * from ComboBox Strings.
-         *
-         * (cmbstate)
-         *
-         */
-        for (String s : CustomerProfile.STATES)
+    public JPanel getPanel()
+    {
+        return panel1;
+    }
+
+    // Initalize ui components with profile
+    private void initialize(CustomerProfile profile) {
+        // Set states to combobox to select state
+        for (String s : CompanyCustomerProfile.STATES)
             cmbState.addItem(s);
 
-        /**customer name has max 20 characters.
-         * add key listener
-         */
+        // customer name has 20 length
         txtCustomerName.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -92,10 +71,7 @@ public class CustomerProfileDetail {
             }
         });
 
-        /** street address has 20 max characters
-         * add key listener
-         *
-         */
+        // street address has 20 length
         txtStreetAddress.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -104,10 +80,7 @@ public class CustomerProfileDetail {
             }
         });
 
-        /**city has 20 max characters
-         * add key listener
-         *
-         */
+        // city has 20 length
         txtCity.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -116,34 +89,20 @@ public class CustomerProfileDetail {
             }
         });
 
-        /** Phone number style is:
-         *
-         * [xxx-xxx-xxxx]
-         */
+        // Phone number style
         txtPhone.setFormatterFactory(new DefaultFormatterFactory(createFormatter("###-###-####")));
-        /**Balance and last paid amount should be
-         * Decimal numbers
-         *
-         */
+        // Balance and last paid amount should be number
         txtBalance.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getInstance())));
         txtLastPaidAmount.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getInstance())));
-        /**LastOrderDate should be date format
-         * [ mm / dd / yyyy ]
-         *
-         */
+        // LastOrderDate should be date format
         txtLastOrderDate.setFormatterFactory(new DefaultFormatterFactory(createFormatter("##/##/####")));
 
-        /** Create a new customer profile
-         *
-         */
+        // Create new profile case
         if (profile == null) {
             isCreate = true;
-            txtCustomerID.setText(String.valueOf(CustomerProfile.ID + 1));
-            /** Edit customer  profile
-             *
-             */
-        }
-        else {
+            txtCustomerID.setText(String.valueOf(CompanyCustomerProfile.ID + 1));
+        // Edit profile case
+        } else {
             isCreate = false;
             txtCustomerID.setText(String.valueOf(profile.getCustomerID()));
             txtCustomerName.setText(profile.getCustomerName());
@@ -156,33 +115,21 @@ public class CustomerProfileDetail {
             txtLastOrderDate.setText(profile.getLastOrderDate());
         }
 
-        /** OK( done with customer profile editing )
-         * button clicked
-         *add action listener
-         */
+        // OK button clicked
         OKButton.addActionListener(e -> {
-            /** Validate all data is correct
-             *
-             */
+            // Validate all data is correct
             if (!validateForm())
                 return;
 
-            /**Create new profile and
-             *  add it to the customer list
-             *
-             */
+            // Create new profile and add it to list
             if (isCreate) {
                 float balance = 0;
                 float amount = 0;
-                /**
-                 * Exception  Possible.
-                 */
                 try {
                     balance = Float.parseFloat(txtBalance.getText());
                     amount = Float.parseFloat(txtLastPaidAmount.getText());
-                }
-                catch (Exception ignored) {}
-                CustomerProfile.profiles.add(new CustomerProfile(txtCustomerName.getText(),
+                } catch (Exception ignored) {}
+                database.addProfile(new CompanyCustomerProfile(txtCustomerName.getText(),
                         txtStreetAddress.getText(),
                         txtCity.getText(),
                         (String)cmbState.getSelectedItem(),
@@ -190,16 +137,10 @@ public class CustomerProfileDetail {
                         balance,
                         amount,
                         txtLastOrderDate.getText()));
-            }
-            else if (profile != null){
-                /** Edit customer profile
-                 *
-                 */
+            } else if (profile != null){
+                // Edit profile
                 float balance = 0;
                 float amount = 0;
-                /**
-                 * Exception possible.
-                 */
                 try {
                     balance = Float.parseFloat(txtBalance.getText());
                     amount = Float.parseFloat(txtLastPaidAmount.getText());
@@ -212,38 +153,21 @@ public class CustomerProfileDetail {
                 profile.setBalance(balance);
                 profile.setLastPaidAmount(amount);
                 profile.setLastOrderDate(txtLastOrderDate.getText());
+
             }
 
-            /** Update parent's list view
-             * According to new customer profiles.
-             *
-             */
-            this.view.updateView();
-            /** Close detail of the customer  profile
-             *
-             */
-            SwingUtilities.getWindowAncestor(this.panel1).dispose();
+            // Close detail profile
+            mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel());
         });
 
-        /** Cancel button clicked
-         *
-         *  add action listener .
-         */
+        // Cancel button clicked
         cancelButton.addActionListener(e -> {
-            /**Close detail of the
-             * customer profile page
-             *
-             */
-            SwingUtilities.getWindowAncestor(this.panel1).dispose();
+            // Close detail profile page
+            mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel());
         });
     }
 
-    /** Create formatter for
-     * the formatted text
-     *
-     * @param s
-     * @return
-     */
+    // Create formatter for formatted text
     private MaskFormatter createFormatter(String s) {
         MaskFormatter formatter = null;
         try {
@@ -255,92 +179,59 @@ public class CustomerProfileDetail {
         return formatter;
     }
 
-    /** to Validate
-     * that all the  data are equal
-     *
-     * @return
-     */
+    // Validate data are equal
     private boolean validateForm() {
-        for (Profile profile : CustomerProfile.profiles) {
+        for (CustomerProfile profile : database.getAllProfiles()) {
             if (txtCustomerID.getText().equals(String.valueOf(profile.getCustomerID())))
                 continue;
-
-            /**The system will restrict adding
-             * duplicate customer names.
-             * Customer Name should be different.
-             *
-             */
+            // Customer Name should be different
             if (profile.getCustomerName().equals(txtCustomerName.getText())) {
                 JOptionPane.showMessageDialog(null, "Same customer name in the list.");
                 return false;
             }
             if (txtCustomerName.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "You should input customer name, Thank you!");
+                JOptionPane.showMessageDialog(null, "You should input customer name.");
                 return false;
             }
         }
 
-        /**Street address  field
-         *  should have value
-         *
-         */
+        // Street should have value
         if (txtStreetAddress.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "You should input customer's street address, Thank you!");
+            JOptionPane.showMessageDialog(null, "You should input customer's street address.");
             return false;
         }
-        /** City field
-         *  should have value
-         *
-         */
+        // City should have value
         if (txtCity.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "You should input customer's city, Thank you! ");
+            JOptionPane.showMessageDialog(null, "You should input customer's city.");
             return false;
         }
-        /**State field
-         * should have value
-         *
-         */
+        // State should have value
         if (cmbState.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "You should select customer' state, Thank you! ");
+            JOptionPane.showMessageDialog(null, "You should select customer' state.");
             return false;
         }
-        /**Phone field
-         * should have value
-         *
-         */
+        // Phone should have value
         if (txtPhone.getText().contains(" ")) {
-            JOptionPane.showMessageDialog(null, "You should input customer phone number, Thank you!");
+            JOptionPane.showMessageDialog(null, "You should input customer phone number.");
             return false;
         }
-        /** LastOrderDate field
-         * should have value
-         *
-         */
+        // LastOrderDate should have value
         SimpleDateFormat fromUser = new SimpleDateFormat("MM/dd/yyyy");
         Date date;
-        /**
-         * Exception possible for wrong input.
-         */
         try {
             date = fromUser.parse(txtLastOrderDate.getText());
         } catch (ParseException e) {
-            JOptionPane.showMessageDialog(null, "Please input correct date , Thank you!");
+            JOptionPane.showMessageDialog(null, "Please input correct date");
             return false;
         }
 
-        /**Check if the date is
-         * past date
-         *
-         * system restrict adding past date values.
-         */
+        // Check past date
         if (date.getTime() < new Date().getTime()) {
-            JOptionPane.showMessageDialog(null, "It is not allowed to use past date");
+            JOptionPane.showMessageDialog(null, "It isnt allowed to use past date");
             return false;
         }
 
-        /** All inputs are true
-         *
-         */
+        // All true
         return true;
     }
-} //end of class
+}
