@@ -1,9 +1,13 @@
 package src.Customer;
 
 public class CompanyCustomerProfile implements CustomerProfile {
-    // Static ID for unique per each profile
+    /** Static ID for unique per each profile
+     *
+     */
     public static int ID = 100000;
-    // State list in us
+    /**State list in us
+     *
+     */
     public static String[] STATES = new String[] {
             "AL",
             "AK",
@@ -62,7 +66,9 @@ public class CompanyCustomerProfile implements CustomerProfile {
             "WI",
             "WY" };
 
-    // Properties of profile
+    /**Properties of profile
+     *
+     */
     private int customerID;
     private String customerName;
     private String streetAddress;
@@ -73,7 +79,17 @@ public class CompanyCustomerProfile implements CustomerProfile {
     private float lastPaidAmount;
     private String lastOrderDate;
 
-    // Constructor
+    /**Constructor
+     *
+     * @param customerName
+     * @param streetAddress
+     * @param city
+     * @param state
+     * @param phone
+     * @param balance
+     * @param lastPaidAmount
+     * @param lastOrderDate
+     */
     public CompanyCustomerProfile(String customerName, String streetAddress, String city, String state, String phone, float balance, float lastPaidAmount, String lastOrderDate) {
         this.customerID = ++ID;
         this.customerName = customerName;
@@ -86,7 +102,10 @@ public class CompanyCustomerProfile implements CustomerProfile {
         this.lastOrderDate = lastOrderDate;
     }
 
-    // Get methods
+    /** Get methods
+     *
+     * @return
+     */
     public int getCustomerID() {
         return customerID;
     }
@@ -123,7 +142,10 @@ public class CompanyCustomerProfile implements CustomerProfile {
         return lastOrderDate;
     }
 
-    // Set Methods
+    /**Set Methods
+     *
+     * @param customerName
+     */
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
@@ -156,7 +178,10 @@ public class CompanyCustomerProfile implements CustomerProfile {
         this.lastOrderDate = lastOrderDate;
     }
 
-    // Make string for listview
+    /**Make string for listview
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "" + customerName +

@@ -28,7 +28,9 @@ public class CustomerProfileManagerGUI {
     private JButton viewAllButton;
     MainWindowGUI mainWindowGUI;
 
-   // Constructor
+    /**Constructor
+     *
+     */
     public CustomerProfileManagerGUI() {
 
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -39,20 +41,28 @@ public class CustomerProfileManagerGUI {
         updateView();
     }
     private void initUI() {
-        // Add new profile button clicked
+        /**Add new profile button clicked
+         *
+         */
         addNewProfileButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new DetailCustomerProfileGUI().getPanel());
         });
 
-        // Edit Profile button clicked
+        /**Edit Profile button clicked
+         *
+         */
         editProfileButton.addActionListener(e -> {
-            // Check owner user select the item in the list
+            /**Check owner user select the item in the list
+             * 
+             */
             if (list1.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Please select profile to edit");
                 return;
             }
 
-            // Get selected profile
+            /** Get selected profile
+             *
+             */
             CustomerProfile profile = null;
 
             for (CustomerProfile p : database.getAllProfiles()) {
@@ -62,23 +72,33 @@ public class CustomerProfileManagerGUI {
                 }
             }
 
-            // If no profile selected, do nothing
+            /** If no profile selected, do nothing
+             *
+             */
             if (profile == null)
                 return;
 
-            // Show DetailProfile with selected profile data
+            /** Show DetailProfile with selected profile data
+             *
+             */
             mainWindowGUI.setJPanel(new DetailCustomerProfileGUI(profile).getPanel());
         });
 
-        // Delete Profile button clicked
+        /** Delete Profile button clicked
+         *
+         */
         deleteProfileButton.addActionListener(e -> {
-            // Check owner user select the item in the list
+            /**Check owner user select the item in the list
+             *
+             */
             if (list1.getSelectedIndex() == -1) {
                 JOptionPane.showMessageDialog(null, "Please select profile to delete");
                 return;
             }
 
-            // Get selected profile
+            /**Get selected profile
+             *
+             */
             CustomerProfile profile = null;
 
             for (CustomerProfile p : database.getAllProfiles()) {
@@ -88,20 +108,28 @@ public class CustomerProfileManagerGUI {
                 }
             }
 
-            // If no profile selected, do nothing
+            /**If no profile selected, do nothing
+             *
+             */
             if (profile == null)
                 return;
 
-            // Check profile has balance bigger than 0
+            /**Check profile has balance bigger than 0
+             *
+             */
             if (profile.getBalance() > 0) {
                 JOptionPane.showMessageDialog(null, "You can delete the profile has 0 balance.");
                 return;
             }
 
-            // If balance is 0, it ask to confirm for invoices
+            /** If balance is 0, it ask to confirm for invoices
+             *
+             */
             int reply = JOptionPane.showConfirmDialog(null,
                     "All associated invoices will be deleted, is it ok?", "Delete Profile", JOptionPane.YES_NO_OPTION);
-            // Yes clicked, delete profile and refresh view
+            /** Yes clicked, delete profile and refresh view
+             *
+             */
             if (reply == JOptionPane.YES_OPTION) {
                 database.deleteProfile(profile);
                 txtSearchField.setText("");
@@ -109,29 +137,43 @@ public class CustomerProfileManagerGUI {
             }
         });
 
-        // Search button clicked
+        /** Search button clicked
+         *
+         */
         searchButton.addActionListener(e -> {
-            // Get search String
+            /** Get search String
+             *
+             */
             String searchStr = txtSearchField.getText();
 
-            // If search string is empty, show all
+            /** If search string is empty, show all
+             *
+             */
             if (searchStr.isEmpty()) {
                 updateView();
                 return;
             }
 
-            // Get item list with search string
+            /** Get item list with search string
+             *
+             */
             ArrayList<String> result = new ArrayList<>();
             for (CustomerProfile p : database.getAllProfiles()) {
-                // Check customer name contains search string
+                /** Check customer name contains search string
+                 *
+                 */
                 if (p.getCustomerName().contains(searchStr))
                     result.add(p.toString());
-                // Check customer ID contains search string
+                /** Check customer ID contains search string
+                 *
+                 */
                 else if (String.valueOf(p.getCustomerID()).contains(searchStr))
                     result.add(p.toString());
             }
 
-            // If no search result, show alert
+            /** If no search result, show alert
+             *
+             */
             if (result.size() == 0) {
                 JOptionPane.showMessageDialog(null, "Cannot find the profile");
                 list1.setListData(new String[]{});
@@ -141,28 +183,40 @@ public class CustomerProfileManagerGUI {
             }
         });
 
-        // View all button clicked
+        /**View all button clicked
+         *
+         */
         viewAllButton.addActionListener(e -> {
-            // Remove search string and update
+            /** Remove search string and update
+             *
+             */
             txtSearchField.setText("");
             updateView();
         });
 
-        // Exit button clicked, close program
+        /**Exit button clicked, close program
+         *
+         */
         exitButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
         });
     }
 
-    // Update list from saved profiles
+    /** Update list from saved profiles
+     *
+     */
     public void updateView() {
-        // If profiles are empty, show empty list
+        /** If profiles are empty, show empty list
+         *
+         */
         CustomerProfile[] profiles = database.getAllProfiles();
         if (profiles.length == 0) {
             String[] result = new String[]{};
             list1.setListData(result);
         } else {
-            // Get string of profile (Name, phone, balance, lastpaidamount) from profile list
+            /** Get string of profile (Name, phone, balance, lastpaidamount) from profile list
+             * 
+             */
             String[] result = new String[profiles.length];
             for (int i = 0; i < result.length; i++)
                 result[i] = profiles[i].toString();
