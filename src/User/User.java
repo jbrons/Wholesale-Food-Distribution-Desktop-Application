@@ -1,4 +1,4 @@
-package src;
+package src.User;
 
 public class User implements IUser{
     private String userID;

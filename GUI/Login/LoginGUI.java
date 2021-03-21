@@ -6,10 +6,9 @@ import java.util.Arrays;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.PasswordChange.PasswordChangeGUI;
-import com.sun.tools.javac.Main;
-import src.EnumUserRoles;
-import src.User;
-import src.UserDatabase;
+import src.User.EnumUserRoles;
+import src.User.User;
+import src.User.UserDatabase;
 
 public class LoginGUI {
     private JPanel rootPanel;

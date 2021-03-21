@@ -3,8 +3,8 @@ package GUI.UserManagement;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
-import src.User;
-import src.UserDatabase;
+import src.User.User;
+import src.User.UserDatabase;
 
 import javax.swing.*;
 

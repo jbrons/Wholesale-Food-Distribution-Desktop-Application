@@ -1,9 +1,9 @@
 package GUI.UserManagement;
 
 import GUI.MainWindow.MainWindowGUI;
-import src.EnumUserRoles;
-import src.User;
-import src.UserDatabase;
+import src.User.EnumUserRoles;
+import src.User.User;
+import src.User.UserDatabase;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;

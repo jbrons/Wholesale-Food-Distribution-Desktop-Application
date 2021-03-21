@@ -1,4 +1,4 @@
-package src;
+package src.User;
 
 public enum EnumUserRoles {
     OWNER (3),

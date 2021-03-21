@@ -1,7 +1,7 @@
 package GUI.UserManagement;
 
-import src.User;
-import src.UserDatabase;
+import src.User.User;
+import src.User.UserDatabase;
 
 import javax.swing.*;
 

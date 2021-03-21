@@ -1,6 +1,6 @@
 package GUI.UserManagement;
 
-import src.User;
+import src.User.User;
 
 public interface IUserInformationLogic {
     boolean formValidated(User newUser);

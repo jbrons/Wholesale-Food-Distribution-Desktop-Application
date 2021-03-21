@@ -3,9 +3,10 @@ package GUI.MainMenu;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.UserManagement.UserManagementGUI;
+import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
 
-import src.EnumUserRoles;
-import src.UserDatabase;
+import src.User.EnumUserRoles;
+import src.User.UserDatabase;
 import javax.swing.*;
 
 public class MainMenuGUI {
@@ -28,8 +29,12 @@ public class MainMenuGUI {
         btnManageUser.addActionListener(e->
                 mainWindowGUI.setJPanel(new UserManagementGUI().getPanel()));
 
-        button2.addActionListener(e ->
-                System.out.println(database.getCurrentUser().toString()));
+        button2.addActionListener(e -> {
+            if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER)
+                mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel());
+            else
+                JOptionPane.showMessageDialog(null, "You are not OWNER user.");
+        });
 
         btnLogout.addActionListener(e ->
                 mainWindowGUI.setJPanel(new LoginGUI().getPanel()));

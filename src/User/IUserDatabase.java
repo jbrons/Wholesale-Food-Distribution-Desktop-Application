@@ -1,4 +1,4 @@
-package src;
+package src.User;
 
 public interface IUserDatabase {
     boolean addUser(User user);

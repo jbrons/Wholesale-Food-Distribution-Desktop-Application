@@ -8,6 +8,7 @@ package src;
  */
 
 import GUI.MainWindow.MainWindowGUI;
+import src.User.UserDatabase;
 
 public class Application {
 

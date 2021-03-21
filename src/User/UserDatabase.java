@@ -1,4 +1,4 @@
-package src;
+package src.User;
 
 import java.util.HashMap;
 
