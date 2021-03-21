@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="10" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="5" bottom="5" right="5"/>
     <constraints>
-      <xy x="20" y="20" width="444" height="389"/>
+      <xy x="20" y="20" width="532" height="389"/>
     </constraints>
     <properties>
       <background color="-8604565"/>
@@ -168,26 +168,6 @@
           <text value="* required"/>
         </properties>
       </component>
-      <component id="c305d" class="javax.swing.JButton" binding="btnCreate">
-        <constraints>
-          <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-5515553"/>
-          <foreground color="-16777216"/>
-          <text value="Create"/>
-        </properties>
-      </component>
-      <component id="13ccd" class="javax.swing.JButton" binding="btnCancel">
-        <constraints>
-          <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-5515553"/>
-          <foreground color="-16777216"/>
-          <text value="Cancel"/>
-        </properties>
-      </component>
       <component id="1b9be" class="javax.swing.JTextField" binding="txtFullName">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
@@ -227,6 +207,22 @@
         </constraints>
         <properties>
           <text value="Log Out"/>
+        </properties>
+      </component>
+      <component id="6f26a" class="javax.swing.JButton" binding="btnCancel">
+        <constraints>
+          <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Cancel"/>
+        </properties>
+      </component>
+      <component id="18e8a" class="javax.swing.JButton" binding="btnCreate">
+        <constraints>
+          <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Create"/>
         </properties>
       </component>
     </children>

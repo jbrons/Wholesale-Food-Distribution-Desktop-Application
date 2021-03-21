@@ -30,6 +30,12 @@ public class MainMenuGUI {
             userManagementButton.setVisible(false);
         }
 
+        if (database.getCurrentUser().getRole() != EnumUserRoles.PURCHASER
+                && database.getCurrentUser().getRole() != EnumUserRoles.OWNER) {
+            vendorManagementButton.setEnabled(false);
+            vendorManagementButton.setVisible(false);
+        }
+
         userManagementButton.addActionListener(e->
                 mainWindowGUI.setJPanel(new UserManagementGUI().getPanel()));
 
