@@ -1,8 +1,16 @@
+/*
+ * Author: Zachary Nicolai
+ * Class Name: Items
+ * Class Description: This class class is used for creating a new Item object.
+ * it contains all the item profile details as variables as well as get and set
+ * methods to access them. It also contains a toString() override which is
+ * called upon to display the item profile details.
+*/
 package src.Item;
 
 import java.text.DecimalFormat;
 
-//testing
+
 public class Items {
     //variables
     private int id;
@@ -94,11 +102,12 @@ public class Items {
         return quantity;
     }
 
+    //toString() override which displays Item profile details
     @Override
     public String toString(){
         DecimalFormat df = new DecimalFormat("#.00");
-        return "Item ID: " + this.getId() + ", Item Name: " + this.getName() + ", Quantity on Hand: " + this.getQuantity() +
-                ", Selling Price: $" + df.format(this.getSellingPrice()) + ", Purchase Price $" + df.format(this.getPurchasePrice()) +
-                ", Expiring Date " + this.getExpirationDate();
+        return "Item ID: " + this.getId() + ", Item Name: " + this.getName() + ", Quantity on Hand: " +
+                this.getQuantity() + ", Selling Price: $" + df.format(this.getSellingPrice()) + ", Purchase Price $"
+                + df.format(this.getPurchasePrice()) + ", Expiring Date " + this.getExpirationDate();
     }
 }
