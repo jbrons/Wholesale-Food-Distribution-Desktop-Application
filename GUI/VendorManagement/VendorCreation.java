@@ -22,7 +22,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class VendorCreation<formatter> implements ActionListener, KeyListener {
-    //private JFrame mainFrame;
     private JPanel rootPanel;
 
     protected JLabel lblFullName;
@@ -64,11 +63,17 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
 
     public VendorCreation() {
         mainWindowGUI = MainWindowGUI.getInstance();
+        addListeners();
+        setUpGUI();
+    }
+    public VendorCreation(Vendor vendor) {
+        this();
+        initializeInputs(vendor);
+    }
 
-        //mainFrame = new JFrame("Application.Vendor Application.Profile Creation");
+    private void setUpGUI() {
         String phoneFormat = "###-###-####";
         String dateFormat = "##/##/####";
-        addListeners();
 
         txtPhoneNum.setFormatterFactory(new DefaultFormatterFactory(formatter(phoneFormat, ' ')));
         txtBalance.setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
@@ -76,11 +81,7 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         //txtLastOrderDate.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(new SimpleDateFormat("mm/dd/yyyy"))));
         txtLastOrderDate.setFormatterFactory(new DefaultFormatterFactory(formatter(dateFormat, '-')));
         txtSeasonalDiscDate.setFormatterFactory(new DefaultFormatterFactory(formatter(dateFormat, '-')));
-        cboState.setModel(new DefaultComboBoxModel(StateAbbrs.values()));  /// MOOOVEEEEE SOMEPLACE ELSE
-    }
-
-    public VendorCreation(Vendor vendor) {
-        initializeInputs(vendor);
+        cboState.setModel(new DefaultComboBoxModel(StateAbbrs.values()));
     }
 
     private void initializeInputs(Vendor vendor) {
@@ -93,6 +94,7 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         txtLastPaidAmount.setText(String.valueOf(vendor.getLastPaidAmount()));
         txtLastOrderDate.setText(String.valueOf(vendor.getLastOrderDate()));
         txtSeasonalDiscDate.setText(String.valueOf(vendor.getSeasonalDiscDate()));
+        txtFullName.requestFocusInWindow();
     }
 
     public JPanel getPanel() {

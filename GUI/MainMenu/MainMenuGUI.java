@@ -30,8 +30,7 @@ public class MainMenuGUI {
             userManagementButton.setVisible(false);
         }
 
-        if (database.getCurrentUser().getRole() != EnumUserRoles.PURCHASER
-                && database.getCurrentUser().getRole() != EnumUserRoles.OWNER) {
+        if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
             vendorManagementButton.setEnabled(false);
             vendorManagementButton.setVisible(false);
         }

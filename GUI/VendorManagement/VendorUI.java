@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
+import src.User.EnumUserRoles;
+import src.User.UserDatabase;
 import src.Vendor.StateAbbrs;
 import src.Vendor.Vendor;
 import src.Vendor.VendorList;
@@ -12,6 +14,7 @@ import GUI.MainWindow.MainWindowGUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
 
 /**
  * This class implements a user interface for Purchaser or Owner users for the CSC 4110 Project
@@ -20,7 +23,6 @@ import java.awt.event.*;
  * @date 3/07/2021
  */
 public class VendorUI implements ActionListener {
-    private JFrame mainFrame;
     private JPanel rootPanel;
 
     private JLabel lblSearch;
@@ -37,25 +39,26 @@ public class VendorUI implements ActionListener {
     private JList<Vendor> lstDisplay;
     private JButton btnLogOut;
     private JButton btnMainMenu;
+    private JComboBox<Integer> comboBox1;
 
-    private VendorCreation vendorCreation = new VendorCreation();
     VendorList vendorList = VendorList.getInstance();
     DisplayList displayList = DisplayList.getInstance();
+    UserDatabase database = UserDatabase.getInstance();
 
     MainWindowGUI mainWindowGUI;
 
     public VendorUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
-
         addListeners();
         lstDisplay.setModel(displayList.getDisplayListModel());
         lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+        txtSearchBar.requestFocusInWindow();
+        comboBox1.setModel(new DefaultComboBoxModel(vendorList.getIdList()));
 
-        // ask Jacob
-        /*if ( EnumUserRoles.PURCHASER) {
+        if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
            btnViewProfiles.setEnabled(false);
            btnViewProfiles.setVisible(false);
-        }*/
+        }
     }
 
     /**
@@ -86,13 +89,12 @@ public class VendorUI implements ActionListener {
 
         } else if (userAction == btnCreate) {
             mainWindowGUI.setJPanel(new VendorCreation().getPanel());
-
         } else if (userAction == btnUpdate) {
             vendor = lstDisplay.getSelectedValue();
            if (vendor == null) {
-               displayError("Please select a Vendor to update");
+               displayError("Please search for/select a Vendor to update");
            } else {
-               // call vendor update
+               mainWindowGUI.setJPanel(new VendorCreation(vendor).getPanel());
            }
         } else if (userAction == btnDelete) {
             vendor = lstDisplay.getSelectedValue();
@@ -100,6 +102,7 @@ public class VendorUI implements ActionListener {
                 displayError("Please select a Vendor to delete");
             } else {
                 displayList.removeVendor(vendor);
+                vendorList.deleteVendor(vendor);
             }
         } else if (userAction == btnViewProfiles) {
 
