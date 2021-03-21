@@ -1,4 +1,7 @@
 package src.Item;
+
+import java.text.DecimalFormat;
+
 //testing
 public class Items {
     //variables
@@ -93,8 +96,9 @@ public class Items {
 
     @Override
     public String toString(){
+        DecimalFormat df = new DecimalFormat("#.00");
         return "Item ID: " + this.getId() + ", Item Name: " + this.getName() + ", Quantity on Hand: " + this.getQuantity() +
-                ", Selling Price: $" + this.getSellingPrice() + ", Purchase Price $" + this.getPurchasePrice() +
+                ", Selling Price: $" + df.format(this.getSellingPrice()) + ", Purchase Price $" + df.format(this.getPurchasePrice()) +
                 ", Expiring Date " + this.getExpirationDate();
     }
 }

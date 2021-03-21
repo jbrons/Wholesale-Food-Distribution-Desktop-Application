@@ -79,15 +79,16 @@ public class AddItemsGUI implements FocusListener {
             public void actionPerformed(ActionEvent evt) {
                 ItemsValidation val = new ItemsValidation();
                 try {
-                    if(val.validation(id,iNameField.getText(),(int)vendorCombo.getSelectedItem(),Double.parseDouble(sPriceField.getText()),expirationFormattedText.getText(),
+                    if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceField.getText()),expirationFormattedText.getText(),
                             Double.parseDouble(pPriceField.getText()),Integer.parseInt(quantityField.getText()))){
-                        new ItemsArray(id, (int)vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceField.getText()), (String) categoryCombo.getSelectedItem(),
+                        new ItemsArray(id, (int) vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceField.getText()), (String) categoryCombo.getSelectedItem(),
                                 expirationFormattedText.getText(), Double.parseDouble(pPriceField.getText()), (String) unitCombo.getSelectedItem(), Integer.parseInt(quantityField.getText()));
                     }
                 }
                 catch(NumberFormatException n){
                     JOptionPane.showMessageDialog(null, "Make sure you have entered correct numerical values");
                 }
+
                 closeItemEdit();
 
             }});

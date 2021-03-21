@@ -9,6 +9,7 @@ import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import src.User.UserDatabase;
 import src.User.EnumUserRoles;
@@ -72,14 +73,15 @@ public class EditItemsGUI implements FocusListener {
         pPriceField.addFocusListener(this);
         quantityField.addFocusListener(this);
 
+        DecimalFormat df = new DecimalFormat("#.00");
         itemsListCopy = ItemsArray.getItemsList();
         iIDField.setText(String.valueOf(itemsListCopy.get(this.index).getId()));
         iNameField.setText(itemsListCopy.get(this.index).getName());
         vendorCombo.setSelectedItem(itemsListCopy.get(this.index).getVendorId());
-        sPriceField.setText(String.valueOf(itemsListCopy.get(this.index).getSellingPrice()));
+        sPriceField.setText(String.valueOf(df.format(itemsListCopy.get(this.index).getSellingPrice())));
         categoryCombo.setSelectedItem(itemsListCopy.get(this.index).getCategory());
         expFormattedText.setText(itemsListCopy.get(this.index).getExpirationDate());
-        pPriceField.setText(String.valueOf(itemsListCopy.get(this.index).getPurchasePrice()));
+        pPriceField.setText(String.valueOf(df.format(itemsListCopy.get(this.index).getPurchasePrice())));
         unitCombo.setSelectedItem(itemsListCopy.get(this.index).getUnit());
         quantityField.setText(String.valueOf(itemsListCopy.get(this.index).getQuantity()));
         leaveButton.addActionListener(new ActionListener() {
