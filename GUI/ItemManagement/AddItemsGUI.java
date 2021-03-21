@@ -38,7 +38,7 @@ public class AddItemsGUI implements FocusListener {
 
     NumberFormat nf = new DecimalFormat();
 
-    private static int id = 99999;
+    private static int id = 9999;
 
     private String[] cat = new String[]{"Vegetables", "Fruits", "Nuts", "Dairy", "Meat", "Snacks", "Soda", "Juice", "Bakery Products"};
     private String[] unit = new String[]{"Pound","Gallon","Dozen"};
@@ -87,6 +87,9 @@ public class AddItemsGUI implements FocusListener {
                 }
                 catch(NumberFormatException n){
                     JOptionPane.showMessageDialog(null, "Make sure you have entered correct numerical values");
+                }
+                catch(NullPointerException N){
+                    JOptionPane.showMessageDialog(null, "Please make sure you have chosen a Vendor ID");
                 }
 
                 closeItemEdit();

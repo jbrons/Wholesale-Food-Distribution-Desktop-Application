@@ -113,7 +113,11 @@ public class EditItemsGUI implements FocusListener {
                 }
                 catch(NumberFormatException n){
                     JOptionPane.showMessageDialog(null, "Make sure you have entered correct numerical values");}
+                catch(NullPointerException N){
+                    JOptionPane.showMessageDialog(null, "Please make sure you have chosen a Vendor ID");
+                }
             }
+
 
 
 

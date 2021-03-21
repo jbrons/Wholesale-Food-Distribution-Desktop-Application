@@ -65,6 +65,7 @@ public boolean nameDuplicate(int id,String name,int vID){
                 return true;
             }
         }
+
     return false;
 }
 public boolean checkDate(String d){
@@ -94,5 +95,9 @@ public boolean lessThanTwenty(String n){
             return true;
         }
         return false;
+}
+public boolean emptyVid(int v){
+
+        return true;
 }
 }

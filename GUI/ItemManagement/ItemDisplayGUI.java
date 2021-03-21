@@ -47,7 +47,8 @@ public class ItemDisplayGUI {
             }});
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
+                if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER
+                || dataBase.getCurrentUser().getRole() == EnumUserRoles.INVENTORY_MANAGER) {
                     ItemsArray.remove(index);
                     closeItemEdit();
                 }
