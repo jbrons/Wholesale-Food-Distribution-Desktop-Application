@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.VendorCreation">
+  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="10" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="5" bottom="5" right="5"/>
+    <constraints>
+      <xy x="20" y="20" width="444" height="389"/>
+    </constraints>
+    <properties>
+      <background color="-8604565"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="dcc1c" class="javax.swing.JLabel" binding="lblFullName">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="Full Name: *"/>
+        </properties>
+      </component>
+      <component id="80189" class="javax.swing.JLabel" binding="lblStreetAddress">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="Street Address: *"/>
+        </properties>
+      </component>
+      <component id="2daf" class="javax.swing.JLabel" binding="lblCity">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="City: *"/>
+        </properties>
+      </component>
+      <component id="1b09c" class="javax.swing.JLabel" binding="lblState">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="State: *"/>
+        </properties>
+      </component>
+      <component id="7afc0" class="javax.swing.JLabel" binding="lblPhoneNum">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="Phone Number: *"/>
+        </properties>
+      </component>
+      <component id="7e770" class="javax.swing.JLabel" binding="lblSeasonalDiscDate">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="Seasonal Discounts Start Date: *"/>
+        </properties>
+      </component>
+      <component id="a6eab" class="javax.swing.JLabel" binding="lblBalance">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="Balance:"/>
+        </properties>
+      </component>
+      <component id="3778b" class="javax.swing.JLabel" binding="lblLastPaidAmount">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="Last Paid Amount:"/>
+        </properties>
+      </component>
+      <component id="379bb" class="javax.swing.JLabel" binding="lblLastOrderDate">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-16777216"/>
+          <text value="Last Order Date: *"/>
+        </properties>
+      </component>
+      <component id="8e0f2" class="javax.swing.JTextField" binding="txtStreetAddress">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+        </properties>
+      </component>
+      <component id="a66e3" class="javax.swing.JTextField" binding="txtCity">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+        </properties>
+      </component>
+      <component id="c3d6" class="javax.swing.JFormattedTextField" binding="txtPhoneNum">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="951a7" class="javax.swing.JFormattedTextField" binding="txtSeasonalDiscDate">
+        <constraints>
+          <grid row="8" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="7537f" class="javax.swing.JFormattedTextField" binding="txtLastOrderDate">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="b0afd" class="javax.swing.JComboBox" binding="cboState">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+        </properties>
+      </component>
+      <component id="6d11e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="2"/>
+          <foreground color="-16777216"/>
+          <text value="* required"/>
+        </properties>
+      </component>
+      <component id="c305d" class="javax.swing.JButton" binding="btnCreate">
+        <constraints>
+          <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5515553"/>
+          <foreground color="-16777216"/>
+          <text value="Create"/>
+        </properties>
+      </component>
+      <component id="13ccd" class="javax.swing.JButton" binding="btnCancel">
+        <constraints>
+          <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5515553"/>
+          <foreground color="-16777216"/>
+          <text value="Cancel"/>
+        </properties>
+      </component>
+      <component id="1b9be" class="javax.swing.JTextField" binding="txtFullName">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+        </properties>
+      </component>
+      <component id="2d205" class="javax.swing.JFormattedTextField" binding="txtLastPaidAmount">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1512478"/>
+          <foreground color="-16777216"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="9afa7" class="javax.swing.JFormattedTextField" binding="txtBalance">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="53618" class="javax.swing.JButton" binding="btnLogOut">
+        <constraints>
+          <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Log Out"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
