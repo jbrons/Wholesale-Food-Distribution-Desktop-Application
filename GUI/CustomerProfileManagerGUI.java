@@ -103,7 +103,7 @@ public class CustomerProfileManagerGUI {
             /** Check profile has balance bigger than 0
             */
             if (profile.getBalance() > 0) {
-                JOptionPane.showMessageDialog(null, "You can delete the profile has 0 balance.");
+                JOptionPane.showMessageDialog(null, "You can't delete the profile has 0 balance.");
                 return;
             }
 
