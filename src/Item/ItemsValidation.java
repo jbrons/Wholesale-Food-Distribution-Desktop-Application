@@ -85,7 +85,7 @@ public class ItemsValidation {
         SimpleDateFormat smf = new SimpleDateFormat(f);
         try {
             LocalDate dt = LocalDate.parse(d, format);
-            today = smf.parse("03/20/2021");
+            today = smf.parse("03/24/2021");
             givenDate = smf.parse(d);
 
             if(givenDate.after(today) || givenDate.equals(today)){
