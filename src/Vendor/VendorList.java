@@ -50,7 +50,7 @@ public class VendorList {
     }
 
     public Vector<Integer> getIdList() {
-        Vector<Integer> idList = null;
+        Vector<Integer> idList = new Vector<Integer>();
         for (Vendor vendor : vendorList) {
             idList.add(vendor.getId());
         }
