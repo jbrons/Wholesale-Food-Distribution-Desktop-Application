@@ -1,5 +1,5 @@
 package GUI.ItemManagement;
-
+import GUI.Login.LoginGUI;
 import src.Item.ItemsArray;
 import GUI.MainWindow.MainWindowGUI;
 
@@ -19,6 +19,7 @@ public class ItemDisplayGUI {
     private JPanel buttonPanel;
     private JPanel rootPanel;
     private JLabel contentLabel;
+    private JButton logoutButton;
     private int index;
 
     private MainWindowGUI mainWindowGUI;
@@ -59,6 +60,10 @@ public class ItemDisplayGUI {
             public void actionPerformed(ActionEvent evt) {
                 closeItemEdit();
             }});
+        logoutButton.addActionListener(e ->
+        {
+            mainWindowGUI.setJPanel(new LoginGUI().getPanel());
+        });
     }
 
     public int getIndex(){

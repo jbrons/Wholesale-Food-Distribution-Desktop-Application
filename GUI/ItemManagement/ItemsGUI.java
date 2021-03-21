@@ -7,7 +7,7 @@ import src.Item.Items;
 import src.Item.ItemsArray;
 import src.User.UserDatabase;
 import src.User.EnumUserRoles;
-
+import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,7 +17,7 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 
-import GUI.MainWindow.MainWindowGUI;
+
 
 public class ItemsGUI  implements FocusListener{
 

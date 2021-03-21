@@ -1,5 +1,5 @@
 package GUI.ItemManagement;
-
+import GUI.Login.LoginGUI;
 import src.Item.Items;
 import src.Item.ItemsArray;
 import src.Item.ItemsValidation;
@@ -12,8 +12,11 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import src.User.UserDatabase;
 import src.User.EnumUserRoles;
+import src.Vendor.VendorList;
+import src.Vendor.Vendor;
 
 import GUI.MainWindow.MainWindowGUI;
+
 
 public class EditItemsGUI implements FocusListener {
     private JFrame frame;
@@ -30,6 +33,8 @@ public class EditItemsGUI implements FocusListener {
     private JComboBox categoryCombo;
     private JComboBox unitCombo;
     private JFormattedTextField expFormattedText;
+    private JComboBox vendorCombo;
+    private JButton logoutButton;
     private int index;
     private ArrayList<Items> itemsListCopy;
     private JTextField focused = iNameField;
@@ -38,6 +43,7 @@ public class EditItemsGUI implements FocusListener {
     private String[] unit = new String[]{"Pound","Gallon","Dozen"};
     UserDatabase dataBase = UserDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
+    VendorList vendorList = VendorList.getInstance();
 
     public EditItemsGUI(int i) {
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -54,11 +60,13 @@ public class EditItemsGUI implements FocusListener {
         DefaultComboBoxModel<String> unitModel = new DefaultComboBoxModel<>(unit);
         unitCombo.setModel(unitModel);
 
+        vendorCombo.setModel(new DefaultComboBoxModel(vendorList.getIdList()));
+
 
         expFormattedText.setFormatterFactory(new DefaultFormatterFactory(format("##/##/####")));
         iIDField.addFocusListener(this);
         iNameField.addFocusListener(this);
-        vIDField.addFocusListener(this);
+
         sPriceField.addFocusListener(this);
         expFormattedText.addFocusListener(this);
         pPriceField.addFocusListener(this);
@@ -67,7 +75,7 @@ public class EditItemsGUI implements FocusListener {
         itemsListCopy = ItemsArray.getItemsList();
         iIDField.setText(String.valueOf(itemsListCopy.get(this.index).getId()));
         iNameField.setText(itemsListCopy.get(this.index).getName());
-        vIDField.setText(String.valueOf(itemsListCopy.get(this.index).getVendorId()));
+        vendorCombo.setSelectedItem(itemsListCopy.get(this.index).getVendorId());
         sPriceField.setText(String.valueOf(itemsListCopy.get(this.index).getSellingPrice()));
         categoryCombo.setSelectedItem(itemsListCopy.get(this.index).getCategory());
         expFormattedText.setText(itemsListCopy.get(this.index).getExpirationDate());
@@ -86,11 +94,11 @@ public class EditItemsGUI implements FocusListener {
                 //try block ensures the user doesn't enter an invalid number for numerical inputs
                 try {
                     //validation method ensures all other inputs arent invalid
-                    if(val.validation(Integer.parseInt(iIDField.getText()),iNameField.getText(),Integer.parseInt(vIDField.getText()),Double.parseDouble(sPriceField.getText()),
+                    if(val.validation(Integer.parseInt(iIDField.getText()),iNameField.getText(),(int)vendorCombo.getSelectedItem(),Double.parseDouble(sPriceField.getText()),
                             expFormattedText.getText(),Double.parseDouble(pPriceField.getText()),Integer.parseInt(quantityField.getText()))) {
                         ItemsArray.setIndexID(getIndex(), Integer.parseInt(iIDField.getText()));
                         ItemsArray.setIndexName(getIndex(), iNameField.getText());
-                        ItemsArray.setIndexVId(getIndex(), Integer.parseInt(vIDField.getText()));
+                        ItemsArray.setIndexVId(getIndex(), (int)vendorCombo.getSelectedItem());
                         ItemsArray.setIndexPPrice(getIndex(), Double.parseDouble(pPriceField.getText()));
                         ItemsArray.setIndexCategory(getIndex(), (String) categoryCombo.getSelectedItem());
                         ItemsArray.setIndexExpiration(getIndex(), expFormattedText.getText());
@@ -107,6 +115,10 @@ public class EditItemsGUI implements FocusListener {
 
 
 
+        });
+        logoutButton.addActionListener(e ->
+        {
+            mainWindowGUI.setJPanel(new LoginGUI().getPanel());
         });
     }
 
