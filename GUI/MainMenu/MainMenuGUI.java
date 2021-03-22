@@ -11,6 +11,13 @@ import src.User.EnumUserRoles;
 import src.User.UserDatabase;
 import javax.swing.*;
 
+/**
+ * Handles the GUI form MainMenuGUI.form
+ *
+ * The Main Menu allows the user to traverse the software.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class MainMenuGUI {
     private JPanel rootPanel;
     private JButton userManagementButton;

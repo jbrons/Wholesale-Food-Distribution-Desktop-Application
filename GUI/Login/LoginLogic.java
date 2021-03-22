@@ -5,6 +5,12 @@ import src.User.UserDatabase;
 
 import java.util.Arrays;
 
+/**
+ * Handles all the logic needed for
+ * when a user logs in.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class LoginLogic implements ILoginLogic{
 
     UserDatabase database;

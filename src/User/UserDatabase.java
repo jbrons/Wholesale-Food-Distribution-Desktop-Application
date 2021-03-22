@@ -2,6 +2,13 @@ package src.User;
 
 import java.util.HashMap;
 
+/**
+ * UserDatabase handles all of the storage and retrival of ALL users in the system.
+ * This is a singleton class and provides methods to retrieve information from and set
+ * information in the database.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class UserDatabase implements IUserDatabase{
 
     private static UserDatabase databaseInstance = null;

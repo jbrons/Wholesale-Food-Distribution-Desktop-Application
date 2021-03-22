@@ -5,6 +5,14 @@ import src.User.UserDatabase;
 
 import javax.swing.*;
 
+/**
+ * UserInformationLogic.java handles all of the functionality for the UserManagement page.
+ * This mainly validates the forms being submitted to ensure that the information entered
+ * by the user is in the correct format and if so will update the database to reflect
+ * the new information (whether creating a new user or updating an existing one).
+ *
+ * @author Jacob Price | ga4116
+ */
 public class UserInformationLogic implements IUserInformationLogic {
 
     UserDatabase database;

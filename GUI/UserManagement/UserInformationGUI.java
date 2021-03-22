@@ -10,6 +10,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
+/**
+ * UserInformationGui.java handles both some of the functionality for the
+ * UserInformationGui.form and some very basic logic that cannot be handled
+ * int UserInformationLogic.java.
+ *
+ * This handles when a user is either creating a new User or updating a current
+ * User.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class UserInformationGUI {
     private JFrame rootFrame;
     private JPanel rootPanel;

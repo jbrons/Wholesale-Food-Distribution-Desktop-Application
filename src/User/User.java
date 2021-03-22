@@ -1,5 +1,12 @@
 package src.User;
 
+/**
+ * This class handles all the data for the various users in the system.
+ * User makes use of EnumUserRoles.java for setting roles and dealing with
+ * any checks related to the roles.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class User implements IUser{
     private String userID;
     private String firstName;

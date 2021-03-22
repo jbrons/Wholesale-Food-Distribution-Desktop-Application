@@ -10,6 +10,14 @@ import src.User.EnumUserRoles;
 import src.User.User;
 import src.User.UserDatabase;
 
+/**
+ * LoginGUI handles all the GUI for the LoginGUI.form.
+ *
+ * This will allow a registered user to login to the system
+ * and prevent anyone not registered from accessing the system.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class LoginGUI {
     private JPanel rootPanel;
     private JLabel userIDLabel;

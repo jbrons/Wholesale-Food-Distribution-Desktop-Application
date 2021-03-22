@@ -8,6 +8,17 @@ import src.User.UserDatabase;
 import javax.swing.*;
 import java.util.Arrays;
 
+
+/**
+ * This handles the GUI for PasswordChangeGUI.form
+ * and also handles very basic logic to change a users password.
+ *
+ * This class is for when a new user who is not an owner or administrator logs
+ * in for the very first time. They are told to create a new password (and confirm it)
+ * and will throw error messages if the constraints are not satisfied.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class PasswordChangeGUI {
     private JPanel rootPanel;
     private JPasswordField passwordField1;

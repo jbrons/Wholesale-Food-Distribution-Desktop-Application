@@ -4,6 +4,14 @@ import GUI.Login.LoginGUI;
 
 import javax.swing.*;
 
+/**
+ * Handles the Main Window for this entire software. Allows for setting
+ * this windows content pane with other GUI panels such that new frames
+ * do not need to be created everytime the user is redirected to a different
+ * page.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class MainWindowGUI {
 
     private static MainWindowGUI mainWindowInstance = null;
