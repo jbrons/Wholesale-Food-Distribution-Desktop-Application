@@ -1,11 +1,13 @@
 package src.Vendor;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Profile {
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private int id;
     private String name = "";
     private String streetAddress;
@@ -15,7 +17,7 @@ public abstract class Profile {
     private double balance;
     private double lastPaidAmount;
     private LocalDate lastOrderDate;
-    private NumberFormat numberFormat = NumberFormat.getInstance();
+    private static NumberFormat numberFormat = new DecimalFormat("#,##0.00");
 
     int phoneNumLength = 12;
     int maxChars = 20;

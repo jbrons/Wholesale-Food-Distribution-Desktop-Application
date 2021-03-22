@@ -2,14 +2,12 @@ package src.Vendor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import src.Vendor.DateValidator;
+import java.text.DecimalFormat;
 
 /**
  *
  */
 public class Vendor extends Profile {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     LocalDate seasonalDiscDate;
     static int id = 0;
 

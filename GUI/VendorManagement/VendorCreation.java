@@ -74,6 +74,7 @@ public class VendorCreation implements ActionListener, KeyListener {
     }
     public VendorCreation(Vendor vendor) {
         this();
+        this.vendor = vendor;
         initializeInputs(vendor);
     }
 
@@ -111,7 +112,7 @@ public class VendorCreation implements ActionListener, KeyListener {
             displayError("Full Name" + message);
             return false;
         } else {
-            if (vendorList.searchVendorList(txtFullName.getText()) > -1) {
+            if (vendorList.searchVendorList(txtFullName.getText()) > -1 && vendor == null) {
                 displayError(txtFullName.getText() + " already has a profile");
                 return false;
             }

@@ -37,13 +37,13 @@ public class VendorUI implements ActionListener {
     private JScrollPane scpDisplay;
     private JList<String> lstSearchResults;
     private JPanel pnlListBackground;
-    private boolean viewProfiles = true;
+    private static boolean viewProfiles = true;
 
     VendorList vendorList = VendorList.getInstance();
     ListModel vendorModel = ListModel.getInstance();
     UserDatabase database = UserDatabase.getInstance();
 
-    DefaultListModel<String> searchModel = new DefaultListModel();
+    SearchModel searchModel = SearchModel.getInstance();
 
     MainWindowGUI mainWindowGUI;
 
@@ -57,22 +57,20 @@ public class VendorUI implements ActionListener {
         txtSearchBar.requestFocusInWindow();;
         btnGo.setEnabled(false);
 
-        lstSearchResults.setModel(searchModel);
-        lstSearchResults.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-
-        lstDisplay.setVisible(false);
+        lstSearchResults.setVisible(false);
 
        if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
             btnViewProfiles.setEnabled(false);
             btnViewProfiles.setVisible(false);
-            lstSearchResults.setModel(searchModel);
+            lstSearchResults.setModel(searchModel.getDisplayListModel());
             lstSearchResults.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-            searchModel.addElement(null);
+            lstDisplay.setVisible(false);
+            scpDisplay.setVisible(false);
        } else {
-            lstSearchResults.setVisible(false);
             lstDisplay.setModel(vendorModel.getDisplayListModel());
             lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-            lstSearchResults.setVisible(false);
+           lstDisplay.setVisible(!viewProfiles);
+           scpDisplay.setVisible(!viewProfiles);
        }
     }
 
@@ -91,6 +89,10 @@ public class VendorUI implements ActionListener {
         Object userAction = e.getSource();
 
         if (userAction == btnGo) {
+            if (vendorModel.isEmpty()) {
+                displayError("No Vendors to view");
+                return;
+            }
             int option = confirmSearch();
             String input = txtSearchBar.getText();
             if (option == JOptionPane.CLOSED_OPTION) {
@@ -109,8 +111,9 @@ public class VendorUI implements ActionListener {
                 index = vendorList.getIndex(input);
             }
             if (index > -1) {
+                lstSearchResults.setVisible(true);
                 lstDisplay.setSelectedIndex(index);
-                searchModel.setElementAt(vendorList.getVendorDetails(index), 0);
+                searchModel.updateVendor(vendorList.getVendorDetails(index), 0);
             } else {
                 displayError("No Profile Vendor found.");
             }
@@ -135,8 +138,8 @@ public class VendorUI implements ActionListener {
                 index = lstSearchResults.getSelectedIndex();
             }
 
-            if (index > 0) {
-                displayError("Please search for a Vendor to update");
+            if (index < 0) {
+                displayError("Please select a Vendor to update");
             } else {
                 mainWindowGUI.setJPanel(new VendorCreation(vendorList.getVendor(index)).getPanel());
             }
@@ -148,10 +151,17 @@ public class VendorUI implements ActionListener {
             }
 
             if (index < 0) {
-                displayError("Please select a Vendor to delete");
+                displayMessage("Please select a Vendor to delete");
             } else {
-                vendorModel.removeVendor(index);
-                vendorList.deleteVendor(index);
+                if (deleteWarning() == JOptionPane.YES_OPTION) {
+                    if (vendorList.deleteVendor(index)) {
+                        /* delete purchase orders here */
+                        vendorModel.removeVendor(index);
+                        displayMessage("Vendor removed.");
+                    } else {
+                        displayError("Can only delete when balance = 0.");
+                    }
+                }
             }
         } else if (userAction == btnLogOut) {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
@@ -169,6 +179,7 @@ public class VendorUI implements ActionListener {
         } else {
             btnViewProfiles.setText(viewMessage);
         }
+        scpDisplay.setVisible(viewProfiles);
         lstDisplay.setVisible(viewProfiles);
         viewProfiles = !viewProfiles;
         lstDisplay.clearSelection();
@@ -179,12 +190,22 @@ public class VendorUI implements ActionListener {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    private void displayMessage(String message)
+    {
+        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message);
+    }
+
     private int confirmSearch() {
         Object[] options = {"ID", "Full Name"};
         return JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Search by:", "Search Options",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
+    private int deleteWarning() {
+        Object[] options = {"Confirm", "Cancel"};
+        return JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "All associated purchase orders will be deleted.", "Warning",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
 
     public JPanel getPanel()
     {
