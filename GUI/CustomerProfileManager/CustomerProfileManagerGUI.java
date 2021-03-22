@@ -1,6 +1,11 @@
 package GUI.CustomerProfileManager;
+/**
+ * Author : Joyshree Chowdhury
+ *
+ */
 
 import GUI.DetailCustomerProfile.DetailCustomerProfileGUI;
+import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.MainMenu.MainMenuGUI;
 import src.Customer.CustomerProfile;
@@ -26,6 +31,7 @@ public class CustomerProfileManagerGUI {
     private JTextField txtSearchField;
     private JButton searchButton;
     private JButton viewAllButton;
+    private JButton logoutButton;
     MainWindowGUI mainWindowGUI;
 
     /**Constructor
@@ -193,6 +199,11 @@ public class CustomerProfileManagerGUI {
             txtSearchField.setText("");
             updateView();
         });
+
+        /**
+         * Logout button
+         */
+        logoutButton.addActionListener(e -> mainWindowGUI.setJPanel(new LoginGUI().getPanel()));
 
         /**Exit button clicked, close program
          *

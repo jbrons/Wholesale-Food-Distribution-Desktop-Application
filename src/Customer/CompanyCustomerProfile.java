@@ -1,12 +1,17 @@
 package src.Customer;
+/**
+ * Author : Joyshree Chowdhury
+ *
+ */
+
 
 public class CompanyCustomerProfile implements CustomerProfile {
-    /** Static ID for unique per each profile
-     *
+    /**
+     * Static ID for unique per each profile
      */
     public static int ID = 100000;
-    /**State list in us
-     *
+    /**
+     * State list in us
      */
     public static String[] STATES = new String[] {
             "AL",

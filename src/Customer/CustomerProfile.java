@@ -1,8 +1,12 @@
 package src.Customer;
 
-/** Interface of Profile
- *
+/**
+ * Interface of Profile
+ * Author : Joyshree Chowdhury
+
  */
+
+
 public interface CustomerProfile {
 
     int getCustomerID();

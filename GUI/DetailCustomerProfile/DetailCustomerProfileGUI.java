@@ -1,4 +1,8 @@
 package GUI.DetailCustomerProfile;
+/**
+ * Author : Joyshree Chowdhury
+ *
+ */
 
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
 import GUI.MainWindow.MainWindowGUI;
@@ -164,8 +168,12 @@ public class DetailCustomerProfileGUI {
                 float balance = 0;
                 float amount = 0;
                 try {
-                    balance = Float.parseFloat(txtBalance.getText());
-                    amount = Float.parseFloat(txtLastPaidAmount.getText());
+                    String temp = txtBalance.getText();
+                    temp = temp.replaceAll(",", "");
+                    balance = Float.parseFloat(temp);
+                    temp = txtLastPaidAmount.getText();
+                    temp = temp.replaceAll(",", "");
+                    amount = Float.parseFloat(temp);
                 } catch (Exception ignored) {}
                 database.addProfile(new CompanyCustomerProfile(txtCustomerName.getText(),
                         txtStreetAddress.getText(),
@@ -182,8 +190,12 @@ public class DetailCustomerProfileGUI {
                 float balance = 0;
                 float amount = 0;
                 try {
-                    balance = Float.parseFloat(txtBalance.getText());
-                    amount = Float.parseFloat(txtLastPaidAmount.getText());
+                    String temp = txtBalance.getText();
+                    temp = temp.replaceAll(",", "");
+                    balance = Float.parseFloat(temp);
+                    temp = txtLastPaidAmount.getText();
+                    temp = temp.replaceAll(",", "");
+                    amount = Float.parseFloat(temp);
                 } catch (Exception ignored) {}
                 profile.setCustomerName(txtCustomerName.getText());
                 profile.setStreetAddress(txtStreetAddress.getText());
@@ -194,6 +206,8 @@ public class DetailCustomerProfileGUI {
                 profile.setLastPaidAmount(amount);
                 profile.setLastOrderDate(txtLastOrderDate.getText());
 
+                database.deleteProfile(profile);
+                database.addProfile(profile);
             }
 
             /** Close detail profile
