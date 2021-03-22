@@ -21,7 +21,7 @@ The only thing left to download is the actual source files for this project. Thi
 [CSC4110 Group2 Term Project](https://git.wayne.edu/gt2533/group2)
 
 Selecting the **Clone** option will allow you to download the zip file of the project. After downloading, the zip file
-will need ot be unzipped.
+will need to be unzipped.
 
 After the file has been unzipped, open the project in Intellij (Choose to open a folder and choose the unzipped folder).
 
