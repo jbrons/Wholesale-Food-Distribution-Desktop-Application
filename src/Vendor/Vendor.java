@@ -1,11 +1,15 @@
 package src.Vendor;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import src.Vendor.DateValidator;
 
 /**
  *
  */
 public class Vendor extends Profile {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     LocalDate seasonalDiscDate;
     static int id = 0;
 
@@ -31,6 +35,6 @@ public class Vendor extends Profile {
 
    @Override
     public String toString() {
-        return super.toString() + ", " + seasonalDiscDate;
+        return super.toString() + ", " + seasonalDiscDate.format(super.formatter());
     }
 }

@@ -1,5 +1,7 @@
 package GUI.VendorManagement;
 
+import src.User.EnumUserRoles;
+import src.User.UserDatabase;
 import src.Vendor.StateAbbrs;
 import src.Vendor.VendorList;
 import src.Vendor.Vendor;
@@ -20,8 +22,9 @@ import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Vector;
 
-public class VendorCreation<formatter> implements ActionListener, KeyListener {
+public class VendorCreation implements ActionListener, KeyListener {
     private JPanel rootPanel;
 
     protected JLabel lblFullName;
@@ -48,20 +51,19 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
     private JButton btnCancel;
     private JButton btnLogOut;
 
-    VendorList vendorList = VendorList.getInstance();
-    //DefaultFormatterFactory formatterFactory = new DefaultFormatterFactory(dataFormatter);
-    DisplayList displayList = DisplayList.getInstance();
+    private VendorList vendorList = VendorList.getInstance();
+    private ListModel displayModel = ListModel.getInstance();
     private Vendor vendor = null;
 
-    private boolean update = false;
     private String name, streetAddress, city, phoneNum;
     private StateAbbrs state;
     private double balance, lastPaidAmount;
     private LocalDate lastOrderDate, seasonalDiscDate;
-    NumberFormat numberFormat = NumberFormat.getInstance();
-    NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
-    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-    DateValidator validator = new DateValidator(dateFormat);
+    private NumberFormat numberFormat = NumberFormat.getInstance();
+    private NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
+    private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    private DateValidator validator = new DateValidator(dateFormat);
+    private UserDatabase database = UserDatabase.getInstance();
 
     MainWindowGUI mainWindowGUI;
 
@@ -72,9 +74,7 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
     }
     public VendorCreation(Vendor vendor) {
         this();
-        this.vendor = vendor;
         initializeInputs(vendor);
-        update = true;
     }
 
     private void setUpGUI() {
@@ -102,6 +102,102 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         txtLastOrderDate.setText(vendor.getLastOrderDate().format(dateFormat));
         txtSeasonalDiscDate.setText(vendor.getSeasonalDiscDate().format(dateFormat));
         txtFullName.requestFocusInWindow();
+    }
+
+    private boolean getInputs() {
+        String message = " cannot be blank.";
+
+        if (txtFullName.getText().isEmpty()) {
+            displayError("Full Name" + message);
+            return false;
+        } else {
+            if (vendorList.searchVendorList(txtFullName.getText()) > -1) {
+                displayError(txtFullName.getText() + " already has a profile");
+                return false;
+            }
+            name = txtFullName.getText();
+        }
+
+        if (txtStreetAddress.getText().isEmpty()) {
+            displayError("Street Address" + message);
+            return false;
+        } else {
+            streetAddress = txtStreetAddress.getText();
+        }
+
+        if (txtCity.getText().isEmpty()) {
+            displayError("City" + message);
+            return false;
+        } else {
+            city = txtCity.getText();
+        }
+
+        if (cboState.getSelectedIndex() < 0) {
+            displayError("State" + message);
+            return false;
+        } else {
+            state = (StateAbbrs) cboState.getSelectedItem();
+        }
+
+        if (!txtPhoneNum.isEditValid()) {
+            displayError("Phone number" + message);
+            return false;
+        } else {
+            phoneNum = txtPhoneNum.getText();
+        }
+
+        if (!txtBalance.getText().isEmpty()) {
+            balance = getNumber(txtBalance.getText());
+            if (balance == -1) {
+                return false;
+            }
+        } else {
+            balance = 0 ;
+        }
+        if (!txtLastPaidAmount.getText().isEmpty()) {
+            lastPaidAmount = getNumber(txtLastPaidAmount.getText());
+            if (lastPaidAmount == -1) {
+                return false;
+            }
+        } else {
+            lastPaidAmount = 0;
+        }
+
+        if (!txtLastOrderDate.isEditValid()) {
+            displayError("Last Order Date" + message);
+            return false;
+        } else {
+            lastOrderDate = validator.getDate(txtLastOrderDate.getText());
+            if (lastOrderDate == null) {
+                displayError("Incorrect Last Order Date");
+                return false;
+            }
+        }
+
+        if (!txtSeasonalDiscDate.isEditValid()) {
+            displayError("Seasonal Discount Start Date" + message);
+            return false;
+        } else {
+            seasonalDiscDate = validator.getDate(txtSeasonalDiscDate.getText());
+            if (seasonalDiscDate == null) {
+                displayError("Incorrect Seasonal Discount Start Date");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void updateInputs() {
+        vendor.setName(name);
+        vendor.setStreetAddress(streetAddress);
+        vendor.setCity(city);
+        vendor.setState(state);
+        vendor.setPhoneNum(phoneNum);
+        vendor.setBalance(balance);
+        vendor.setLastPaidAmount(lastPaidAmount);
+        vendor.setLastOrderDate(lastOrderDate);
+        vendor.setSeasonalDiscDate(seasonalDiscDate);
     }
 
     public JPanel getPanel() {
@@ -165,105 +261,22 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         } else if (userAction == txtSeasonalDiscDate) {
         } else if (userAction == btnCreate) {
             if (getInputs()) {
-                if (update) {
-                    vendorList.updateVendor(vendor);  // pass id to new constructor
+                if (vendor != null) {
+                    updateInputs();
+                    vendorList.updateVendor(vendor);
                     System.out.println(vendorList.searchVendorList(vendor.getId()));
-                    displayList.updateVendor(vendor, vendorList.searchVendorList(vendor.getId()));
+                    displayModel.updateVendor(vendor.toString(), vendorList.searchVendorList(vendor.getId()));
                 } else {
-                    vendor = new Vendor(name, streetAddress, city, state, phoneNum, balance,
+                    Vendor vendor = new Vendor(name, streetAddress, city, state, phoneNum, balance,
                             lastPaidAmount, lastOrderDate, seasonalDiscDate);
                     vendorList.addVendor(vendor);
-                    displayList.addVendor(vendor);
+                   displayModel.addVendor(vendor.toString());
                 }
                 mainWindowGUI.setJPanel(new VendorUI().getPanel());
             }
         } else if (userAction == btnCancel) {
             mainWindowGUI.setJPanel(new VendorUI().getPanel());
         }
-    }
-
-    private boolean getInputs() {
-        String message = " cannot be blank.";
-
-        if (txtFullName.getText().isEmpty()) {
-            displayError("Full Name" + message);
-            return false;
-        } else {
-            if (vendorList.searchVendorList(txtFullName.getText()) > -1) {
-                displayError(txtFullName.getText() + " already has a profile");
-                return false;
-            }
-            name = txtFullName.getText();
-        }
-
-        if (txtStreetAddress.getText().isEmpty()) {
-            displayError("Street Address" + message);
-            return false;
-        } else {
-            streetAddress = txtStreetAddress.getText();
-        }
-
-        if (txtCity.getText().isEmpty()) {
-            displayError("City" + message);
-            return false;
-        } else {
-            city = txtCity.getText();
-        }
-
-        if (cboState.getSelectedIndex() == 0) {
-            displayError("State" + message);
-            return false;
-        } else {
-            state = (StateAbbrs) cboState.getSelectedItem();
-        }
-
-        if (!txtPhoneNum.isEditValid()) {
-            displayError("Phone number" + message);
-            return false;
-        } else {
-            phoneNum = txtPhoneNum.getText();
-        }
-
-        if (!txtBalance.getText().isEmpty()) {
-            balance = getNumber(txtBalance.getText());
-            if (balance == -1) {
-                return false;
-            }
-        } else {
-            balance = 0 ;
-        }
-        if (!txtLastPaidAmount.getText().isEmpty()) {
-            lastPaidAmount = getNumber(txtLastPaidAmount.getText());
-            if (lastPaidAmount == -1) {
-                return false;
-            }
-        } else {
-            lastPaidAmount = 0;
-        }
-
-        if (!txtLastOrderDate.isEditValid()) {
-            displayError("Last Order Date" + message);
-            return false;
-        } else {
-            lastOrderDate = validator.getDate(txtLastOrderDate.getText());
-            if (lastOrderDate == null) {
-                displayError("Incorrect Last Order Date");
-                return false;
-            }
-        }
-
-        if (!txtSeasonalDiscDate.isEditValid()) {
-            displayError("Seasonal Discount Start Date" + message);
-            return false;
-        } else {
-            seasonalDiscDate = validator.getDate(txtSeasonalDiscDate.getText());
-            if (seasonalDiscDate == null) {
-                displayError("Seasonal Discount Start Date");
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private double getNumber(String numStr) {
@@ -275,8 +288,7 @@ public class VendorCreation<formatter> implements ActionListener, KeyListener {
         }
     }
 
-    private void displayError(String message)
-    {
+    private void displayError(String message) {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 

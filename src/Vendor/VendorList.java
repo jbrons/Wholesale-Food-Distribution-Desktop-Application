@@ -7,7 +7,7 @@ public class VendorList {
     private Vector<Vendor> vendorList = null;
 
     private VendorList() {
-        vendorList = new Vector <Vendor>();
+        vendorList = new Vector<Vendor>();
     }
 
     public static VendorList getInstance() {
@@ -18,7 +18,7 @@ public class VendorList {
     }
 
     public boolean addVendor(Vendor vendor) {
-        if (searchVendorList(vendor.getName()) == -1) {
+        if (getIndex(vendor.getId()) == -1) {
             vendorList.add(vendor);
             return true;
         }
@@ -26,27 +26,39 @@ public class VendorList {
     }
 
     public boolean updateVendor(Vendor vendor) {
-        // how to implement?
+        vendorList.set(vendorList.indexOf(vendor), vendor);
         return true;
     }
 
-    public boolean deleteVendor(Vendor vendor) {
-        if (vendor.getBalance() == 0) {
-            vendorList.remove(vendor);
+    public boolean deleteVendor(int index) {
+        if (vendorList.get(index).getBalance() == 0) {
+            vendorList.removeElementAt(index);
             return true;
         }
         return false;
     }
 
-    public Vendor getVendor(int id) {
-        if (searchVendorList(id) > -1) {
-            return vendorList.get(id - 1);
+    public String getVendorDetails(int index) {
+        if (index > -1) {
+            return vendorList.get(index).toString();
         }
         return null;
     }
 
-    public Vector<Vendor> getVendorList() {
-        return vendorList;
+    public String getVendorDetails(String name) {
+        int index = searchVendorList(name);
+        if (index > -1) {
+            return vendorList.get(index).toString();
+        }
+        return null;
+    }
+
+    public Vector<String> getVendorListDetails() {
+        Vector<String> vendors = new Vector<String>();
+        for (Vendor vendor : vendorList) {
+            vendors.add(vendor.toString());
+        }
+        return vendors;
     }
 
     public Vector<Integer> getIdList() {
@@ -55,6 +67,14 @@ public class VendorList {
             idList.add(vendor.getId());
         }
         return idList;
+    }
+
+    public int getIndex(int id) {
+        return searchVendorList(id);
+    }
+
+    public int getIndex(String name) {
+        return searchVendorList(name);
     }
 
     public int searchVendorList(int id) {
@@ -68,20 +88,14 @@ public class VendorList {
 
     public int searchVendorList(String name) {
         for (Vendor vendor : vendorList) {
-            if (name == vendor.getName()) {
+            if (name.equals(vendor.getName())) {
                 return vendorList.indexOf(vendor);
             }
         }
         return -1;
     }
 
-    @Override
-    public String toString() {
-        String list = null;
-        for (Vendor vendor : vendorList) {
-            list += vendor + "\n";
-        }
-        return list;
+    public Vendor getVendor(int index) {
+        return vendorList.get(index);
     }
-    // toString
 }

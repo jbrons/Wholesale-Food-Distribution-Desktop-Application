@@ -6,15 +6,12 @@ import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
-import src.Vendor.StateAbbrs;
 import src.Vendor.Vendor;
 import src.Vendor.VendorList;
 
 import GUI.MainWindow.MainWindowGUI;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 
 /**
  * This class implements a user interface for Purchaser or Owner users for the CSC 4110 Project
@@ -31,32 +28,52 @@ public class VendorUI implements ActionListener {
     private JButton btnGo;
     private JButton btnViewProfiles;
 
-    private JTextArea txtDisplayInfo;
-    private JLabel lblManageProfiles;
-    private JButton btnCreate;
-    private JButton btnUpdate;
-    private JButton btnDelete;
-    private JList<Vendor> lstDisplay;
+    private JButton btnCreateProfile;
+    private JButton btnUpdateProfile;
+    private JButton btnDeleteProfile;
+    private JList<String> lstDisplay;
     private JButton btnLogOut;
     private JButton btnMainMenu;
+    private JScrollPane scpDisplay;
+    private JList<String> lstSearchResults;
+    private JPanel pnlListBackground;
+    private boolean viewProfiles = true;
 
     VendorList vendorList = VendorList.getInstance();
-    DisplayList displayList = DisplayList.getInstance();
+    ListModel vendorModel = ListModel.getInstance();
     UserDatabase database = UserDatabase.getInstance();
+
+    DefaultListModel<String> searchModel = new DefaultListModel();
 
     MainWindowGUI mainWindowGUI;
 
     public VendorUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
         addListeners();
-        lstDisplay.setModel(displayList.getDisplayListModel());
-        lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-        txtSearchBar.requestFocusInWindow();
+        setUpGUI();
+    }
 
-        if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
-           btnViewProfiles.setEnabled(false);
-           btnViewProfiles.setVisible(false);
-        }
+    private void setUpGUI() {
+        txtSearchBar.requestFocusInWindow();;
+        btnGo.setEnabled(false);
+
+        lstSearchResults.setModel(searchModel);
+        lstSearchResults.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+
+        lstDisplay.setVisible(false);
+
+       if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
+            btnViewProfiles.setEnabled(false);
+            btnViewProfiles.setVisible(false);
+            lstSearchResults.setModel(searchModel);
+            lstSearchResults.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+            searchModel.addElement(null);
+       } else {
+            lstSearchResults.setVisible(false);
+            lstDisplay.setModel(vendorModel.getDisplayListModel());
+            lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+            lstSearchResults.setVisible(false);
+       }
     }
 
     /**
@@ -69,41 +86,73 @@ public class VendorUI implements ActionListener {
         int maxChars = 20;
         int idLength = 6;
         Vendor vendor = null;
+        int index = -1;
 
         Object userAction = e.getSource();
 
-        if (userAction == txtSearchBar) {
+        if (userAction == btnGo) {
+            int option = confirmSearch();
             String input = txtSearchBar.getText();
-            if (input.length() > maxChars) {
-                // give error message
-            } else if (input.length() <= idLength) {
-                try {
-                    int vendorId = Integer.parseInt(input);
-                    // it is an id
-                } catch (NumberFormatException ex) {
-                    // it is a name
+            if (option == JOptionPane.CLOSED_OPTION) {
+                return;
+            } else if (option == JOptionPane.YES_OPTION) {
+                if (input.length() <= idLength) {
+                    try {
+                        int vendorId = Integer.parseInt(input);
+                        index = vendorList.getIndex(vendorId);
+                    } catch (NumberFormatException ex) {
+                        displayError("Not a valid ID.");
+                        return;
+                    }
                 }
+            } else if (option == JOptionPane.NO_OPTION) {
+                index = vendorList.getIndex(input);
+            }
+            if (index > -1) {
+                lstDisplay.setSelectedIndex(index);
+                searchModel.setElementAt(vendorList.getVendorDetails(index), 0);
+            } else {
+                displayError("No Profile Vendor found.");
+            }
+            txtSearchBar.setText(null);
+            btnGo.setEnabled(false);
+        } else if (userAction == btnViewProfiles) {
+            if (viewProfiles) {
+                if (vendorModel.isEmpty()) {
+                    displayError("No Vendors to view");
+                } else {
+                    displayListSettings();
+                }
+            } else {
+                displayListSettings();
+            }
+        } else if (userAction == btnCreateProfile) {
+            mainWindowGUI.setJPanel(new VendorCreation().getPanel());
+        } else if (userAction == btnUpdateProfile) {
+            if (lstDisplay.isVisible()) {
+                index = lstDisplay.getSelectedIndex();
+            } else {
+                index = lstSearchResults.getSelectedIndex();
             }
 
-        } else if (userAction == btnCreate) {
-            mainWindowGUI.setJPanel(new VendorCreation().getPanel());
-        } else if (userAction == btnUpdate) {
-            vendor = lstDisplay.getSelectedValue();
-           if (vendor == null) {
-               displayError("Please search for/select a Vendor to update");
-           } else {
-               mainWindowGUI.setJPanel(new VendorCreation(vendor).getPanel());
-           }
-        } else if (userAction == btnDelete) {
-            vendor = lstDisplay.getSelectedValue();
-            if (vendor == null) {
+            if (index > 0) {
+                displayError("Please search for a Vendor to update");
+            } else {
+                mainWindowGUI.setJPanel(new VendorCreation(vendorList.getVendor(index)).getPanel());
+            }
+        } else if (userAction == btnDeleteProfile) {
+            if (lstDisplay.isVisible()) {
+                index = lstDisplay.getSelectedIndex();
+            } else {
+                index = lstSearchResults.getSelectedIndex();
+            }
+
+            if (index < 0) {
                 displayError("Please select a Vendor to delete");
             } else {
-                displayList.removeVendor(vendor);
-                vendorList.deleteVendor(vendor);
+                vendorModel.removeVendor(index);
+                vendorList.deleteVendor(index);
             }
-        } else if (userAction == btnViewProfiles) {
-
         } else if (userAction == btnLogOut) {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
         } else if (userAction == btnMainMenu) {
@@ -111,9 +160,29 @@ public class VendorUI implements ActionListener {
         }
     }
 
+    private void displayListSettings() {
+        String hideMessage = "Hide Profiles";
+        String viewMessage = "View Profiles";
+
+        if (viewProfiles) {
+            btnViewProfiles.setText(hideMessage);
+        } else {
+            btnViewProfiles.setText(viewMessage);
+        }
+        lstDisplay.setVisible(viewProfiles);
+        viewProfiles = !viewProfiles;
+        lstDisplay.clearSelection();
+    }
+
     private void displayError(String message)
     {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private int confirmSearch() {
+        Object[] options = {"ID", "Full Name"};
+        return JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Search by:", "Search Options",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
 
@@ -126,14 +195,59 @@ public class VendorUI implements ActionListener {
      * Invoked to add a ActionListener to JButtons and JTextFields
      */
     private void addListeners() {
-        Component[] components = rootPanel.getComponents();
-
-        btnCreate.addActionListener(this);
-        btnUpdate.addActionListener(this);
-        btnDelete.addActionListener(this);
+        btnCreateProfile.addActionListener(this);
+        btnUpdateProfile.addActionListener(this);
+        btnDeleteProfile.addActionListener(this);
         btnViewProfiles.addActionListener(this);
         btnLogOut.addActionListener(this);
         txtSearchBar.addActionListener(this);
         btnMainMenu.addActionListener(this);
+        btnGo.addActionListener(this);
+
+        /**
+         * Invoked when a key has been typed.
+         * See the class description for {@link KeyEvent} for a definition of
+         * a key typed event.
+         *
+         * @param e the event to be processed
+         */
+
+        txtSearchBar.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int maxChars = 20;
+                int length = txtSearchBar.getText().length();
+                if (length >= maxChars) {
+                    e.consume();
+                }
+            }
+
+            /**
+             * Invoked when a key has been pressed.
+             * See the class description for {@link KeyEvent} for a definition of
+             * a key pressed event.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            /**
+             * Invoked when a key has been released.
+             * See the class description for {@link KeyEvent} for a definition of
+             * a key released event.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int length = txtSearchBar.getText().length();
+                if (length > 0) {
+                    btnGo.setEnabled(true);
+                } else {
+                    btnGo.setEnabled(false);
+                }
+            }
+        });
     }
 }

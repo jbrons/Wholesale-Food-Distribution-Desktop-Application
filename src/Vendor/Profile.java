@@ -2,18 +2,20 @@ package src.Vendor;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Profile {
-    int id;
-    String name = null;
-    String streetAddress;
-    String city;
-    StateAbbrs state;
-    String phoneNum;
-    double balance;
-    double lastPaidAmount;
-    LocalDate lastOrderDate;
-    NumberFormat numberFormat = NumberFormat.getInstance();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    private int id;
+    private String name = "";
+    private String streetAddress;
+    private String city;
+    private StateAbbrs state;
+    private String phoneNum;
+    private double balance;
+    private double lastPaidAmount;
+    private LocalDate lastOrderDate;
+    private NumberFormat numberFormat = NumberFormat.getInstance();
 
     int phoneNumLength = 12;
     int maxChars = 20;
@@ -130,11 +132,16 @@ public abstract class Profile {
         return maxChars;
     }
 
+    public DateTimeFormatter formatter() {
+        return formatter;
+    }
+
     @Override
     public String toString() {
         String balanceText = numberFormat.format(balance);
         String lastPaidAmountText = numberFormat.format(lastPaidAmount);
+        String date = lastOrderDate.format(formatter);
 
-        return String.format("%s, %s, %s, %s, %s", name, phoneNum, balanceText, lastPaidAmountText, lastOrderDate);
+        return String.format("%s, %s, %s, %s, %s", name, phoneNum, balanceText, lastPaidAmountText, date);
     }
 }
