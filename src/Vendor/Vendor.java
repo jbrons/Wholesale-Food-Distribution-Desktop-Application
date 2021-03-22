@@ -1,10 +1,13 @@
 package src.Vendor;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.text.DecimalFormat;
 
 /**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 03/18/2021
  *
  */
 public class Vendor extends Profile {

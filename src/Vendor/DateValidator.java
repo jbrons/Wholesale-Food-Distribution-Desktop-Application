@@ -4,6 +4,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ *  This class implements a Date Validator for validating user date inputs
+ *  for the Vendor GUI
+ *
+ * @author Jordan Bronstetter
+ * @date 03/18/2021
+ *
+ */
 public class DateValidator {
     private DateTimeFormatter dateFormat;
 
@@ -11,7 +19,6 @@ public class DateValidator {
         this.dateFormat = dateFormat;
     }
 
-   // @Override
     public boolean isValid(String date) {
         try {
             LocalDate.parse(date, dateFormat);

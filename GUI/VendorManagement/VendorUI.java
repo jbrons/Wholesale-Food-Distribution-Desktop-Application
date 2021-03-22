@@ -1,23 +1,24 @@
 package GUI.VendorManagement;
 
 import javax.swing.*;
+import java.awt.event.*;
 
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
-import src.Vendor.Vendor;
 import src.Vendor.VendorList;
-
 import GUI.MainWindow.MainWindowGUI;
 
-import java.awt.event.*;
-
 /**
- * This class implements a user interface for Purchaser or Owner users for the CSC 4110 Project
+ * This class implements the main user interface for Purchaser or Owner users for the CSC 4110 Project.
+ * It displays the list of Vendors differently, based upon user permissions:
+ *  Purchaser users can see the search results of one Vendor at a time, which they can select to update or delete
+ *  Owner users can search from and see a list of vendors and select one to update or delete
  *
  * @author Jordan Bronstetter
  * @date 3/07/2021
+ *
  */
 public class VendorUI implements ActionListener {
     private JPanel rootPanel;
@@ -43,7 +44,7 @@ public class VendorUI implements ActionListener {
     ListModel vendorModel = ListModel.getInstance();
     UserDatabase database = UserDatabase.getInstance();
 
-    SearchModel searchModel = SearchModel.getInstance();
+    SearchModel searchModel = new SearchModel();
 
     MainWindowGUI mainWindowGUI;
 
@@ -81,11 +82,8 @@ public class VendorUI implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        int maxChars = 20;
         int idLength = 6;
-        Vendor vendor = null;
         int index = -1;
-
         Object userAction = e.getSource();
 
         if (userAction == btnGo) {
@@ -149,7 +147,6 @@ public class VendorUI implements ActionListener {
             } else {
                 index = lstSearchResults.getSelectedIndex();
             }
-
             if (index < 0) {
                 displayMessage("Please select a Vendor to delete");
             } else {
@@ -185,13 +182,11 @@ public class VendorUI implements ActionListener {
         lstDisplay.clearSelection();
     }
 
-    private void displayError(String message)
-    {
+    private void displayError(String message) {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void displayMessage(String message)
-    {
+    private void displayMessage(String message) {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message);
     }
 
@@ -203,7 +198,8 @@ public class VendorUI implements ActionListener {
 
     private int deleteWarning() {
         Object[] options = {"Confirm", "Cancel"};
-        return JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "All associated purchase orders will be deleted.", "Warning",
+        return JOptionPane.showOptionDialog(JOptionPane.getRootFrame(),
+                "All associated purchase orders will be deleted.", "Warning",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 

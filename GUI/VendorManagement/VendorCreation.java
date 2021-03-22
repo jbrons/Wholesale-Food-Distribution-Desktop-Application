@@ -1,12 +1,10 @@
 package GUI.VendorManagement;
 
-import src.User.EnumUserRoles;
 import src.User.UserDatabase;
 import src.Vendor.StateAbbrs;
 import src.Vendor.VendorList;
 import src.Vendor.Vendor;
 import src.Vendor.DateValidator;
-
 import GUI.MainWindow.MainWindowGUI;
 
 import javax.swing.*;
@@ -22,8 +20,15 @@ import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Vector;
 
+/**
+ *  This class implements the Vendor Creation GUI for owner and purchaser users.
+ *  It handles creating and updating the Vendor list.
+ *
+ * @author Jordan Bronstetter
+ * @date 03/18/2021
+ *
+ */
 public class VendorCreation implements ActionListener, KeyListener {
     private JPanel rootPanel;
 
@@ -72,6 +77,7 @@ public class VendorCreation implements ActionListener, KeyListener {
         addListeners();
         setUpGUI();
     }
+
     public VendorCreation(Vendor vendor) {
         this();
         this.vendor = vendor;
@@ -105,6 +111,11 @@ public class VendorCreation implements ActionListener, KeyListener {
         txtFullName.requestFocusInWindow();
     }
 
+    /**
+     * Checks if all the inputs are valid and returns false at the first invalid input
+     *
+     * @return false if there are invalid inputs, otherwise true
+     * */
     private boolean getInputs() {
         String message = " cannot be blank.";
 
@@ -155,6 +166,7 @@ public class VendorCreation implements ActionListener, KeyListener {
         } else {
             balance = 0 ;
         }
+
         if (!txtLastPaidAmount.getText().isEmpty()) {
             lastPaidAmount = getNumber(txtLastPaidAmount.getText());
             if (lastPaidAmount == -1) {
@@ -185,7 +197,6 @@ public class VendorCreation implements ActionListener, KeyListener {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -206,7 +217,7 @@ public class VendorCreation implements ActionListener, KeyListener {
     }
 
     /**
-     * Invoked to add an ActionListener and a KeyListener to JTextFields, JFormattedTextFields,
+     * Invoked to add an ActionListener and a KeyListener to JTextFields and JFormattedTextFields
      * and an ActionListener to Jbuttons
      *
      */
@@ -234,7 +245,6 @@ public class VendorCreation implements ActionListener, KeyListener {
             formatter = new MaskFormatter(format);
             formatter.setPlaceholderCharacter(placeHolder);
         } catch (ParseException e) {
-            // output error message
             System.out.println("Format Error");
         }
         return formatter;
@@ -248,19 +258,8 @@ public class VendorCreation implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object userAction = e.getSource();
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-        if (userAction == txtFullName) {
-        } else if (userAction == txtStreetAddress) {
-        } else if (userAction == txtCity) {
-        } else if (userAction == cboState) {
-            state = (StateAbbrs) cboState.getSelectedItem();
-        } else if (userAction == txtPhoneNum) {
-        } else if (userAction == txtBalance) {
-        } else if (userAction == txtLastPaidAmount) {
-        } else if (userAction == txtLastOrderDate) {
-        } else if (userAction == txtSeasonalDiscDate) {
-        } else if (userAction == btnCreate) {
+        if (userAction == btnCreate) {
             if (getInputs()) {
                 if (vendor != null) {
                     updateInputs();
@@ -338,7 +337,7 @@ public class VendorCreation implements ActionListener, KeyListener {
      * @param e the event to be processed
      */
     @Override
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) {}
 
     /**
      * Invoked when a key has been released.
@@ -350,5 +349,3 @@ public class VendorCreation implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {}
 }
-
-// add a key listener for max char

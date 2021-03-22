@@ -1,29 +1,23 @@
 package GUI.VendorManagement;
 
-import src.Vendor.Vendor;
 import src.Vendor.VendorList;
-
 import javax.swing.*;
 
 /**
+ *  This class implements the DefaultListModel of the list that displays the search results to purchaser users.
+ *  It stores and updates only one Vendor profile at a time in the list.
+ *
+ * @author Jordan Bronstetter
+ * @date 03/18/2021
  *
  */
 public class SearchModel {
-    private static SearchModel firstInstance = null;
     private DefaultListModel<String> searchModel;
 
-    private SearchModel() {
+    public SearchModel() {
         searchModel = new DefaultListModel();
         VendorList vendorList = VendorList.getInstance();
-
         searchModel.addElement(null);
-    }
-
-    public static SearchModel getInstance() {
-        if (firstInstance == null) {
-            firstInstance = new SearchModel();
-        }
-        return firstInstance;
     }
 
     public DefaultListModel<String> getDisplayListModel() {

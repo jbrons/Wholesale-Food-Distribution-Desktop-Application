@@ -5,6 +5,14 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ *  This abstract class implements the Profile that the Vendor profile extends.
+ *  It contains all the attributes that are shared between the Customer and Vendor profiles
+ *
+ * @author Jordan Bronstetter
+ * @date 03/18/2021
+ *
+ */
 public abstract class Profile {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -116,12 +124,10 @@ public abstract class Profile {
         this.lastPaidAmount = lastPaidAmount;
     }
 
-    // fix when you understand it :(
     public double getLastPaidAmount() {
         return lastPaidAmount;
     }
 
-    // fix when you understand it :(
     public void setLastOrderDate(LocalDate lastOrderDate) {
         this.lastOrderDate = lastOrderDate;
     }

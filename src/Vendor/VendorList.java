@@ -2,6 +2,14 @@ package src.Vendor;
 
 import java.util.*;
 
+/**
+ *  This class implements a list to store and modify all the created Vendor profiles.
+ *  It uses a singleton design patter so that all users share the same list of Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 03/18/2021
+ *
+ */
 public class VendorList {
     private static VendorList firstInstance = null;
     private Vector<Vendor> vendorList = null;
