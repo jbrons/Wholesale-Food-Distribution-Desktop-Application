@@ -84,6 +84,7 @@ public class AddItemsGUI implements FocusListener {
         addItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 ItemsValidation val = new ItemsValidation();
+                boolean added = false;
                 //try ensures no bad numerical input or null pointer
                 try {
                     //validation call ensures there is no other types of bad user input
@@ -93,6 +94,7 @@ public class AddItemsGUI implements FocusListener {
                                 (String) categoryCombo.getSelectedItem(),
                                 expirationFormattedText.getText(), Double.parseDouble(pPriceField.getText()), (String) unitCombo.getSelectedItem(),
                                 Integer.parseInt(quantityField.getText()));
+                        added = true;
                     }
                 }
                 catch(NumberFormatException n){
@@ -101,8 +103,10 @@ public class AddItemsGUI implements FocusListener {
                 catch(NullPointerException N){
                     JOptionPane.showMessageDialog(null, "Please make sure you have chosen a Vendor ID");
                 }
-
+            if(added){
                 closeItemAdd();
+            }
+
 
             }});
         logoutButton.addActionListener(e ->
