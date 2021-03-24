@@ -58,18 +58,17 @@ public class VendorUI implements ActionListener {
         txtSearchBar.requestFocusInWindow();;
         btnGo.setEnabled(false);
 
-        lstSearchResults.setVisible(false);
-
        if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
-            btnViewProfiles.setEnabled(false);
-            btnViewProfiles.setVisible(false);
-            lstSearchResults.setModel(searchModel.getDisplayListModel());
-            lstSearchResults.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-            lstDisplay.setVisible(false);
-            scpDisplay.setVisible(false);
+           btnViewProfiles.setEnabled(false);
+           btnViewProfiles.setVisible(false);
+           lstSearchResults.setModel(searchModel.getDisplayListModel());
+           lstSearchResults.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);;
+           lstDisplay.setVisible(false);
+           scpDisplay.setVisible(false);
        } else {
-            lstDisplay.setModel(vendorModel.getDisplayListModel());
-            lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+           lstSearchResults.setVisible(false);
+           lstDisplay.setModel(vendorModel.getDisplayListModel());
+           lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
            lstDisplay.setVisible(!viewProfiles);
            scpDisplay.setVisible(!viewProfiles);
        }
@@ -109,9 +108,15 @@ public class VendorUI implements ActionListener {
                 index = vendorList.getIndex(input);
             }
             if (index > -1) {
-                lstSearchResults.setVisible(true);
-                lstDisplay.setSelectedIndex(index);
-                searchModel.updateVendor(vendorList.getVendorDetails(index), 0);
+                if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER) {
+                    if (viewProfiles) {
+                        displayListSettings();
+                    }
+                    lstDisplay.setSelectedIndex(index);
+                } else {
+                    searchModel.updateVendor(vendorList.getVendorDetails(index), 0);
+                    lstSearchResults.setSelectedIndex(index);
+                }
             } else {
                 displayError("No Profile Vendor found.");
             }

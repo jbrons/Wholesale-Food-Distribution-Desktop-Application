@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
  */
 public abstract class Profile {
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-    private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private int id;
     private String name = "";
     private String streetAddress;
@@ -26,9 +25,8 @@ public abstract class Profile {
     private double lastPaidAmount;
     private LocalDate lastOrderDate;
     private static NumberFormat numberFormat = new DecimalFormat("#,##0.00");
-
-    int phoneNumLength = 12;
-    int maxChars = 20;
+    private static int phoneNumLength = 12;
+    private static int maxChars = 20;
 
     public Profile(int id, String name, String streetAddress, String city, StateAbbrs state, String phoneNum,
                    double balance, double lastPaidAmount, LocalDate lastOrderDate) {
