@@ -13,16 +13,16 @@ We are developing a software application for WSU Inc., a wholesale food distribu
 ## Table of Contents
 
 In [Sprint 1](https://git.wayne.edu/gt2533/group2/-/tree/master#sprint-1-functionalities), we implemented the following four features
-- [Feature 1: Login and Logout](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-1-login-and-logout)
-- [Feature 2: Customer Profiles](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-2-customer-profiles)
-- [Feature 3: Vendor Profiles](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-3-vendor-profiles)
-- [Feature 4: Item Profiles](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-4-item-profiles)
+- [Feature 1: Login and Logout](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-1-login-and-logout)
+- [Feature 2: Customer Profiles](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-2-customer-profiles)
+- [Feature 3: Vendor Profiles](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-3-vendor-profiles)
+- [Feature 4: Item Profiles](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-4-item-profiles)
 
 In [Sprint 2](https://git.wayne.edu/gt2533/group2/-/tree/master#sprint-2-functionalities), we implemented the following four features
-- [Feature 5: Purchase Order](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-5-purchase-order)
-- [Feature 6: Customer Order](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-6-customer-order)
-- [Feature 7: Customer Invoice](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-7-customer-invoice)
-- [Feature 8: Other Functions](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-8-other-functions)
+- [Feature 5: Purchase Order](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-5-purchase-order)
+- [Feature 6: Customer Order](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-6-customer-order)
+- [Feature 7: Customer Invoice](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-7-customer-invoice)
+- [Feature 8: Other Functions](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-8-other-functions)
 
 ## Sprint 1 Functionalities
 
