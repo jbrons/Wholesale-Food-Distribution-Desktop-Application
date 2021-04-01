@@ -2,20 +2,33 @@
 
 This project is for the Term Project for Group 2.
 
-**Contributors:**
+**Contributors:** 
 
 Jordan Bronstetteter, Joyshree Chowdhury, Zachary Nicolai, and Jacob Price
 
-# **Purpose:**
+## Purpose
 
-We are developing a software application for the WSU Inc. Wholesale Food Distribution company to help them meet their business needs to become more efficient and profitable. In this sprint, we focused on developing log in/log out functionalities, accepting user inputs from a variety of users, and storing those user's information. To complete this, we implemented the following four different features:
+We are developing a software application for WSU Inc., a wholesale food distribution company, to help them meet their business needs to become more efficient and profitable. Our project follows the SCRUM framework, consisting of two sprints, each taking roughly three to four weeks.
 
-# **Functionalities:**
+## Table of Contents
 
-**Feature #1:**
+In [Sprint 1](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#sprint-1-functionalities), we implemented the following four features
+- [Feature 1: Login and Logout](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-1-login-and-logout)
+- [Feature 2: Customer Profiles](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-2-customer-profiles)
+- [Feature 3: Vendor Profiles](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-3-vendor-profiles)
+- [Feature 4: Item Profiles](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-4-item-profiles)
 
-Functionality:
+In [Sprint 2](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#sprint-2-functionalities), we implemented the following four features
+- [Feature 5: Purchase Order](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-5-purchase-order)
+- [Feature 6: Customer Order](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-6-customer-order)
+- [Feature 7: Customer Invoice](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-7-customer-invoice)
+- [Feature 8: Other Functions](https://git.wayne.edu/gt2533/group2/-/edit/master/README.md#feature-8-other-functions)
 
+## Sprint 1 Functionalities
+
+#### Feature 1: Login and Logout
+
+Functionalities:
 - Allow registered Users to login to the system using their user id and password.
 - Allow Owner or Administrator users to create user profiles with the following details: User last name (max 15 characters), User First Name (max 15 characters), User ID (max 6 alpha numeric characters), Password(combination of alpha numeric and special characters minimum 8 and maximum 16 characters), and User role.
 - Allow Owner and Administrator users to delete user profiles.
@@ -32,9 +45,9 @@ Restrictions:
 - The system restricts duplicate User ID's when creating or updating user profiles.
 
 
-**Feature #2:**
+### Feature 2: Customer Profiles
 
-Functionalities: 
+Functionalities:
 - Allow Owner User to create a customer profile with the following details : Customer ID( auto generated ) , Full Name, Street Address, City, State, Phone, Balance, Last Paid Amount, Last order Date.
 - Allow Owner users to update any customer profiles.
 - Allow Owner users to delete any customer profiles.
@@ -60,9 +73,9 @@ Restrictions:
 - The system shall automatically delete all invoices associated with the deleted customer. 
 
 
-**Feature #3:**
+### Feature 3: Vendor Profiles
 
-Functionality:
+Functionalities:
 - Allow purchaser or owner users to create vendor profiles with the following information:
    - automatically generated Vendor ID, Full Name, Street Address, City, State, Phone Number, Balance, Last Paid Amount, Last order Date, and Seasonal Discounts Start Date.
 - Allow purchaser or owner users to update vendor profiles
@@ -85,9 +98,9 @@ Restrictions:
     - If user accepts, the system shall automatically delete all purchase orders associated with the deleted vendor
 
 
-**Feature #4:**
+### Feature 4: Item Profiles
 
-*Functionality*
+Functionalities:
 - Allow purchaser, owner, or inventory manager to create Item Profiles.
 - Automatically generate item ID upon an items creation.
 - Purchase, owner, or inventory managers can delete item profiles if if their are no associated purchase 
@@ -99,10 +112,30 @@ Restrictions:
 - The system will allow owner users to see a list of items in the system.
 - The system shall allow purchase users, or purchase owners to update item profiles.
 
-*Restrictions*
+Restrictions:
 - The system shall restrict users from adding duplicate item names for a given vendor id.
 - The system shall restrict invalid input from all users.
 - The system shall restrict users from entering a past expiring date.
 - The system shall restrict users from entering negative quantities on hand values.
 
+## Sprint 2 Functionalities
 
+### Feature 5: Purchase Order
+Functionalities:
+
+Restrictions:
+
+### Feature 6: Customer Order
+Functionalities:
+
+Restrictions:
+
+### Feature 7: Customer Invoice
+Functionalities:
+
+Restrictions:
+
+### Feature 8: Other Functions
+Functionalities:
+
+Restrictions:
