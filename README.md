@@ -12,7 +12,7 @@ We are developing a software application for WSU Inc., a wholesale food distribu
 
 ## Table of Contents
 
-In [Sprint 1](Sprint 1 Functionalities), we implemented the following four features
+In [Sprint 1](https://git.wayne.edu/gt2533/group2/-/tree/master#sprint-1-functionalities), we implemented the following four features
 - [Feature 1: Login and Logout](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-1-login-and-logout)
 - [Feature 2: Customer Profiles](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-2-customer-profiles)
 - [Feature 3: Vendor Profiles](https://git.wayne.edu/gt2533/group2/-/tree/master#feature-3-vendor-profiles)
