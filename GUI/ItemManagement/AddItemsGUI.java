@@ -14,6 +14,7 @@ import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import java.awt.event.*;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
@@ -26,8 +27,6 @@ public class AddItemsGUI implements FocusListener {
 
     private JTextField iIDField;
     private JTextField iNameField;
-    private JTextField sPriceField;
-    private JTextField pPriceField;
     private JTextField quantityField;
     private JButton leaveButton;
     private JButton addItemButton;
@@ -36,6 +35,8 @@ public class AddItemsGUI implements FocusListener {
     private JFormattedTextField expirationFormattedText;
     private JComboBox vendorCombo;
     private JButton logoutButton;
+    private JFormattedTextField sPriceFormattedText;
+    private JFormattedTextField pPriceFormattedText;
     private JTextField focused = iNameField;
 
     MainWindowGUI mainWindowGUI;
@@ -56,6 +57,8 @@ public class AddItemsGUI implements FocusListener {
     private void setupGUI()
     {
         expirationFormattedText.setFormatterFactory(new DefaultFormatterFactory(format("##/##/####")));
+        sPriceFormattedText.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getInstance())));
+        pPriceFormattedText.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getInstance())));
         Random r = new Random();
 
         //setting focus listeners
@@ -63,9 +66,9 @@ public class AddItemsGUI implements FocusListener {
         iIDField.setText(String.valueOf(id));
         iIDField.addFocusListener(this);
         iNameField.addFocusListener(this);
-        sPriceField.addFocusListener(this);
+        sPriceFormattedText.addFocusListener(this);
         expirationFormattedText.addFocusListener(this);
-        pPriceField.addFocusListener(this);
+        pPriceFormattedText.addFocusListener(this);
         quantityField.addFocusListener(this);
 
         //setting combo boxes
@@ -88,11 +91,11 @@ public class AddItemsGUI implements FocusListener {
                 //try ensures no bad numerical input or null pointer
                 try {
                     //validation call ensures there is no other types of bad user input
-                    if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceField.getText()),
-                            expirationFormattedText.getText(), Double.parseDouble(pPriceField.getText()),Integer.parseInt(quantityField.getText()))){
-                        new ItemsArray(id, (int) vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceField.getText()),
+                    if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceFormattedText.getText()),
+                            expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText()),Integer.parseInt(quantityField.getText()))){
+                        new ItemsArray(id, (int) vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceFormattedText.getText()),
                                 (String) categoryCombo.getSelectedItem(),
-                                expirationFormattedText.getText(), Double.parseDouble(pPriceField.getText()), (String) unitCombo.getSelectedItem(),
+                                expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText()), (String) unitCombo.getSelectedItem(),
                                 Integer.parseInt(quantityField.getText()));
                         added = true;
                     }
