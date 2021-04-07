@@ -48,8 +48,8 @@ public class ItemsValidation {
             JOptionPane.showMessageDialog(null, "Invalid Date" );
             return false;
         }
-        if(lessThanTwenty(name)){
-            JOptionPane.showMessageDialog(null, "Name too long" );
+        if(nameLength(name)){
+            JOptionPane.showMessageDialog(null, "Name too long or empty" );
             return false;
         }
     return true;
@@ -99,8 +99,8 @@ public class ItemsValidation {
             return true;
         }
     }
-    public boolean lessThanTwenty(String n){
-        if(n.length()>20){
+    public boolean nameLength(String n){
+        if(n.length()>20 || n.length() <= 0){
             return true;
         }
         return false;

@@ -90,13 +90,13 @@ public class AddItemsGUI implements FocusListener {
                 boolean added = false;
                 //try ensures no bad numerical input or null pointer
                 try {
+
                     //validation call ensures there is no other types of bad user input
-                    if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceFormattedText.getText()),
-                            expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText()),Integer.parseInt(quantityField.getText()))){
-                        new ItemsArray(id, (int) vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceFormattedText.getText()),
-                                (String) categoryCombo.getSelectedItem(),
-                                expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText()), (String) unitCombo.getSelectedItem(),
-                                Integer.parseInt(quantityField.getText()));
+                    if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
+                            expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Integer.parseInt(quantityField.getText()))){
+                        new ItemsArray(id, (int) vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
+                                (String) categoryCombo.getSelectedItem(), expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
+                                (String) unitCombo.getSelectedItem(), Integer.parseInt(quantityField.getText()));
                         added = true;
                     }
                 }
@@ -106,7 +106,7 @@ public class AddItemsGUI implements FocusListener {
                 catch(NullPointerException N){
                     JOptionPane.showMessageDialog(null, "Please make sure you have chosen a Vendor ID");
                 }
-            if(added){
+                if(added){
                 closeItemAdd();
             }
 
