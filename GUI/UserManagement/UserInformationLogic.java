@@ -32,6 +32,20 @@ public class UserInformationLogic implements IUserInformationLogic {
             return false;
         }
 
+        // Ensure the first name is not null
+        if(newUser.getFirstName().isEmpty())
+        {
+            displayError("First Name cannot be blank!");
+            return false;
+        }
+
+        // Ensure the last name is not null
+        if(newUser.getLastName().isEmpty())
+        {
+            displayError("Last Name cannot be blank!");
+            return false;
+        }
+
         // Check that the userID is in correct format
         if(!newUser.getUserID().matches("^[a-zA-Z0-9_]*$"))
         {

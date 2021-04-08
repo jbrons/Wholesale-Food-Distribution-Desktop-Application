@@ -19,7 +19,7 @@ public class UserDatabase implements IUserDatabase{
     private UserDatabase()
     {
         database = new HashMap<>();
-        addUser(new User("Owner", "", "",
+        addUser(new User("Owner", "Macam", "Dattathreya",
                 "pass1234".toCharArray(), EnumUserRoles.OWNER));
     }
 
