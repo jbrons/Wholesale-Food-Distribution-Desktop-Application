@@ -50,9 +50,11 @@ public class MainWindowGUI {
         rootFrame.setContentPane(newPanel);
         rootFrame.pack();
         rootFrame.setVisible(true);
+
+        newPanel.getName();
     }
 
-    public void setJPanelTitle(String title)
+    public void setTitle(String title)
     {
         rootFrame.setTitle(title);
         rootFrame.pack();
