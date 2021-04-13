@@ -37,9 +37,26 @@ public class MainWindowGUI {
         return mainWindowInstance;
     }
 
+    public void setJPanel(JPanel newPanel, String panelTitle)
+    {
+        rootFrame.setContentPane(newPanel);
+        rootFrame.setTitle(panelTitle);
+        rootFrame.pack();
+        rootFrame.setVisible(true);
+    }
+
     public void setJPanel(JPanel newPanel)
     {
         rootFrame.setContentPane(newPanel);
+        rootFrame.pack();
+        rootFrame.setVisible(true);
+
+        newPanel.getName();
+    }
+
+    public void setTitle(String title)
+    {
+        rootFrame.setTitle(title);
         rootFrame.pack();
         rootFrame.setVisible(true);
     }
