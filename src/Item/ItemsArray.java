@@ -10,10 +10,6 @@
 
 package src.Item;
 
-import src.Vendor.Vendor;
-import src.Vendor.VendorList;
-
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class ItemsArray {
@@ -51,15 +47,6 @@ public class ItemsArray {
         return true;
     }
 
-
-    //returns itemsList as a StringArray
-    public String[] itemsListToString() {
-        String[] tempListArray = new String[itemsList.size()];
-        for (int i = 0; i < itemsList.size(); i++) {
-            tempListArray[i] = itemsList.toString();
-        }
-        return tempListArray;
-    }
     public Vector<String> getAllItemDetails() {
         Vector<String> items = new Vector<String>();
         for (Items item : itemsList) {

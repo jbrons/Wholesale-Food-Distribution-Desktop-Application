@@ -23,7 +23,7 @@ import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
-
+import java.util.Vector;
 
 
 public class ItemsGUI implements FocusListener{
@@ -59,8 +59,7 @@ public class ItemsGUI implements FocusListener{
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
                     String searchedItem = searchField.getText();
-                    iList.setListData(itemsList.getSearchDetails(searchedItem));
-                    iList.setFont(new Font("Arial",Font.BOLD,12));
+                    setCatalog(itemsList.getSearchDetails(searchedItem));
                     if(iList.getModel().getSize() == 0 ){
                         JOptionPane.showMessageDialog(null, searchedItem + " not found");
                     }
@@ -87,9 +86,7 @@ public class ItemsGUI implements FocusListener{
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER) {
-                    //edited
-                    iList.setListData(itemsList.getAllItemDetails());
-                    iList.setFont(new Font("Arial",Font.BOLD,12));
+                    setCatalog(itemsList.getAllItemDetails());
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Only Owners can view a list of all items in the system");
@@ -112,7 +109,10 @@ public class ItemsGUI implements FocusListener{
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
         });
     }
-
+    public void setCatalog(Vector v){
+        iList.setListData(v);
+        iList.setFont(new Font("Arial",Font.BOLD,12));
+    }
     public void closeCatalog(){
         mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
     }
