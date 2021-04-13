@@ -95,12 +95,17 @@ public class ItemsGUI implements FocusListener{
 
         iList.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
-                JList jList = (JList)evt.getSource();
-                if (evt.getClickCount() == 2) {
-                    //index of selected jList is stored and then ItemsGUI displays selectedIndex
-                    int index = iList.locationToIndex(evt.getPoint());
-                    ItemDisplayGUI dis = new ItemDisplayGUI(index);
-                    mainWindowGUI.setJPanel(dis.getPanel());
+                try {
+                    JList jList = (JList) evt.getSource();
+                    if (evt.getClickCount() == 2) {
+                        //index of selected jList is stored and then ItemsGUI displays selectedIndex
+                        int index = searchIndex(iList.locationToIndex(evt.getPoint()));
+                        ItemDisplayGUI dis = new ItemDisplayGUI(index);
+                        mainWindowGUI.setJPanel(dis.getPanel());
+                    }
+                }
+                catch(ArrayIndexOutOfBoundsException a){
+                    JOptionPane.showMessageDialog(null, "Please make sure you have selected an item.");
                 }
             }
         });
@@ -112,6 +117,12 @@ public class ItemsGUI implements FocusListener{
     public void setCatalog(Vector v){
         iList.setListData(v);
         iList.setFont(new Font("Arial",Font.BOLD,12));
+    }
+    public int searchIndex(int index){
+        String itemsString;
+        System.out.println(iList.getModel().getElementAt(index));
+        itemsString = (String) iList.getModel().getElementAt(index);
+        return itemsList.getId(itemsString);
     }
     public void closeCatalog(){
         mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());

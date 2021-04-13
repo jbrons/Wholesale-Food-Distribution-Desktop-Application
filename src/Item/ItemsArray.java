@@ -74,6 +74,17 @@ public class ItemsArray {
         }
         return items;
     }
+
+    public int getId(String s){
+        int i=0;
+        for (Items item : itemsList) {
+            if(s.equals(item.toString())){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
     public Items get(int index) {
         return itemsList.get(index);
     }
