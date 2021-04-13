@@ -16,12 +16,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 
 public class ItemsValidation {
+    ItemsArray itemsList = ItemsArray.getInstance();
     public ItemsValidation(){
     }
-
     //validation method that returns true assuming all user input is correct
     public boolean validation(int id,String name, int vID, double sPrice,String date, double pPrice,int quantity){
         //check sPrice
@@ -40,10 +41,10 @@ public class ItemsValidation {
             return false;
         }
         //check that there are no duplicate names for a given vendor ID
-        /*if(nameDuplicate(id, name, vID)){
+        if(nameDuplicate(id, name, vID)){
             JOptionPane.showMessageDialog(null, "Vendor: " + vID + " already has Item: " + name);
             return false;
-        }*/
+        }
         if(checkDate(date)){
             JOptionPane.showMessageDialog(null, "Invalid Date" );
             return false;
@@ -66,17 +67,13 @@ public class ItemsValidation {
         }
             return false;
 }
-   /* public boolean nameDuplicate(int id,String name,int vID){
-        ArrayList<Items> itemsListCopy =ItemsArray.getItemsList();
-        for(int i=0;i< itemsListCopy.size();i++){
-            if(itemsListCopy.get(i).getName().equals(name) && itemsListCopy.get(i).getVendorId()==vID &&
-                    itemsListCopy.get(i).getId() != id){
-                return true;
-            }
+    public boolean nameDuplicate(int id,String name,int vID){
+        if(itemsList.nameDupe(id,name,vID)){
+            return true;
+        }
+        return false;
         }
 
-        return false;
-}*/
     public boolean checkDate(String d){
         String f = "MM/dd/yyyy" ;
         DateTimeFormatter format = DateTimeFormatter.ofPattern(f);

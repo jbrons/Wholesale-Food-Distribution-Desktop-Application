@@ -117,6 +117,7 @@ public class EditItemsGUI implements FocusListener {
                         Items updatedItem = new Items(Integer.parseInt(iIDField.getText()) ,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                                 (String) categoryCombo.getSelectedItem(),expFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
                                 (String) unitCombo.getSelectedItem(),Integer.parseInt(quantityField.getText()));
+                        itemsList.editItem(updatedItem,index);
                         closeItemEdit();
                     }
                 }

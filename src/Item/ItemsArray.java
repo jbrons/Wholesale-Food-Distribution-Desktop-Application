@@ -67,6 +67,16 @@ public class ItemsArray {
         }
         return items;
     }
+    public boolean nameDupe(int id,String name,int vID) {
+        Vector<String> items = new Vector<String>();
+        for (Items item : itemsList) {
+            if(item.getName().equals(name) && item.getVendorId()==vID &&
+                    item.getId() != id){
+                return true;
+            }
+        }
+        return false;
+    }
     public Vector<String> getSearchDetails(String search){
         Vector<String> items = new Vector<String>();
         for (Items item : itemsList) {
