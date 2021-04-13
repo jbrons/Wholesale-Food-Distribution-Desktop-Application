@@ -40,10 +40,10 @@ public class ItemsValidation {
             return false;
         }
         //check that there are no duplicate names for a given vendor ID
-        if(nameDuplicate(id, name, vID)){
+        /*if(nameDuplicate(id, name, vID)){
             JOptionPane.showMessageDialog(null, "Vendor: " + vID + " already has Item: " + name);
             return false;
-        }
+        }*/
         if(checkDate(date)){
             JOptionPane.showMessageDialog(null, "Invalid Date" );
             return false;
@@ -66,7 +66,7 @@ public class ItemsValidation {
         }
             return false;
 }
-    public boolean nameDuplicate(int id,String name,int vID){
+   /* public boolean nameDuplicate(int id,String name,int vID){
         ArrayList<Items> itemsListCopy =ItemsArray.getItemsList();
         for(int i=0;i< itemsListCopy.size();i++){
             if(itemsListCopy.get(i).getName().equals(name) && itemsListCopy.get(i).getVendorId()==vID &&
@@ -76,7 +76,7 @@ public class ItemsValidation {
         }
 
         return false;
-}
+}*/
     public boolean checkDate(String d){
         String f = "MM/dd/yyyy" ;
         DateTimeFormatter format = DateTimeFormatter.ofPattern(f);

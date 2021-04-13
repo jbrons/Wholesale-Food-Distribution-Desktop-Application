@@ -10,63 +10,75 @@
 
 package src.Item;
 
+import src.Vendor.Vendor;
+import src.Vendor.VendorList;
+
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class ItemsArray {
-    //itemsList that stores all item profiles
-    public static ArrayList<Items> itemsList = new ArrayList<Items>();
+    private static ItemsArray firstInstance = null;
+    private Vector<Items> itemsList = null;
 
-    //constructor that adds a new items object to the ArrayList
-    public ItemsArray(int i,int vi,String n,double sp,String c,String ed,double pp,String u,int q){
-        itemsList.add(new Items(i,vi,n,sp,c,ed,pp,u,q));
+    private ItemsArray(){
+        itemsList = new Vector<Items>();
     }
-
-    //set methods
-    public static void setIndexID(int i,int s){
-        itemsList.get(i).setId(s);
-    }
-    public static void setIndexName(int i,String s){
-        itemsList.get(i).setName(s);
-    }
-    public static void setIndexVId(int i,int s){
-        itemsList.get(i).setVendorId(s);
-    }
-    public static void setIndexSPrice(int i,double s){
-        itemsList.get(i).setSellingPrice(s);
-    }
-    public static void setIndexCategory(int i,String s){
-        itemsList.get(i).setCategory(s);
-    }
-    public static void setIndexExpiration(int i,String s){
-        itemsList.get(i).setExpirationDate(s);
-    }
-    public static void setIndexPPrice(int i,double s){
-        itemsList.get(i).setPurchasePrice(s);
-    }
-    public static void setIndexUnit(int i,String s){
-        itemsList.get(i).setUnit(s);
-    }
-    public static void setIndexQuantity(int i,int s){
-        itemsList.get(i).setQuantity(s);
+    public static ItemsArray getInstance() {
+        if (firstInstance == null) {
+            firstInstance = new ItemsArray();
+        }
+        return firstInstance;
     }
 
-    //removes a Item object from the itemsList
-    public static void remove(int index){
-        itemsList.remove(index);
+    public boolean addItem(Items item){
+            itemsList.add(item);
+            return true;
+    }
+    public boolean removeItem(int index){
+        itemsList.removeElementAt(index);
+        return true;
+    }
+    public boolean editItem(Items item,int index){
+        itemsList.get(index).setId(item.getId());
+        itemsList.get(index).setName(item.getName());
+        itemsList.get(index).setVendorId(item.getVendorId());
+        itemsList.get(index).setExpirationDate(item.getExpirationDate());
+        itemsList.get(index).setPurchasePrice(item.getPurchasePrice());
+        itemsList.get(index).setQuantity(item.getQuantity());
+        itemsList.get(index).setSellingPrice(item.getSellingPrice());
+        itemsList.get(index).setUnit(item.getUnit());
+        itemsList.get(index).setCategory(item.getCategory());
+        return true;
     }
 
-    //returns itemsList
-    public static ArrayList<Items> getItemsList() {
-        return itemsList;
-    }
 
     //returns itemsList as a StringArray
-    public static String[] itemsListToArray(ArrayList<Items> tempList) {
-        String[] tempListArray = new String[tempList.size()];
-        for (int i = 0; i < tempList.size(); i++) {
-            tempListArray[i] = tempList.get(i).toString();
+    public String[] itemsListToString() {
+        String[] tempListArray = new String[itemsList.size()];
+        for (int i = 0; i < itemsList.size(); i++) {
+            tempListArray[i] = itemsList.toString();
         }
         return tempListArray;
+    }
+    public Vector<String> getAllItemDetails() {
+        Vector<String> items = new Vector<String>();
+        for (Items item : itemsList) {
+            items.add(item.toString());
+        }
+        return items;
+    }
+    public Vector<String> getSearchDetails(String search){
+        Vector<String> items = new Vector<String>();
+        for (Items item : itemsList) {
+            if(String.valueOf(item.getId()).equals(search) || item.getName().equals(search) ||
+                    item.getExpirationDate().equals(search)) {
+                items.add(item.toString());
+            }
+        }
+        return items;
+    }
+    public Items get(int index) {
+        return itemsList.get(index);
     }
 
 

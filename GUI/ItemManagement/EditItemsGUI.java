@@ -51,6 +51,8 @@ public class EditItemsGUI implements FocusListener {
     UserDatabase dataBase = UserDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
     VendorList vendorList = VendorList.getInstance();
+    ItemsArray itemsList = ItemsArray.getInstance();
+
 
     public EditItemsGUI(int i) {
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -60,6 +62,7 @@ public class EditItemsGUI implements FocusListener {
 
     public void setupGUI()
     {
+        Items item = itemsList.get(this.index);
         //setting combo boxes
         DefaultComboBoxModel<String> catModel = new DefaultComboBoxModel<>(cat);
         categoryCombo.setModel(catModel);
@@ -82,17 +85,17 @@ public class EditItemsGUI implements FocusListener {
 
         //setting text fields based on current item profile details
         DecimalFormat df = new DecimalFormat("#.00");
-        //getting current itemsList
-        itemsListCopy = ItemsArray.getItemsList();
-        iIDField.setText(String.valueOf(itemsListCopy.get(this.index).getId()));
-        iNameField.setText(itemsListCopy.get(this.index).getName());
-        vendorCombo.setSelectedItem(itemsListCopy.get(this.index).getVendorId());
-        sPriceFormattedText.setText(String.valueOf(df.format(itemsListCopy.get(this.index).getSellingPrice())));
-        categoryCombo.setSelectedItem(itemsListCopy.get(this.index).getCategory());
-        expFormattedText.setText(itemsListCopy.get(this.index).getExpirationDate());
-        pPriceFormattedText.setText(String.valueOf(df.format(itemsListCopy.get(this.index).getPurchasePrice())));
-        unitCombo.setSelectedItem(itemsListCopy.get(this.index).getUnit());
-        quantityField.setText(String.valueOf(itemsListCopy.get(this.index).getQuantity()));
+
+        //setting text fields based on current item profile details
+        iIDField.setText(String.valueOf(item.getId()));
+        iNameField.setText(item.getName());
+        vendorCombo.setSelectedItem(item.getVendorId());
+        sPriceFormattedText.setText(String.valueOf(df.format(item.getSellingPrice())));
+        categoryCombo.setSelectedItem(item.getCategory());
+        expFormattedText.setText(item.getExpirationDate());
+        pPriceFormattedText.setText(String.valueOf(df.format(item.getPurchasePrice())));
+        unitCombo.setSelectedItem(item.getUnit());
+        quantityField.setText(String.valueOf(item.getQuantity()));
 
         //button actions
         leaveButton.addActionListener(new ActionListener() {
@@ -111,16 +114,9 @@ public class EditItemsGUI implements FocusListener {
                             Double.parseDouble(sPriceFormattedText.getText().replace(",","")), expFormattedText.getText(),
                             Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Integer.parseInt(quantityField.getText()))) {
                         //setting item information
-                        ItemsArray.setIndexID(getIndex(), Integer.parseInt(iIDField.getText()));
-                        ItemsArray.setIndexName(getIndex(), iNameField.getText());
-                        ItemsArray.setIndexVId(getIndex(), (int)vendorCombo.getSelectedItem());
-                        ItemsArray.setIndexPPrice(getIndex(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")));
-                        ItemsArray.setIndexCategory(getIndex(), (String) categoryCombo.getSelectedItem());
-                        ItemsArray.setIndexExpiration(getIndex(), expFormattedText.getText());
-                        ItemsArray.setIndexSPrice(getIndex(), Double.parseDouble(sPriceFormattedText.getText().replace(",","")));
-                        ItemsArray.setIndexUnit(getIndex(), (String) unitCombo.getSelectedItem());
-                        ItemsArray.setIndexID(getIndex(), Integer.parseInt(iIDField.getText()));
-                        ItemsArray.setIndexQuantity(getIndex(),Integer.parseInt(quantityField.getText()));
+                        Items updatedItem = new Items(Integer.parseInt(iIDField.getText()) ,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
+                                (String) categoryCombo.getSelectedItem(),expFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
+                                (String) unitCombo.getSelectedItem(),Integer.parseInt(quantityField.getText()));
                         closeItemEdit();
                     }
                 }

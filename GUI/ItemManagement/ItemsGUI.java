@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 
 
-
 public class ItemsGUI implements FocusListener{
 
     private JPanel rootPanel;
@@ -42,6 +41,7 @@ public class ItemsGUI implements FocusListener{
     private JTextField focused = searchField;
     private ArrayList<Items> itemsListCopy;
     private MainWindowGUI mainWindowGUI;
+    ItemsArray itemsList = ItemsArray.getInstance();
 
 
     UserDatabase dataBase = UserDatabase.getInstance();
@@ -59,22 +59,11 @@ public class ItemsGUI implements FocusListener{
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
                     String searchedItem = searchField.getText();
-                    itemsListCopy = ItemsArray.getItemsList();
-                    ArrayList<Items> itemsListFinal = new ArrayList<Items>();
-                    boolean found = false;
-
-                    for (int i = 0; i < itemsListCopy.size(); i++) {
-                        if (String.valueOf(itemsListCopy.get(i).getId()).equals(searchedItem) ||
-                                itemsListCopy.get(i).getName().equals(searchedItem) ||
-                                itemsListCopy.get(i).getExpirationDate().equals(searchedItem)) {
-                            itemsListFinal.add(itemsListCopy.get(i));
-                            found = true;
-                        }
-                    }
-                    if (!found) {
+                    iList.setListData(itemsList.getSearchDetails(searchedItem));
+                    iList.setFont(new Font("Arial",Font.BOLD,12));
+                    if(iList.getModel().getSize() == 0 ){
                         JOptionPane.showMessageDialog(null, searchedItem + " not found");
                     }
-                    displayCatalog(itemsListFinal);
                 }
                 else{
                     JOptionPane.showMessageDialog(null,  "Must be Owner user or Purchase user");
@@ -98,7 +87,9 @@ public class ItemsGUI implements FocusListener{
         displayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER) {
-                    displayCatalog(ItemsArray.getItemsList());
+                    //edited
+                    iList.setListData(itemsList.getAllItemDetails());
+                    iList.setFont(new Font("Arial",Font.BOLD,12));
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Only Owners can view a list of all items in the system");
@@ -120,11 +111,6 @@ public class ItemsGUI implements FocusListener{
         {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
         });
-    }
-
-    public void displayCatalog(ArrayList<Items> itemsListFinal) {
-        iList.setListData(ItemsArray.itemsListToArray(itemsListFinal));
-        iList.setFont(new Font("Arial",Font.BOLD,12));
     }
 
     public void closeCatalog(){

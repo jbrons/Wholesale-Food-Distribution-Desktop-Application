@@ -10,6 +10,7 @@
 package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
+import src.Item.Items;
 import src.Item.ItemsArray;
 import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class ItemDisplayGUI {
     private JLabel contentLabel;
     private JButton logoutButton;
     private int index;
-
+    ItemsArray itemsList = ItemsArray.getInstance();
     private MainWindowGUI mainWindowGUI;
     UserDatabase dataBase = UserDatabase.getInstance();
 
@@ -42,8 +43,9 @@ public class ItemDisplayGUI {
 
     private void setupGUI()
     {
+        Items item = itemsList.get(this.index);
         //sets label to the index of selected item
-        contentLabel.setText(ItemsArray.itemsListToArray(ItemsArray.getItemsList())[index]);
+        contentLabel.setText(item.toString());
         //button actions
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -59,7 +61,7 @@ public class ItemDisplayGUI {
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER
                 || dataBase.getCurrentUser().getRole() == EnumUserRoles.INVENTORY_MANAGER) {
-                    ItemsArray.remove(index);
+                    itemsList.removeItem(index);
                     closeItemEdit();
                 }
                 else{

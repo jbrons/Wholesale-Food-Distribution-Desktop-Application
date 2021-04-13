@@ -8,6 +8,7 @@
 package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
+import src.Item.Items;
 import src.Item.ItemsArray;
 import src.Item.ItemsValidation;
 import GUI.MainWindow.MainWindowGUI;
@@ -38,9 +39,11 @@ public class AddItemsGUI implements FocusListener {
     private JFormattedTextField sPriceFormattedText;
     private JFormattedTextField pPriceFormattedText;
     private JTextField focused = iNameField;
-
     MainWindowGUI mainWindowGUI;
-    //getting the current vendor list
+    //Item variables
+
+    //getting the current vendor list and item list
+    ItemsArray itemsList = ItemsArray.getInstance();
     VendorList vendorList = VendorList.getInstance();
     NumberFormat nf = new DecimalFormat();
 
@@ -94,9 +97,12 @@ public class AddItemsGUI implements FocusListener {
                     //validation call ensures there is no other types of bad user input
                     if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                             expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Integer.parseInt(quantityField.getText()))){
-                        new ItemsArray(id, (int) vendorCombo.getSelectedItem(), iNameField.getText(), Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
-                                (String) categoryCombo.getSelectedItem(), expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
-                                (String) unitCombo.getSelectedItem(), Integer.parseInt(quantityField.getText()));
+
+
+                        Items item = new Items(id,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
+                                (String) categoryCombo.getSelectedItem(),expirationFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
+                                (String) unitCombo.getSelectedItem(),Integer.parseInt(quantityField.getText()));
+                        itemsList.addItem(item);
                         added = true;
                     }
                 }
