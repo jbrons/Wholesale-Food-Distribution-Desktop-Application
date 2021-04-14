@@ -126,9 +126,21 @@ Functionalities:
 Restrictions:
 
 ### Feature 6: Customer Order
-Functionalities:
+Functionalities: 
+- Enable sales users to search for a given Customer Name for creating a customer order.
+- Enable a sales user to get an alert when more than two items in the inventory are expired.
+- The system shall assign a unique automatically generated Order ID [Maximum 6 numerical characters] for a customer order.
+- The system shall allow sales user to select a given item from an item list and add Need by date[mm/dd/yyyy], Order Date[mm/dd/yyyy] and Quantity [Decimal] values. 
+- The system shall use the Unit Price [Decimal] from the item’s details and calculate the subtotal cost for each item. 
+- The system shall automatically calculate the Total Cost [Decimal] of the customer order.
+- The system shall automatically update the quantity on hand for the item based on the item they added in the customer order, after a customer order is created.
+	     
+Restrictions: 
+- The system shall restrict entering past Need by date or order date values.
+- The system shall allow a maximum of five items per order.
+- The system shall restrict less than or equal 0 quantity value.
+- The system shall restrict adding quantities for items that have more than quantity on hand.
 
-Restrictions:
 
 ### Feature 7: Customer Invoice
 Functionalities:
