@@ -21,7 +21,7 @@ public class Items {
     private String expirationDate;
     private double purchasePrice;
     private String unit;
-    private int quantity;
+    private double quantity;
 
     //constructors
     public Items(){
@@ -35,7 +35,7 @@ public class Items {
         unit = "";
         quantity = 0;
     }
-    public Items(int i,int vi,String n,double sp,String c,String ed,double pp,String u,int q){
+    public Items(int i,int vi,String n,double sp,String c,String ed,double pp,String u,double q){
         id = i;
         vendorId = vi;
         name = n;
@@ -70,7 +70,7 @@ public class Items {
     public void setUnit(String u){
         unit = u;
     }
-    public void setQuantity(int q){
+    public void setQuantity(double q){
         quantity = q;
     }
     //get methods
@@ -98,7 +98,7 @@ public class Items {
     public String getUnit(){
         return unit;
     }
-    public int getQuantity(){
+    public double getQuantity(){
         return quantity;
     }
 

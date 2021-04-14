@@ -23,7 +23,7 @@ public class ItemsValidation {
     public ItemsValidation(){
     }
     //validation method that returns true assuming all user input is correct
-    public boolean validation(int id,String name, int vID, double sPrice,String date, double pPrice,int quantity){
+    public boolean validation(int id,String name, int vID, double sPrice,String date, double pPrice,double quantity){
         //check sPrice
         if(twoDecimals(sPrice)){
         JOptionPane.showMessageDialog(null, "your selling price input is invalid");
@@ -60,7 +60,7 @@ public class ItemsValidation {
         }
         return false;
 }
-    public boolean neg(int q){
+    public boolean neg(double q){
         if (q<0){
             return true;
         }

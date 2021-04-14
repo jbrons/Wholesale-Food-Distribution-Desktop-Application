@@ -112,11 +112,11 @@ public class EditItemsGUI implements FocusListener {
                     //validation method ensures all other inputs arent invalid
                     if(val.validation(Integer.parseInt(iIDField.getText()),iNameField.getText(),(int)vendorCombo.getSelectedItem(),
                             Double.parseDouble(sPriceFormattedText.getText().replace(",","")), expFormattedText.getText(),
-                            Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Integer.parseInt(quantityField.getText()))) {
+                            Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Double.parseDouble(quantityField.getText()))) {
                         //setting item information
                         Items updatedItem = new Items(Integer.parseInt(iIDField.getText()) ,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                                 (String) categoryCombo.getSelectedItem(),expFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
-                                (String) unitCombo.getSelectedItem(),Integer.parseInt(quantityField.getText()));
+                                (String) unitCombo.getSelectedItem(),Double.parseDouble(quantityField.getText()));
                         itemsList.editItem(updatedItem,index);
                         closeItemEdit();
                     }

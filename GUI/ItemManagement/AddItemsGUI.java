@@ -96,12 +96,12 @@ public class AddItemsGUI implements FocusListener {
 
                     //validation call ensures there is no other types of bad user input
                     if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
-                            expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Integer.parseInt(quantityField.getText()))){
+                            expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Double.parseDouble(quantityField.getText()))){
 
 
                         Items item = new Items(id,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                                 (String) categoryCombo.getSelectedItem(),expirationFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
-                                (String) unitCombo.getSelectedItem(),Integer.parseInt(quantityField.getText()));
+                                (String) unitCombo.getSelectedItem(),Double.parseDouble(quantityField.getText()));
                         itemsList.addItem(item);
                         added = true;
                     }

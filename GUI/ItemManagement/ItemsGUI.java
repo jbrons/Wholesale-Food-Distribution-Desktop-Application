@@ -120,7 +120,6 @@ public class ItemsGUI implements FocusListener{
     }
     public int searchIndex(int index){
         String itemsString;
-        System.out.println(iList.getModel().getElementAt(index));
         itemsString = (String) iList.getModel().getElementAt(index);
         return itemsList.getId(itemsString);
     }
