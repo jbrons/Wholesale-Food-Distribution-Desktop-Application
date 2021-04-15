@@ -1,0 +1,64 @@
+package src.CustomerOrder;
+
+import java.util.HashMap;
+
+public class CustomerOrderDatabase {
+    /**
+     * instance for singleton pattern
+     */
+    private static CustomerOrderDatabase databaseInstance = null;
+
+    /**
+     * map of id and customer order
+     */
+    HashMap<Integer, CustomerOrder> database;
+
+    private CustomerOrderDatabase()
+    {
+        database = new HashMap<>();
+    }
+
+    /**
+     * get instance of order db
+     * @return
+     */
+    public static CustomerOrderDatabase getInstance()
+    {
+        if(databaseInstance == null)
+            databaseInstance = new CustomerOrderDatabase();
+
+        return databaseInstance;
+    }
+
+    /**
+     * add new order to db
+     * @param order new order
+     * @return
+     */
+    public boolean addOrder(CustomerOrder order) {
+        if(database.containsKey(order.getOrderID()))
+            return false;
+        else
+            database.put(order.getOrderID(), order);
+
+        return true;
+    }
+
+    /**
+     * delete order from db
+     * @param order existring order
+     * @return
+     */
+    public boolean deleteOrder(CustomerOrder order) {
+        return database.remove(order.getOrderID(), order);
+    }
+
+    /**
+     * get all orders
+     * @return
+     */
+    public CustomerOrder[] getAllOrders()
+    {
+        return database.values().toArray(new CustomerOrder[0]);
+    }
+}

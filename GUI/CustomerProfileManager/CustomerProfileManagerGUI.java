@@ -1,7 +1,7 @@
 package GUI.CustomerProfileManager;
 /**
- * Author : Joyshree Chowdhury
  *
+ * Customer profile manager
  */
 
 import GUI.DetailCustomerProfile.DetailCustomerProfileGUI;
@@ -18,7 +18,7 @@ public class CustomerProfileManagerGUI {
 
     CustomerProfileDatabase database;
 
-    /** UI Components
+    /** User interface Components
     */
     private JPanel panel1;
     private JButton editProfileButton;
@@ -47,15 +47,16 @@ public class CustomerProfileManagerGUI {
         updateView();
     }
     private void initUI() {
-        /**Add new profile button clicked
-         *
+        /**
+         Add new profile button clicked
+
          */
         addNewProfileButton.addActionListener(e -> {
-            mainWindowGUI.setJPanel(new DetailCustomerProfileGUI().getPanel());
+            mainWindowGUI.setJPanel(new DetailCustomerProfileGUI().getPanel(), "Add Customer Profile");
         });
 
-        /**Edit Profile button clicked
-         *
+        /**
+         * Edit Profile button clicked
          */
         editProfileButton.addActionListener(e -> {
             /**Check owner user select the item in the list
@@ -87,7 +88,7 @@ public class CustomerProfileManagerGUI {
             /** Show DetailProfile with selected profile data
              *
              */
-            mainWindowGUI.setJPanel(new DetailCustomerProfileGUI(profile).getPanel());
+            mainWindowGUI.setJPanel(new DetailCustomerProfileGUI(profile).getPanel(), "Edit Customer Profile");
         });
 
         /** Delete Profile button clicked

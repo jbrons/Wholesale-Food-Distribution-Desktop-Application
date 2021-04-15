@@ -11,6 +11,10 @@ public class CustomerProfileDatabase {
     private CustomerProfileDatabase()
     {
         database = new HashMap<>();
+        addProfile(new CompanyCustomerProfile("John Smith", "Lincoln", "New York",
+                "New York", "123456789", 12, 10, "12/12/2020"));
+        addProfile(new CompanyCustomerProfile("Jane Lin", "Walt", "Chicago",
+                "Illinois", "123456789", 23, 13, "12/12/2020"));
     }
 
     public static CustomerProfileDatabase getInstance()
@@ -36,7 +40,11 @@ public class CustomerProfileDatabase {
 
     public CustomerProfile[] getAllProfiles()
     {
+
         return database.values().toArray(new CustomerProfile[0]);
     }
 
+    public CustomerProfile getProfile(int customerID) {
+        return database.get(customerID);
+    }
 }

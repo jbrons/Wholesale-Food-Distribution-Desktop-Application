@@ -1,5 +1,6 @@
 package GUI.MainMenu;
 
+import GUI.CustomerOrderManagement.CustomerOrderGUI;
 import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
@@ -25,6 +26,7 @@ public class MainMenuGUI {
     private JButton logoutButton;
     private JButton itemManagementButton;
     private JButton vendorManagementButton;
+    private JButton customerOrderManagementButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -43,15 +45,22 @@ public class MainMenuGUI {
             vendorManagementButton.setVisible(false);
         }
 
+        if (database.getCurrentUser().getRole() != EnumUserRoles.SALES_PERSON &&
+                database.getCurrentUser().getRole() != EnumUserRoles.OWNER) {
+            customerOrderManagementButton.setEnabled(false);
+            customerOrderManagementButton.setVisible(false);
+        }
+
         userManagementButton.addActionListener(e->
                 mainWindowGUI.setJPanel(new UserManagementGUI().getPanel()));
 
+        /*
         customerManagementButton.addActionListener(e -> {
             if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER)
                 mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel());
             else
                 JOptionPane.showMessageDialog(null, "You are not OWNER user.");
-        });
+        });*/
 
         vendorManagementButton.addActionListener(e->
         {
@@ -65,6 +74,21 @@ public class MainMenuGUI {
 
         logoutButton.addActionListener(e ->
                 mainWindowGUI.setJPanel(new LoginGUI().getPanel()));
+
+
+       //customer management
+        customerManagementButton.addActionListener(e -> {
+            if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER)
+                mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel(), "Customer Profile Management");
+            else
+                JOptionPane.showMessageDialog(null, "You are not OWNER user.");
+        });
+        //customer order management
+        customerOrderManagementButton.addActionListener(e -> {
+            mainWindowGUI.setJPanel(new CustomerOrderGUI().getPanel(), "Customer Order Management");
+        });
+
+
     }
 
     public JPanel getPanel()

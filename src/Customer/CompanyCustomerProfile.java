@@ -1,6 +1,6 @@
 package src.Customer;
 /**
- * Author : Joyshree Chowdhury
+ *
  *
  */
 
@@ -13,6 +13,7 @@ public class CompanyCustomerProfile implements CustomerProfile {
     /**
      * State list in us
      */
+
     public static String[] STATES = new String[] {
             "AL",
             "AK",
@@ -152,6 +153,7 @@ public class CompanyCustomerProfile implements CustomerProfile {
      * @param customerName
      */
     public void setCustomerName(String customerName) {
+
         this.customerName = customerName;
     }
 

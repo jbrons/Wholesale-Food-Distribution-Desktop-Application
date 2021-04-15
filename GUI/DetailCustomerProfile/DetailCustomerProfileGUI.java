@@ -1,6 +1,6 @@
 package GUI.DetailCustomerProfile;
 /**
- * Author : Joyshree Chowdhury
+ *
  *
  */
 
@@ -66,12 +66,17 @@ public class DetailCustomerProfileGUI {
         initialize(profile);
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanel()
     {
+
         return panel1;
     }
 
-    /**Initalize ui components with profile
+    /**Initialize ui components with profile
      *
      * @param profile
      */

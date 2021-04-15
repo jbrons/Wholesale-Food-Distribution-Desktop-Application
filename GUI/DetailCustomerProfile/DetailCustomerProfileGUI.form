@@ -85,16 +85,6 @@
               <text value="Last Order Date"/>
             </properties>
           </component>
-          <component id="142bd" class="javax.swing.JTextField" binding="txtCustomerID">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <editable value="false"/>
-            </properties>
-          </component>
           <component id="785b" class="javax.swing.JTextField" binding="txtCustomerName">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -160,6 +150,16 @@
               </grid>
             </constraints>
             <properties/>
+          </component>
+          <component id="142bd" class="javax.swing.JTextField" binding="txtCustomerID">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <editable value="false"/>
+            </properties>
           </component>
         </children>
       </grid>
