@@ -111,9 +111,18 @@ public class InvoiceGUI implements FocusListener {
     }
 
     public int searchIndex(int index){
-        String customerString;
+        System.out.println(iList.getModel().getElementAt(index));
 
-        return customerOrderDatabase.getIndex(iList.getModel().getElementAt(index));
+        int i=0;
+        for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
+            if (order ==iList.getModel().getElementAt(index)) {
+                System.out.println(i);
+                return i;
+            }
+            i++;
+        }
+        System.out.println("-1");
+        return -1;
     }
 
 

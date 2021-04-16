@@ -38,6 +38,7 @@ public class InvoiceDisplayGUI {
     {
 
         CustomerOrder order = customerOrderDatabase.get(this.index);
+        System.out.println(this.getIndex());
         //sets label to the index of selected item
         invoiceDetails.setText(order.toString());
         invoiceHeader.setText(order.toString());
