@@ -106,4 +106,7 @@ public class VendorList {
     public Vendor getVendor(int index) {
         return vendorList.get(index);
     }
+
+    public boolean isEmpty() {return vendorList.isEmpty();}
+    public int size() { return vendorList.size();}
 }

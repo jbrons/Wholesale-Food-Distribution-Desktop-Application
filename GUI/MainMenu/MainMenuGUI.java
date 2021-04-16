@@ -11,7 +11,10 @@ import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
 import GUI.VendorManagement.VendorUI;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
+import src.Vendor.Vendor;
+
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Handles the GUI form MainMenuGUI.form
@@ -96,6 +99,24 @@ public class MainMenuGUI {
         });
 
 
+    }
+
+    public void currentDiscountsAlert()
+    {
+        DiscountAlertLogic discountAlertLogic = new DiscountAlertLogic();
+        ArrayList<Vendor> vendors = discountAlertLogic.getCurrentDiscounts();
+
+        if(vendors.isEmpty())
+            return;
+
+        StringBuilder alertMessage = new StringBuilder("=== The below vendor(s) have started their discounts ===\n");
+
+        for (Vendor vendor : vendors) {
+            alertMessage.append(vendor.getName()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(null, alertMessage.toString(),
+                "Current Seasonal Discounts", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public JPanel getPanel()

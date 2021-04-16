@@ -3,6 +3,7 @@ package GUI.Login;
 import javax.swing.*;
 import java.util.Arrays;
 
+import GUI.MainMenu.DiscountAlertLogic;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.PasswordChange.PasswordChangeGUI;
@@ -27,6 +28,7 @@ public class LoginGUI {
     private JButton btnLogin;
 
     LoginLogic loginLogic;
+    DiscountAlertLogic discountAlertLogic;
 
     public LoginGUI()
     {
@@ -57,6 +59,12 @@ public class LoginGUI {
 
                 if(currentUser.getFirstLogin() && isNormalUser)
                     mainWindowGUI.setJPanel(new PasswordChangeGUI().getPanel());
+                else if(currentUser.getRole() == EnumUserRoles.OWNER)
+                {
+                    MainMenuGUI mainMenuGUI = new MainMenuGUI();
+                    mainWindowGUI.setJPanel(mainMenuGUI.getPanel());
+                    mainMenuGUI.currentDiscountsAlert();
+                }
                 else
                     mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
 
