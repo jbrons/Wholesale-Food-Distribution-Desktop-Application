@@ -50,6 +50,7 @@ public class InvoiceGUI implements FocusListener {
                     if (profile.getCustomerName().contains(searchField.getText()))
                         searchedItem.add(profile);
                 }
+                
                 setCatalog(searchedItem);
                 if(iList.getModel().getSize() == 0 ){
                     JOptionPane.showMessageDialog(null, searchedItem + " not found");
