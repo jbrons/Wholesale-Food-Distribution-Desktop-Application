@@ -13,10 +13,6 @@ public class ChildItems {
     private String message; // the bean  property
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public ChildItems() {
-        // default
-    }
-
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
