@@ -74,6 +74,7 @@ public class VendorCreation implements ActionListener, KeyListener {
 
     public VendorCreation() {
         mainWindowGUI = MainWindowGUI.getInstance();
+        mainWindowGUI.setTitle("Create Vendor");
         addListeners();
         setUpGUI();
     }
@@ -81,6 +82,7 @@ public class VendorCreation implements ActionListener, KeyListener {
     public VendorCreation(Vendor vendor) {
         this();
         this.vendor = vendor;
+        mainWindowGUI.setTitle("Update Vendor");
         initializeInputs(vendor);
     }
 
@@ -226,6 +228,16 @@ public class VendorCreation implements ActionListener, KeyListener {
 
         for (Component component : components) {
             if (component instanceof JTextField)  {
+                component.addKeyListener(this);
+            } else if (component instanceof JFormattedTextField) {
+                component.addKeyListener(this);
+            } else if (component instanceof JButton) {
+                ((JButton) component).addActionListener(this);
+            }
+        }
+        /*
+                for (Component component : components) {
+            if (component instanceof JTextField)  {
                 ((JTextField) component).addActionListener(this);
                 component.addKeyListener(this);
             } else if (component instanceof JFormattedTextField) {
@@ -237,6 +249,7 @@ public class VendorCreation implements ActionListener, KeyListener {
                 ((JComboBox) component).addActionListener(this);
             }
         }
+         */
     }
 
     private MaskFormatter formatter(String format, char placeHolder) {
@@ -272,11 +285,15 @@ public class VendorCreation implements ActionListener, KeyListener {
                     vendorList.addVendor(vendor);
                    displayModel.addVendor(vendor.toString());
                 }
-                mainWindowGUI.setJPanel(new VendorUI().getPanel());
+                closeCreationGUI();
             }
         } else if (userAction == btnCancel) {
-            mainWindowGUI.setJPanel(new VendorUI().getPanel());
+            closeCreationGUI();
         }
+    }
+
+    public void closeCreationGUI() {
+        mainWindowGUI.setJPanel(new VendorUI().getPanel());
     }
 
     private double getNumber(String numStr) {
