@@ -25,4 +25,8 @@ public class InvoiceGUI implements FocusListener {
     }
     public void focusLost(FocusEvent e) {
     }
+    public JPanel getPanel()
+    {
+        return rootPanel;
+    }
 }

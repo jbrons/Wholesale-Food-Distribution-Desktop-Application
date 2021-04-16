@@ -41,6 +41,7 @@ public class CustomerOrder {
      */
     public CustomerOrder(int customerID, String needByDate, String orderDate) {
         orderID = ++ID;
+        this.customerID = customerID;
         this.needByDate = needByDate;
         this.orderDate = orderDate;
         this.items = new HashMap<>();

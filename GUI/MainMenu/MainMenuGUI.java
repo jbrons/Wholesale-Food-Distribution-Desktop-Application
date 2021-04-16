@@ -1,6 +1,7 @@
 package GUI.MainMenu;
 
 import GUI.CustomerOrderManagement.CustomerOrderGUI;
+import GUI.InvoiceManagement.InvoiceGUI;
 import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
@@ -27,6 +28,7 @@ public class MainMenuGUI {
     private JButton itemManagementButton;
     private JButton vendorManagementButton;
     private JButton customerOrderManagementButton;
+    private JButton customerInvoiceManagementButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -86,6 +88,11 @@ public class MainMenuGUI {
         //customer order management
         customerOrderManagementButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new CustomerOrderGUI().getPanel(), "Customer Order Management");
+        });
+
+        //
+        customerInvoiceManagementButton.addActionListener(e -> {
+            mainWindowGUI.setJPanel(new InvoiceGUI().getPanel(), "Customer Invoice Management");
         });
 
 
