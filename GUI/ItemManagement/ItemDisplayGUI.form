@@ -6,7 +6,7 @@
       <xy x="20" y="16" width="904" height="244"/>
     </constraints>
     <properties>
-      <background color="-5585187"/>
+      <background color="-1118482"/>
       <foreground color="-5585187"/>
     </properties>
     <border type="none"/>
@@ -21,7 +21,7 @@
           </grid>
         </constraints>
         <properties>
-          <background color="-5585187"/>
+          <background color="-1118482"/>
         </properties>
         <border type="none"/>
         <children>
@@ -46,7 +46,7 @@
           </grid>
         </constraints>
         <properties>
-          <background color="-5585187"/>
+          <background color="-1118482"/>
         </properties>
         <border type="none"/>
         <children>
@@ -73,7 +73,7 @@
           </grid>
         </constraints>
         <properties>
-          <background color="-5585187"/>
+          <background color="-1118482"/>
         </properties>
         <border type="none"/>
         <children>
