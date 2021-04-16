@@ -80,6 +80,7 @@ public class CustomerOrderDatabase {
     }
 
     public CustomerOrder get(int index) {
-        return database.get(index);
+        CustomerOrder order = database.get(index);
+        return order;
     }
 }
