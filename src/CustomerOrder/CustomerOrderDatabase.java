@@ -67,7 +67,7 @@ public class CustomerOrderDatabase {
     }
 
     //I added the next two functions for me to use
-    public int getIndex(String s){
+    public int getIndex(Object s){
         int i=0;
         List<CustomerOrder> list = new ArrayList<>(database.values());
         for (CustomerOrder order : list) {
