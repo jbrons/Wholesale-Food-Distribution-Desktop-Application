@@ -1,5 +1,7 @@
 package src.CustomerOrder;
 
+import src.Item.Items;
+
 import java.util.*;
 
 public class CustomerOrderDatabase {
@@ -62,5 +64,22 @@ public class CustomerOrderDatabase {
         List<CustomerOrder> list = new ArrayList<>(database.values());
         list.sort(Comparator.comparingInt(CustomerOrder::getOrderID));
         return list.toArray(new CustomerOrder[0]);
+    }
+
+    //I added the next two functions for me to use
+    public int getIndex(String s){
+        int i=0;
+        List<CustomerOrder> list = new ArrayList<>(database.values());
+        for (CustomerOrder order : list) {
+            if(s.equals(order.toString())){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
+    public CustomerOrder get(int index) {
+        return database.get(index);
     }
 }

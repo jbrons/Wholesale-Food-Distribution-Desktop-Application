@@ -27,6 +27,7 @@ public class InvoiceGUI implements FocusListener {
     private JButton logoutButton;
     private JLabel invoiceLabel;
     private JButton createInvoiceButton;
+    private JLabel InvoiceNameLabel;
     private JTextField focused = searchField;
     private MainWindowGUI mainWindowGUI;
 
@@ -69,7 +70,9 @@ public class InvoiceGUI implements FocusListener {
             });
         createInvoiceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-
+                int index = searchIndex(iList.getSelectedIndex());
+                InvoiceDisplayGUI dis = new InvoiceDisplayGUI(index);
+                mainWindowGUI.setJPanel(dis.getPanel());
             }
         });
         leaveButton.addActionListener(new ActionListener() {
@@ -81,13 +84,13 @@ public class InvoiceGUI implements FocusListener {
         iList.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
                 try {
+
                     JList jList = (JList) evt.getSource();
-                    if (evt.getClickCount() == 2) {
-                        //index of selected jList is stored and then ItemsGUI displays selectedIndex
-                        /*int index = searchIndex(iList.locationToIndex(evt.getPoint()));
+
+                        /*
                         ItemDisplayGUI dis = new ItemDisplayGUI(index);
                         mainWindowGUI.setJPanel(dis.getPanel());*/
-                    }
+
                 }
                 catch(ArrayIndexOutOfBoundsException a){
                     JOptionPane.showMessageDialog(null, "Please make sure you have selected an item.");
@@ -106,13 +109,13 @@ public class InvoiceGUI implements FocusListener {
         iList.setListData(v);
         iList.setFont(new Font("Arial",Font.BOLD,12));
     }
-    /*
+
     public int searchIndex(int index){
-        String itemsString;
-        itemsString = (String) iList.getModel().getElementAt(index);
-        return itemsList.getId(itemsString);
+        String customerString;
+        customerString = (String) iList.getModel().getElementAt(index);
+        return customerOrderDatabase.getIndex(customerString);
     }
-    */
+
 
     public void closeCatalog(){
         mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
