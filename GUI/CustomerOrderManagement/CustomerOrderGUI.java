@@ -287,7 +287,7 @@ public class CustomerOrderGUI {
         try {
             quantity = Integer.parseInt(textQuantity.getText());
 
-            if (quantity == 0) {
+            if (quantity <= 0) {
                 JOptionPane.showMessageDialog(null, "Please input positive quantity");
                 return false;
             }
@@ -349,6 +349,8 @@ public class CustomerOrderGUI {
         double price;
         int itemId = listItems.getSelectedIndex();
         if (itemId == -1) {
+            price = 0;
+        } else if (quantity <= 0) {
             price = 0;
         } else {
             Items item = itemDB.get(itemId);
