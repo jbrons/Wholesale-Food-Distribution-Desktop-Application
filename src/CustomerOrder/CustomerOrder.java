@@ -1,3 +1,7 @@
+/**
+ *
+ */
+
 package src.CustomerOrder;
 
 import src.Item.Items;
@@ -108,8 +112,9 @@ public class CustomerOrder {
      * @param quantity quantity
      */
     public void addItem(Items item, Integer quantity) {
-        if (items.size() < 5)
-            items.put(item, quantity);
+        if (items.size() < 5) {
+            items.merge(item, quantity, Integer::sum);
+        }
     }
 
     /**

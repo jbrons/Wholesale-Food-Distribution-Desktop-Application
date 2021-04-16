@@ -1,7 +1,12 @@
 package src.Customer;
 
 
+import src.CustomerOrder.CustomerOrder;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 public class CustomerProfileDatabase {
 
@@ -40,8 +45,9 @@ public class CustomerProfileDatabase {
 
     public CustomerProfile[] getAllProfiles()
     {
-
-        return database.values().toArray(new CustomerProfile[0]);
+        List<CustomerProfile> list = new ArrayList<>(database.values());
+        list.sort(Comparator.comparingInt(CustomerProfile::getCustomerID));
+        return list.toArray(new CustomerProfile[0]);
     }
 
     public CustomerProfile getProfile(int customerID) {

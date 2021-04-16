@@ -1,6 +1,6 @@
 package src.CustomerOrder;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class CustomerOrderDatabase {
     /**
@@ -59,6 +59,8 @@ public class CustomerOrderDatabase {
      */
     public CustomerOrder[] getAllOrders()
     {
-        return database.values().toArray(new CustomerOrder[0]);
+        List<CustomerOrder> list = new ArrayList<>(database.values());
+        list.sort(Comparator.comparingInt(CustomerOrder::getOrderID));
+        return list.toArray(new CustomerOrder[0]);
     }
 }

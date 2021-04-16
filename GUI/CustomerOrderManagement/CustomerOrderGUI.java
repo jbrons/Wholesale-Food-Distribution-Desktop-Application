@@ -1,5 +1,5 @@
 /**
- * Customer Order
+ * Customer Order management
  *
  */
 package GUI.CustomerOrderManagement;
@@ -152,6 +152,7 @@ public class CustomerOrderGUI {
             if (addItem(profile, order)) {
                 // Add order to database
                 orderDB.addOrder(order);
+                setLists();
             }
 
         });
@@ -160,11 +161,29 @@ public class CustomerOrderGUI {
         btnAppendItem.addActionListener(e -> {
             // Get order
             CustomerOrder order = listCOrders.getSelectedValue();
+            if (order == null) {
+                JOptionPane.showMessageDialog(null, "Please select order in the orders list");
+                return;
+            }
+
             // Get customer
-            CustomerProfile customer = listCustomers.getSelectedValue();
+            CustomerProfile customer = null;
+            for (CustomerProfile c : customerDB.getAllProfiles()) {
+                if (c.getCustomerID() == order.getCustomerID()) {
+                    customer = c;
+                    break;
+                }
+            }
+
+            if (customer == null) {
+                JOptionPane.showMessageDialog(null, "Invalid Customer");
+                return;
+            }
 
             // Add item
             addItem(customer, order);
+
+            setLists();
         });
 
         btnDeleteOrder.addActionListener(e -> {
@@ -188,11 +207,8 @@ public class CustomerOrderGUI {
 
             orderDB.deleteOrder(order);
 
-
             // Set list data
-            listCOrders.setListData(orderDB.getAllOrders());
-            listCustomers.setListData(customerDB.getAllProfiles());
-            listItems.setListData(itemDB.getAllItemDetails());
+            setLists();
         });
 
         // Get quantity and calculate the price
@@ -248,6 +264,11 @@ public class CustomerOrderGUI {
             return false;
         }
 
+        if (listItems.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Please select item in the items list");
+            return false;
+        }
+
         // Get selected item
         Items item = itemDB.get(listItems.getSelectedIndex());
 
@@ -265,6 +286,11 @@ public class CustomerOrderGUI {
         int quantity;
         try {
             quantity = Integer.parseInt(textQuantity.getText());
+
+            if (quantity == 0) {
+                JOptionPane.showMessageDialog(null, "Please input positive quantity");
+                return false;
+            }
 
             // Compare item's quantity and input quantity
             if (item.getQuantity() >= quantity) {
@@ -285,11 +311,6 @@ public class CustomerOrderGUI {
 
                 // Add item
                 order.addItem(item, quantity);
-
-                // Set list data
-                listCOrders.setListData(orderDB.getAllOrders());
-                listCustomers.setListData(customerDB.getAllProfiles());
-                listItems.setListData(itemDB.getAllItemDetails());
             } else {
                 JOptionPane.showMessageDialog(null, "Quantity value is much than item's quantity in inventory");
                 return false;
@@ -301,6 +322,15 @@ public class CustomerOrderGUI {
         }
 
         return true;
+    }
+
+    /**
+     * Set list data
+     */
+    private void setLists() {
+        listCOrders.setListData(orderDB.getAllOrders());
+        listCustomers.setListData(customerDB.getAllProfiles());
+        listItems.setListData(itemDB.getAllItemDetails());
     }
 
     /**
