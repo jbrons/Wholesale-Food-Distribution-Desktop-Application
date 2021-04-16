@@ -12,7 +12,7 @@ import javax.swing.*;
  * @date 03/18/2021
  *
  */
-public class ListModel {
+public class ListModel implements IModel {
     private static ListModel firstInstance = null;
     private DefaultListModel<String> listModel;
 

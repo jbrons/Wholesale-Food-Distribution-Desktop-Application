@@ -235,21 +235,6 @@ public class VendorCreation implements ActionListener, KeyListener {
                 ((JButton) component).addActionListener(this);
             }
         }
-        /*
-                for (Component component : components) {
-            if (component instanceof JTextField)  {
-                ((JTextField) component).addActionListener(this);
-                component.addKeyListener(this);
-            } else if (component instanceof JFormattedTextField) {
-                ((JFormattedTextField) component).addActionListener(this);
-                component.addKeyListener(this);
-            } else if (component instanceof JButton) {
-                ((JButton) component).addActionListener(this);
-            } else if (component instanceof JComboBox) {
-                ((JComboBox) component).addActionListener(this);
-            }
-        }
-         */
     }
 
     private MaskFormatter formatter(String format, char placeHolder) {

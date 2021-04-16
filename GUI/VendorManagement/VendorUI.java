@@ -41,7 +41,7 @@ public class VendorUI implements ActionListener {
     private static boolean viewProfiles = true;
 
     VendorList vendorList = VendorList.getInstance();
-    ListModel vendorModel = ListModel.getInstance();  // fix
+    ListModel vendorModel = ListModel.getInstance();  // fix resetting it each time?
     UserDatabase database = UserDatabase.getInstance();
 
     SearchModel searchModel = new SearchModel();
@@ -70,7 +70,6 @@ public class VendorUI implements ActionListener {
        } else {
            lstSearchResults.setVisible(false);
            lstDisplay.setModel(vendorModel.getDisplayListModel());
-           vendorModel.addVendor("<html><u>Name, Phone Number, Balance, Last Paid Amount, Last Order Date, Seasonal Discounts Start Date</u></html>");
            lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
            lstDisplay.setVisible(!viewProfiles);
            scpDisplay.setVisible(!viewProfiles);

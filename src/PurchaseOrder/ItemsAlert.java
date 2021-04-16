@@ -1,64 +1,55 @@
 package src.PurchaseOrder;
 
-import src.Item.Items;
+import GUI.PurchaseOrderManagement.*;
 import src.User.EnumUserRoles;
-import src.User.User;
 import src.User.UserDatabase;
-import src.Vendor.VendorList;
 
-import java.util.HashMap;
+import javax.swing.*;
 
-public class ItemsAlert extends Items {
-    private static ItemsAlert alertInstance = null;
-    private HashMap<Integer, Integer> stock;
-    private int outOfStock = 0;
+public class ItemsAlert  {
+    private static ItemsStock stock = ItemsStock.getInstance();
+    private static int outOfStock = 0;  /* may hold value between 0-2 */
+    private static UserDatabase database = UserDatabase.getInstance();
 
-    private ItemsAlert()
-    {
-        stock = new HashMap<>();
-    }
+    // private ItemsAlert() {}
 
-    public static ItemsAlert getInstance() {
-        if (alertInstance == null) {
-            alertInstance = new ItemsAlert();
+    public static void alertStock(int id, double quantity) {
+        if (database.getCurrentUser().getRole() != EnumUserRoles.PURCHASER) {
+            return;
         }
-        return alertInstance;
-    }
 
-    public void updateStock(int quantity, int id) {
         // the item has been accounted for already
-        if (quantity == 0 && stock.containsKey(id)) {
-            if (stock.get(id) == quantity) {
-                /* do nothing */
-            } else if (stock.get(id) == 0) {
+        if (stock.isInInventory(id)) {
+            if (stock.getItem(id) == quantity) {
+                return;
+            } else if (stock.getItem(id) == 0) {
                 decrementOutOfStock();
-                setItem(id, quantity);
-            } else if (quantity == 0) {
-                ++outOfStock;
-                setItem(id, quantity);
+                stock.deleteItem(id);
+                return;
             }
-        } else {
-            setItem(id, quantity);
+        }
+        if (quantity == 0) {
+            incrementOutOfStock();  // fix NAMESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+            stock.setItem(id, quantity);
+
+            if (outOfStock == 2) {
+                ItemsAlertGUI.displayAlert("Two Items have gone out of Stock");
+                outOfStock = 0;
+            }
         }
     }
 
-    private void decrementOutOfStock() {
+    private static void decrementOutOfStock() {  // rename to something less stupid
         if (outOfStock > 0) {
             --outOfStock;
+        } else {
+            // throw error
         }
     }
 
-    private void incrementOutOfStock() {
+    private static void incrementOutOfStock() {
         if (outOfStock < 2) {
             ++outOfStock;
         }
-    }
-
-    public void setItem(int id, int quantity) {
-        stock.put(id, quantity);
-    }
-
-    public boolean deleteItem(User user) {
-        return stock.remove(user.getUserID(), user);
     }
 }

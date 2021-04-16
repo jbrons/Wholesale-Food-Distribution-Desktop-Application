@@ -13,7 +13,7 @@ import javax.swing.*;
  * @date 03/18/2021
  *
  */
-public class SearchModel {
+public class SearchModel implements IModel {
     private DefaultListModel<String> searchModel;
 
     public SearchModel() {
