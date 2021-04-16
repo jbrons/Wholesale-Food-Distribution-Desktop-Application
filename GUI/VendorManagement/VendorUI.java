@@ -23,7 +23,6 @@ import GUI.MainWindow.MainWindowGUI;
 public class VendorUI implements ActionListener {
     private JPanel rootPanel;
 
-    private JLabel lblSearch;
     private JTextField txtSearchBar;
 
     private JButton btnGo;
@@ -38,18 +37,21 @@ public class VendorUI implements ActionListener {
     private JScrollPane scpDisplay;
     private JList<String> lstSearchResults;
     private JPanel pnlListBackground;
+    private JLabel lblListInfo;
     private static boolean viewProfiles = true;
 
     VendorList vendorList = VendorList.getInstance();
-    ListModel vendorModel = ListModel.getInstance();
+    ListModel vendorModel = ListModel.getInstance();  // fix
     UserDatabase database = UserDatabase.getInstance();
 
     SearchModel searchModel = new SearchModel();
 
     MainWindowGUI mainWindowGUI;
+    private JLabel lblSearch;
 
     public VendorUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
+        mainWindowGUI.setTitle("Vendor Management");
         addListeners();
         setUpGUI();
     }
@@ -68,6 +70,7 @@ public class VendorUI implements ActionListener {
        } else {
            lstSearchResults.setVisible(false);
            lstDisplay.setModel(vendorModel.getDisplayListModel());
+           vendorModel.addVendor("<html><u>Name, Phone Number, Balance, Last Paid Amount, Last Order Date, Seasonal Discounts Start Date</u></html>");
            lstDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
            lstDisplay.setVisible(!viewProfiles);
            scpDisplay.setVisible(!viewProfiles);
@@ -103,6 +106,8 @@ public class VendorUI implements ActionListener {
                         displayError("Not a valid ID.");
                         return;
                     }
+                } else {
+
                 }
             } else if (option == JOptionPane.NO_OPTION) {
                 index = vendorList.getIndex(input);
