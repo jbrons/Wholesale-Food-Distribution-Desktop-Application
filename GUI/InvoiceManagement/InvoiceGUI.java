@@ -45,19 +45,18 @@ public class InvoiceGUI implements FocusListener {
         //button actions
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-               /*
-                CustomerProfile[] v = customerProfileDatabase.getAllProfiles();
-                for(int i =0;i<customerProfileDatabase.getAllProfiles().length;i++){
-                    CustomerProfile.
+                Vector<CustomerProfile> searchedItem = new Vector<>();
+                for (CustomerProfile profile : customerProfileDatabase.getAllProfiles()) {
+                    if (profile.getCustomerName().contains(searchField.getText()))
+                        searchedItem.add(profile);
                 }
-                /*
-                    String searchedItem = searchField.getText();
-                    setCatalog(itemsList.getSearchDetails(searchedItem));
-                    if(iList.getModel().getSize() == 0 ){
-                        JOptionPane.showMessageDialog(null, searchedItem + " not found");
-                    }*/
-                setCatalog(customerOrderDatabase.getAllOrders());
+                
+                setCatalog(searchedItem);
+                if(iList.getModel().getSize() == 0 ){
+                    JOptionPane.showMessageDialog(null, searchedItem + " not found");
                 }
+
+            }
 
             });
         createInvoiceButton.addActionListener(new ActionListener() {
@@ -94,7 +93,7 @@ public class InvoiceGUI implements FocusListener {
     }
 
 
-    public void setCatalog(CustomerOrder[] v){
+    public void setCatalog(Vector<CustomerProfile> v){
         iList.setListData(v);
         iList.setFont(new Font("Arial",Font.BOLD,12));
     }
