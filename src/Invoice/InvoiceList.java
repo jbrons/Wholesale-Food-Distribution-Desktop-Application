@@ -79,7 +79,7 @@ public class InvoiceList {
 
         for (Invoice invoice : invoiceList) {
             LocalDate orderDate = LocalDate.parse(invoice.getOrderDate());
-            
+
             boolean inBetweenDates = startDate.isBefore(orderDate) && endDate.isAfter(orderDate);
             boolean equalToStartDate = startDate.isEqual(orderDate);
             boolean equalToEndDate = endDate.isEqual(orderDate);
