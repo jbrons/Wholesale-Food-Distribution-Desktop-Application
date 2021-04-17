@@ -21,7 +21,7 @@ public class MainWindowGUI {
 
     private MainWindowGUI() {
         rootFrame = new JFrame("Login");
-        rootFrame.setContentPane(new LoginGUI().getPanel());
+        rootFrame.setContentPane(new LoginGUI(1).getPanel());
         rootFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         rootFrame.pack();

@@ -29,8 +29,17 @@ public class LoginGUI {
 
     LoginLogic loginLogic;
     DiscountAlertLogic discountAlertLogic;
+    MainWindowGUI mainWindowGUI;
 
     public LoginGUI()
+    {
+        loginLogic = new LoginLogic();
+        mainWindowGUI = MainWindowGUI.getInstance();
+        mainWindowGUI.setTitle("Login");
+        setupGUI();
+    }
+
+    public LoginGUI(int n)
     {
         loginLogic = new LoginLogic();
         setupGUI();
@@ -53,7 +62,7 @@ public class LoginGUI {
                 Arrays.fill(password, '0');
 
                 User currentUser = UserDatabase.getInstance().getCurrentUser();
-                MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
+                mainWindowGUI = MainWindowGUI.getInstance();
 
                 boolean isNormalUser = currentUser.getPermissionLevel() < EnumUserRoles.ADMINISTRATOR.getPermissionLevel();
 
