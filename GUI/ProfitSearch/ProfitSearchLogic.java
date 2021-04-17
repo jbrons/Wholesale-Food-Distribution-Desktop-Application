@@ -23,19 +23,25 @@ public class ProfitSearchLogic {
         invoiceListDatabase = InvoiceList.getInstance();
     }
 
-    public double getProfit(String itemName, LocalDate startDate, LocalDate endDate)
+    public double getProfit(Items item, LocalDate startDate, LocalDate endDate)
     {
         Vector<Invoice> invoiceList = invoiceListDatabase.getInvoiceList(startDate, endDate);
 
         if(invoiceList.isEmpty())
             return totalProfit;
 
+        double itemMargin = item.getSellingPrice() - item.getPurchasePrice();
+
         for(Invoice invoice : invoiceList)
         {
-            Map<Items, Integer> itemsList;
-            itemsList = invoice.getItems();
+            Map<Items, Integer> itemsList = invoice.getItems();
 
-            itemsList.get(itemName);
+            if(itemsList.get(item) != null) {
+                int quantitySold = itemsList.get(item);
+
+                totalProfit += quantitySold * itemMargin;
+            }
+
         }
 
         return totalProfit;
@@ -77,10 +83,6 @@ public class ProfitSearchLogic {
 
         if(endDate == null) {
             displayError("Incorrect End Date!");
-            return false;
-        }
-        else if(today.isBefore(endDate)) {
-            displayError("End Date cannot be after today's date! (" + today.toString() + ")");
             return false;
         }
 

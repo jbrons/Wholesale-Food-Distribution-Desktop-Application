@@ -74,7 +74,7 @@ public class ProfitSearchGUI {
                     + "\nStart Date: " + startDate.toString() + "\nEnd Date: " + endDate.toString()
                     + "\n\nTotal Profit: $";
 
-            double totalProfit = profitSearchLogic.getProfit(itemName, startDate, endDate);
+            double totalProfit = profitSearchLogic.getProfit(item, startDate, endDate);
             alertMessage += totalProfit;
 
             JOptionPane.showMessageDialog(null, alertMessage,

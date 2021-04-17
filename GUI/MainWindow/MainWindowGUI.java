@@ -20,7 +20,7 @@ public class MainWindowGUI {
     private JPanel rootPanel;
 
     private MainWindowGUI() {
-        rootFrame = new JFrame("CSC4110 Term Project");
+        rootFrame = new JFrame("Login");
         rootFrame.setContentPane(new LoginGUI().getPanel());
         rootFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

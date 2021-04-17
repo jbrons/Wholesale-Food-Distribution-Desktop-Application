@@ -1,6 +1,9 @@
 package src.Invoice;
 
+import src.Vendor.DateValidator;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class InvoiceList {
@@ -77,8 +80,12 @@ public class InvoiceList {
 
         Vector<Invoice> invoices = new Vector<>();
 
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateValidator dateValidator = new DateValidator(dateFormatter);
+
         for (Invoice invoice : invoiceList) {
-            LocalDate orderDate = LocalDate.parse(invoice.getOrderDate());
+
+            LocalDate orderDate = dateValidator.getDate(invoice.getOrderDate());
 
             boolean inBetweenDates = startDate.isBefore(orderDate) && endDate.isAfter(orderDate);
             boolean equalToStartDate = startDate.isEqual(orderDate);
