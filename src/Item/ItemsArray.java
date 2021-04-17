@@ -98,4 +98,7 @@ public class ItemsArray {
         return itemsList.get(index);
     }
 
+    public int size() {return itemsList.size();}
+    public boolean isEmpty() {return itemsList.isEmpty();}
+
 }
