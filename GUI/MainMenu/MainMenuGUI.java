@@ -5,6 +5,7 @@ import GUI.InvoiceManagement.InvoiceGUI;
 import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
+import GUI.ProfitSearch.ProfitSearchGUI;
 import GUI.UserManagement.UserManagementGUI;
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
 
@@ -32,12 +33,15 @@ public class MainMenuGUI {
     private JButton vendorManagementButton;
     private JButton customerOrderManagementButton;
     private JButton customerInvoiceManagementButton;
+    private JButton profitSearchButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
 
     public MainMenuGUI()
     {
+        mainWindowGUI.setTitle("Main Menu");
+
         if (database.getCurrentUser().getPermissionLevel() < EnumUserRoles.ADMINISTRATOR.getPermissionLevel())
         {
             userManagementButton.setEnabled(false);
@@ -54,6 +58,12 @@ public class MainMenuGUI {
                 database.getCurrentUser().getRole() != EnumUserRoles.OWNER) {
             customerOrderManagementButton.setEnabled(false);
             customerOrderManagementButton.setVisible(false);
+        }
+
+        if (database.getCurrentUser().getPermissionLevel() < EnumUserRoles.ADMINISTRATOR.getPermissionLevel())
+        {
+            userManagementButton.setEnabled(false);
+            userManagementButton.setVisible(false);
         }
 
         userManagementButton.addActionListener(e->
@@ -93,12 +103,15 @@ public class MainMenuGUI {
             mainWindowGUI.setJPanel(new CustomerOrderGUI().getPanel(), "Customer Order Management");
         });
 
-        //
+        // customer invoice management
         customerInvoiceManagementButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new InvoiceGUI().getPanel(), "Customer Invoice Management");
         });
 
-
+        // Profit Search
+        profitSearchButton.addActionListener(e -> {
+            mainWindowGUI.setJPanel(new ProfitSearchGUI().getPanel(), "Profit Search");
+        });
     }
 
     public void currentDiscountsAlert()
