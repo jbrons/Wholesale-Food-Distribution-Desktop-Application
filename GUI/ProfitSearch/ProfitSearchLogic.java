@@ -34,10 +34,10 @@ public class ProfitSearchLogic {
 
         for(Invoice invoice : invoiceList)
         {
-            Map<Items, Integer> itemsList = invoice.getItems();
+            Map<Items, Double> itemsList = invoice.getItems();
 
             if(itemsList.get(item) != null) {
-                int quantitySold = itemsList.get(item);
+                double quantitySold = itemsList.get(item);
 
                 totalProfit += quantitySold * itemMargin;
             }

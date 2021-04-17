@@ -47,8 +47,9 @@ public class CustomerOrderDatabase {
     }
 
     /**
-     * delete order from db
-     * @param order existring order
+     * delete order from database
+     * @param order
+     * existing order
      * @return
      */
     public boolean deleteOrder(CustomerOrder order) {

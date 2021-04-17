@@ -27,7 +27,7 @@ public class CustomerOrder {
     /**
      * items - max 5
      */
-    private Map<Items, Integer> items;
+    private Map<Items, Double> items;
     /**
      * need by date - format MM/dd/yyyy
      */
@@ -71,7 +71,7 @@ public class CustomerOrder {
      * get items
      * @return
      */
-    public Map<Items, Integer> getItems() {
+    public Map<Items, Double> getItems() {
         return items;
     }
 
@@ -99,7 +99,7 @@ public class CustomerOrder {
         double price = 0;
 
         // get all data
-        for (Map.Entry<Items, Integer> e : items.entrySet()) {
+        for (Map.Entry<Items, Double> e : items.entrySet()) {
             price += e.getKey().getSellingPrice() * e.getValue();
         }
 
@@ -111,9 +111,9 @@ public class CustomerOrder {
      * @param item item object
      * @param quantity quantity
      */
-    public void addItem(Items item, Integer quantity) {
+    public void addItem(Items item, Double quantity) {
         if (items.size() < 5) {
-            items.merge(item, quantity, Integer::sum);
+            items.merge(item, quantity, Double::sum);
         }
     }
 

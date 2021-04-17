@@ -19,19 +19,17 @@ public class Invoice {
     private CustomerOrder customerOrder;
     private String customerName;
     private int orderId;
-    private Map<Items, Integer> items;
+    private Map<Items, Double> items;
 
 
     public Invoice(CustomerOrder order) {
-        Random r = new Random();
-
         this.customerOrder = order;
         this.orderDate = order.getOrderDate();
         this.totalInvoiceAmount = order.getPrice();
         this.items = order.getItems();
-        this.invoiceId = r.nextInt(10)+1;
-        this.setInvoiceDate();
+        this.invoiceId = getInvoiceID();
         this.invoiceDate = getInvoiceDate();
+        this.customerName = getCustomerName();
         this.orderId = order.getOrderID();
     }
 
@@ -46,6 +44,8 @@ public class Invoice {
         this.invoiceDate = date;
     }
     public void setInvoiceID(){
+        Random r = new Random();
+        this.invoiceId += r.nextInt(10)+1;
     }
     public void setCustomerName(){}
     public void setTotalInvoiceAmount(double total){ this.totalInvoiceAmount = total; }
@@ -55,7 +55,7 @@ public class Invoice {
     public String getInvoiceDate(){ return this.invoiceDate; }
     public String getCustomerName(){ return ""; }
     public int getInvoiceID(){ return this.getInvoiceID(); }
-    public Map<Items, Integer> getItems() {
+    public Map<Items, Double> getItems() {
         return this.items;
     }
     public double getTotalInvoiceAmount(){ return this.totalInvoiceAmount; }
@@ -67,7 +67,7 @@ public class Invoice {
 
     public String getItemDetails(){
         String details = "";
-        for (Map.Entry<Items, Integer> e : items.entrySet()) {
+        for (Map.Entry<Items, Double> e : items.entrySet()) {
             details += "Item Name: " + e.getKey().getName() +" Quantity: " + e.getValue() + " cost: " +  e.getKey().getSellingPrice() * e.getValue() + "\n";
         }
         return details;

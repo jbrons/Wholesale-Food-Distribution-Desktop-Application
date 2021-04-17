@@ -18,6 +18,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -35,8 +36,8 @@ public class CustomerOrderGUI {
     private JTextField textCustomerName;
     private JButton btnSearchCustomer;
     private JButton btnLogout;
-    private JTextField textNeedByDate;
-    private JTextField textOrderDate;
+    private JFormattedTextField textNeedByDate;
+    private JFormattedTextField textOrderDate;
     private JFormattedTextField textQuantity;
     private JLabel lbPrice;
     private JButton btnAppendItem;
@@ -83,6 +84,8 @@ public class CustomerOrderGUI {
 
         // Set quantity as number
         textQuantity.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getInstance())));
+        textNeedByDate.setFormatterFactory(new DefaultFormatterFactory(createFormatter("##/##/####")));
+        textOrderDate.setFormatterFactory(new DefaultFormatterFactory(createFormatter("##/##/####")));
 
         // Search customer button event
         btnSearchCustomer.addActionListener(e -> {
@@ -195,7 +198,7 @@ public class CustomerOrderGUI {
             CustomerProfile profile = customerDB.getProfile(order.getCustomerID());
 
             // Loop all items in order
-            for (Map.Entry<Items, Integer> entry : order.getItems().entrySet()) {
+            for (Map.Entry<Items, Double> entry : order.getItems().entrySet()) {
                 // Get price
                 float price = (float) (entry.getKey().getSellingPrice() * entry.getValue());
 
@@ -251,6 +254,22 @@ public class CustomerOrderGUI {
             JOptionPane.showMessageDialog(null, "There are two more expired items");
     }
 
+    /** Create formatter for formatted text
+     *
+     * @param s
+     * @return
+     */
+    private MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (java.text.ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+            System.exit(-1);
+        }
+        return formatter;
+    }
+
     /**
      * Add new item to order
      * @param customer customer
@@ -283,9 +302,9 @@ public class CustomerOrderGUI {
         }
 
         // Get quantity
-        int quantity;
+        double quantity;
         try {
-            quantity = Integer.parseInt(textQuantity.getText());
+            quantity = Double.parseDouble(textQuantity.getText());
 
             if (quantity <= 0) {
                 JOptionPane.showMessageDialog(null, "Please input positive quantity");
@@ -339,9 +358,9 @@ public class CustomerOrderGUI {
     private void showPrice() {
         // Get quantity
         String value = textQuantity.getText();
-        int quantity = 0;
+        double quantity = 0;
         try {
-            quantity = Integer.parseInt(value);
+            quantity = Double.parseDouble(value);
         } catch (NumberFormatException e) {
         }
 
