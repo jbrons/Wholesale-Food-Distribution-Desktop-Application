@@ -22,11 +22,11 @@ public class ItemsArray {
         Just For testing customer order
          */
         itemsList.add(new Items(1, 1, "mango", 20, "ripe mango", "12/12/2021", 5, "pound", 6));
-        itemsList.add(new Items(2, 1, "potato", 12, "sweet potato", "12/12/2021", 3, "pound", 8));
+        itemsList.add(new Items(2, 1, "potato", 12, "sweet potato", "12/12/2020", 3, "pound", 8));
         itemsList.add(new Items(3, 1, "apple", 32, "green apple", "12/12/2021", 5, "pound", 12));
         itemsList.add(new Items(4, 1, "egg", 48, "organic", "12/12/2021", 4, "pound", 17));
         itemsList.add(new Items(5, 1, "milk", 34, "full cream", "12/12/2021", 2, "pound", 9));
-        itemsList.add(new Items(6, 1, "rice", 43, "brown", "12/12/2021", 11, "pound", 2));
+        itemsList.add(new Items(6, 1, "rice", 43, "brown", "12/12/2020", 11, "pound", 2));
     }
     public static ItemsArray getInstance() {
         if (firstInstance == null) {
@@ -97,6 +97,8 @@ public class ItemsArray {
     public Items get(int index) {
         return itemsList.get(index);
     }
+
+    public Items[] getArray() {return itemsList.toArray(new Items[itemsList.size()]);}
 
     public int size() {return itemsList.size();}
     public boolean isEmpty() {return itemsList.isEmpty();}

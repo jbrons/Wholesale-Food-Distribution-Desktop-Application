@@ -1,6 +1,7 @@
 package GUI.MainMenu;
 
 import GUI.CustomerOrderManagement.CustomerOrderGUI;
+import GUI.ExpiredItems.ExpiredItemsGUI;
 import GUI.InvoiceManagement.InvoiceGUI;
 import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
@@ -34,6 +35,7 @@ public class MainMenuGUI {
     private JButton customerOrderManagementButton;
     private JButton customerInvoiceManagementButton;
     private JButton profitSearchButton;
+    private JButton expiredItemsButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -60,10 +62,16 @@ public class MainMenuGUI {
             customerOrderManagementButton.setVisible(false);
         }
 
-        if (database.getCurrentUser().getPermissionLevel() < EnumUserRoles.ADMINISTRATOR.getPermissionLevel())
+        if (database.getCurrentUser().getRole() != EnumUserRoles.OWNER)
         {
-            userManagementButton.setEnabled(false);
-            userManagementButton.setVisible(false);
+            profitSearchButton.setEnabled(false);
+            profitSearchButton.setVisible(false);
+        }
+
+        if (database.getCurrentUser().getRole() != EnumUserRoles.PURCHASER)
+        {
+            expiredItemsButton.setEnabled(false);
+            expiredItemsButton.setVisible(false);
         }
 
         userManagementButton.addActionListener(e->
@@ -106,6 +114,11 @@ public class MainMenuGUI {
         // customer invoice management
         customerInvoiceManagementButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new InvoiceGUI().getPanel(), "Customer Invoice Management");
+        });
+
+        // Expired Items Search
+        expiredItemsButton.addActionListener(e -> {
+            mainWindowGUI.setJPanel(new ExpiredItemsGUI().getPanel(), "Expired Items Search");
         });
 
         // Profit Search
