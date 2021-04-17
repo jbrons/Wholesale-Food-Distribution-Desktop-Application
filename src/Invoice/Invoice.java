@@ -23,13 +23,15 @@ public class Invoice {
 
 
     public Invoice(CustomerOrder order) {
+        Random r = new Random();
+
         this.customerOrder = order;
         this.orderDate = order.getOrderDate();
         this.totalInvoiceAmount = order.getPrice();
         this.items = order.getItems();
-        this.invoiceId = getInvoiceID();
+        this.invoiceId = r.nextInt(10)+1;
+        this.setInvoiceDate();
         this.invoiceDate = getInvoiceDate();
-        this.customerName = getCustomerName();
         this.orderId = order.getOrderID();
     }
 
@@ -44,8 +46,6 @@ public class Invoice {
         this.invoiceDate = date;
     }
     public void setInvoiceID(){
-        Random r = new Random();
-        this.invoiceId += r.nextInt(10)+1;
     }
     public void setCustomerName(){}
     public void setTotalInvoiceAmount(double total){ this.totalInvoiceAmount = total; }

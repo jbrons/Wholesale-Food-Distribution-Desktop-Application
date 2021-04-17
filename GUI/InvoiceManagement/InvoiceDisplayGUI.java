@@ -6,6 +6,8 @@ import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
 import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
+import src.Invoice.Invoice;
+import src.Invoice.InvoiceList;
 import src.Item.Items;
 import src.User.EnumUserRoles;
 
@@ -25,24 +27,21 @@ public class InvoiceDisplayGUI {
     private JLabel invoiceHeader;
     private JLabel invoiceCreated;
     private MainWindowGUI mainWindowGUI;
-    private int index;
-    CustomerOrderDatabase customerOrderDatabase = CustomerOrderDatabase.getInstance();
+    private Invoice invoice;
 
-    public InvoiceDisplayGUI(int i){
+    CustomerOrderDatabase customerOrderDatabase = CustomerOrderDatabase.getInstance();
+    InvoiceList invoiceList = InvoiceList.getInstance();
+    public InvoiceDisplayGUI(Invoice inv){
         mainWindowGUI = MainWindowGUI.getInstance();
 
-        this.setIndex(i);
+        this.setInvoice(inv);
         setupGUI();
     }
 
     private void setupGUI()
     {
-
-        CustomerOrder order = customerOrderDatabase.get(this.index);
-        System.out.println(this.getIndex());
-        //sets label to the index of selected item
-        invoiceDetails.setText(order.toString());
-        invoiceHeader.setText(order.toString());
+        invoiceHeader.setText(this.invoice.toString());
+        invoiceDetails.setText(this.invoice.getItemDetails());
         //button actions
 
 
@@ -56,11 +55,11 @@ public class InvoiceDisplayGUI {
         });
     }
 
-    public int getIndex(){
-        return this.index;
+    public Invoice getIndex(){
+        return this.invoice;
     }
-    public void setIndex(int i){
-        this.index = i;
+    public void setInvoice(Invoice inv){
+        this.invoice = inv;
     }
     public void closeInvoiceDisplay(){
         mainWindowGUI.setJPanel(new InvoiceGUI().getPanel());
