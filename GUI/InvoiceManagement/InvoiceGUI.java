@@ -10,6 +10,7 @@ import src.Customer.CustomerProfile;
 import src.Customer.CustomerProfileDatabase;
 import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
+import src.Invoice.Invoice;
 import src.Invoice.InvoiceList;
 import src.User.EnumUserRoles;
 
@@ -71,7 +72,18 @@ public class InvoiceGUI implements FocusListener {
         createInvoiceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 int index = searchIndex(iList.getSelectedIndex());
-                InvoiceDisplayGUI dis = new InvoiceDisplayGUI(index);
+
+                CustomerOrder selectedOrder = null;
+                int i = 0;
+                for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
+                    if (i == index) {
+                         selectedOrder = order;
+                    }
+                    i++;
+                }
+                Invoice invoice = new Invoice(selectedOrder);
+                invoiceList.addInvoice(invoice);
+                InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
                 mainWindowGUI.setJPanel(dis.getPanel());
             }
         });
