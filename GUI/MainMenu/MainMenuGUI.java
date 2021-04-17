@@ -1,6 +1,7 @@
 package GUI.MainMenu;
 
 import GUI.CustomerOrderManagement.CustomerOrderGUI;
+import GUI.CustomerOrderSearch.CustomerOrderSearchGUI;
 import GUI.ExpiredItems.ExpiredItemsGUI;
 import GUI.InvoiceManagement.InvoiceGUI;
 import GUI.ItemManagement.ItemsGUI;
@@ -36,6 +37,7 @@ public class MainMenuGUI {
     private JButton customerInvoiceManagementButton;
     private JButton profitSearchButton;
     private JButton expiredItemsButton;
+    private JButton customerOrderSearchButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -72,6 +74,12 @@ public class MainMenuGUI {
         {
             expiredItemsButton.setEnabled(false);
             expiredItemsButton.setVisible(false);
+        }
+
+        if (database.getCurrentUser().getRole() != EnumUserRoles.OWNER)
+        {
+            customerOrderSearchButton.setEnabled(false);
+            customerOrderSearchButton.setVisible(false);
         }
 
         userManagementButton.addActionListener(e->
@@ -124,6 +132,11 @@ public class MainMenuGUI {
         // Profit Search
         profitSearchButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new ProfitSearchGUI().getPanel(), "Profit Search");
+        });
+
+        // Customer Order Search
+        customerOrderSearchButton.addActionListener(e -> {
+            mainWindowGUI.setJPanel(new CustomerOrderSearchGUI().getPanel(), "Customer Order Search");
         });
     }
 
