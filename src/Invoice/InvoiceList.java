@@ -1,5 +1,6 @@
 package src.Invoice;
 
+import java.time.LocalDate;
 import java.util.Vector;
 
 public class InvoiceList {
@@ -69,4 +70,25 @@ public class InvoiceList {
     }
 
     public Vector<Invoice> getInvoiceList() {return invoiceList; }
+
+    public Vector<Invoice> getInvoiceList(LocalDate startDate, LocalDate endDate) {
+        if(invoiceList.isEmpty())
+            return invoiceList;
+
+        Vector<Invoice> invoices = new Vector<>();
+
+        for (Invoice invoice : invoiceList) {
+            LocalDate orderDate = LocalDate.parse(invoice.getOrderDate());
+            
+            boolean inBetweenDates = startDate.isBefore(orderDate) && endDate.isAfter(orderDate);
+            boolean equalToStartDate = startDate.isEqual(orderDate);
+            boolean equalToEndDate = endDate.isEqual(orderDate);
+
+            if(inBetweenDates || equalToStartDate || equalToEndDate) {
+                invoices.add(invoice);
+            }
+        }
+
+        return invoices;
+    }
 }
