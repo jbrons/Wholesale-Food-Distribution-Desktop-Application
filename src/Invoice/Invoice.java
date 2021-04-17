@@ -27,8 +27,8 @@ public class Invoice {
         this.orderDate = order.getOrderDate();
         this.totalInvoiceAmount = order.getPrice();
         this.items = order.getItems();
-        this.invoiceId = getInvoiceID();
-        this.invoiceDate = getInvoiceDate();
+        setInvoiceDate();
+        setInvoiceID();
         this.customerName = getCustomerName();
         this.orderId = order.getOrderID();
     }
@@ -66,10 +66,13 @@ public class Invoice {
 
 
     public String getItemDetails(){
-        String details = "";
+        String details = "<html><body>";
         for (Map.Entry<Items, Double> e : items.entrySet()) {
-            details += "Item Name: " + e.getKey().getName() +" Quantity: " + e.getValue() + " cost: " +  e.getKey().getSellingPrice() * e.getValue() + "\n";
+            details += "Item Name: " + e.getKey().getName() +" Quantity: " + e.getValue() +
+                    " cost: " +  e.getKey().getSellingPrice() * e.getValue() + "<br>";
         }
+        details+="</body></html>";
+        System.out.println(details);
         return details;
     }
 
