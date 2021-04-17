@@ -8,6 +8,8 @@
 */
 package src.Item;
 
+import src.PurchaseOrder.ItemsAlert;
+
 import java.text.DecimalFormat;
 
 
@@ -45,6 +47,7 @@ public class Items {
         purchasePrice = pp;
         unit = u;
         quantity = q;
+        ItemsAlert.alertStock(id, quantity);
     }
 
     //set methods
@@ -72,6 +75,7 @@ public class Items {
     }
     public void setQuantity(double q){
         quantity = q;
+        ItemsAlert.alertStock(id, quantity);
     }
     //get methods
     public int getId(){
