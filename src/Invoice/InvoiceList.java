@@ -68,5 +68,5 @@ public class InvoiceList {
         return invoiceList.get(index);
     }
 
-
+    public Vector<Invoice> getInvoiceList() {return invoiceList; }
 }
