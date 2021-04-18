@@ -6,6 +6,7 @@
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties>
+      <background color="-1118482"/>
       <preferredSize width="600" height="300"/>
     </properties>
     <border type="none"/>
@@ -45,7 +46,7 @@
           <text value="Main Menu"/>
         </properties>
       </component>
-      <component id="4b20" class="javax.swing.JButton" binding="btnCreatePO" custom-create="true">
+      <component id="4b20" class="javax.swing.JButton" binding="btnCreatePO">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -54,7 +55,7 @@
           <text value="Create Purchase Order"/>
         </properties>
       </component>
-      <component id="ad76e" class="javax.swing.JButton" binding="btnViewPO" custom-create="true">
+      <component id="ad76e" class="javax.swing.JButton" binding="btnViewPO">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -70,6 +71,8 @@
           </grid>
         </constraints>
         <properties>
+          <editable value="true"/>
+          <enabled value="true"/>
           <text value=""/>
           <toolTipText value="Search for a Vendor to create a Purchaser Order"/>
         </properties>
@@ -90,7 +93,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="c5b5c" class="javax.swing.JButton" binding="btnCancelPO" custom-create="true">
+      <component id="c5b5c" class="javax.swing.JButton" binding="btnCancelPO">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>

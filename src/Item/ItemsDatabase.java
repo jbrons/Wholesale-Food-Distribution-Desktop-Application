@@ -84,6 +84,16 @@ public class ItemsDatabase {
         return items;
     }
 
+    public Vector<String> getItemsForVendor(int vendorId) {
+        Vector<String> items = new Vector<String>();
+        for (Item item : itemsList) {
+            if(vendorId == item.getVendorId()) {
+                items.add(item.toString());
+            }
+        }
+        return items;
+    }
+
     public int getId(String s){
         int i=0;
         for (Item item : itemsList) {

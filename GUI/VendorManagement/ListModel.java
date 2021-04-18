@@ -20,7 +20,7 @@ public class ListModel implements IModel {
         listModel = new DefaultListModel();
         VendorDatabase vendorDatabase = VendorDatabase.getInstance();
 
-        for (String vendor : vendorDatabase.getVendorListDetails()) {
+        for (String vendor : vendorDatabase.getVendorDatabaseDetails()) {
             listModel.addElement(vendor);
         }
     }

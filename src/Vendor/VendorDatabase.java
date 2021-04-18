@@ -61,7 +61,7 @@ public class VendorDatabase {
         return null;
     }
 
-    public Vector<String> getVendorListDetails() {
+    public Vector<String> getVendorDatabaseDetails() {
         Vector<String> vendors = new Vector<String>();
         for (Vendor vendor : vendordatabase) {
             vendors.add(vendor.toString());
@@ -83,6 +83,10 @@ public class VendorDatabase {
 
     public int getIndex(String name) {
         return searchVendorDatabase(name);
+    }
+
+    public int getId(int index) {
+        return getVendor(index).getId();
     }
 
     public int searchVendorDatabase(int id) {

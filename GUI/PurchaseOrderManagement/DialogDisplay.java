@@ -11,7 +11,13 @@ public class DialogDisplay {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void displayMessage(String message) {
+    public static void displayMessage(String message) {
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Message", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public static int displayQuestion(String message, String title, Object[] options) {
+        return JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), message, title,
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+    }
+
 }

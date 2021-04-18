@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
+import GUI.PurchaseOrderManagement.DialogDisplay;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
 import src.Vendor.VendorDatabase;
@@ -52,13 +53,13 @@ public class VendorUI implements ActionListener {
     public VendorUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
         mainWindowGUI.setTitle("Vendor Management");
-        addListeners();
         setUpGUI();
+        addListeners();
     }
 
     private void setUpGUI() {
-        txtSearchBar.requestFocusInWindow();
         btnGo.setEnabled(false);
+        txtSearchBar.requestFocusInWindow();
 
        if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
            btnViewProfiles.setEnabled(false);
@@ -89,10 +90,11 @@ public class VendorUI implements ActionListener {
 
         if (userAction == btnGo) {
             if (vendorModel.isEmpty()) {
-                displayError("No Vendors to view");
+                DialogDisplay.displayError("No Vendors to view");
                 return;
             }
-            int option = confirmSearch();
+            int option = DialogDisplay.displayQuestion("Search by:",
+                    "Search Options", new Object[] {"ID", "Full Name"});
             String input = txtSearchBar.getText();
             if (option == JOptionPane.CLOSED_OPTION) {
                 return;
@@ -102,7 +104,7 @@ public class VendorUI implements ActionListener {
                         int vendorId = Integer.parseInt(input);
                         index = vendordatabase.getIndex(vendorId);
                     } catch (NumberFormatException ex) {
-                        displayError("Not a valid ID.");
+                        DialogDisplay.displayError("Not a valid ID.");
                         return;
                     }
                 } else {
@@ -122,14 +124,14 @@ public class VendorUI implements ActionListener {
                     lstSearchResults.setSelectedIndex(index);
                 }
             } else {
-                displayError("No Profile Vendor found.");
+                DialogDisplay.displayError("No Profile Vendor found.");
             }
             txtSearchBar.setText(null);
             btnGo.setEnabled(false);
         } else if (userAction == btnViewProfiles) {
             if (viewProfiles) {
                 if (vendorModel.isEmpty()) {
-                    displayError("No Vendors to view");
+                    DialogDisplay.displayError("No Vendors to view");
                 } else {
                     displayListSettings();
                 }
@@ -146,7 +148,7 @@ public class VendorUI implements ActionListener {
             }
 
             if (index < 0) {
-                displayError("Please select a Vendor to update");
+                DialogDisplay.displayError("Please select a Vendor to update");
             } else {
                 mainWindowGUI.setJPanel(new VendorCreation(vendordatabase.getVendor(index)).getPanel());
             }
@@ -157,15 +159,15 @@ public class VendorUI implements ActionListener {
                 index = lstSearchResults.getSelectedIndex();
             }
             if (index < 0) {
-                displayMessage("Please select a Vendor to delete");
+                DialogDisplay.displayMessage("Please select a Vendor to delete");
             } else {
                 if (deleteWarning() == JOptionPane.YES_OPTION) {
                     if (vendordatabase.deleteVendor(index)) {
                         /* delete purchase orders here */
                         vendorModel.removeVendor(index);
-                        displayMessage("Vendor removed.");
+                        DialogDisplay.displayMessage("Vendor removed.");
                     } else {
-                        displayError("Can only delete when balance = 0.");
+                        DialogDisplay.displayError("Can only delete when balance = 0.");
                     }
                 }
             }
@@ -189,20 +191,6 @@ public class VendorUI implements ActionListener {
         lstDisplay.setVisible(viewProfiles);
         viewProfiles = !viewProfiles;
         lstDisplay.clearSelection();
-    }
-
-    private void displayError(String message) {
-        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void displayMessage(String message) {
-        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message);
-    }
-
-    private int confirmSearch() {
-        Object[] options = {"ID", "Full Name"};
-        return JOptionPane.showOptionDialog(JOptionPane.getRootFrame(), "Search by:", "Search Options",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
     private int deleteWarning() {

@@ -62,7 +62,7 @@ public class MainMenuGUI {
             vendorManagementButton.setVisible(false);
         }
 
-        if (database.getCurrentUser().getPermissionLevel() != EnumUserRoles.PURCHASER.getPermissionLevel())
+        if (database.getCurrentUser().getRole() != EnumUserRoles.PURCHASER)
         {
             purchaseOrderManagementButton.setEnabled(false);
             purchaseOrderManagementButton.setVisible(false);
@@ -119,13 +119,13 @@ public class MainMenuGUI {
             mainWindowGUI.setJPanel(new ItemsGUI().getPanel());
         }));
 
-        logoutButton.addActionListener(e ->
-                mainWindowGUI.setJPanel(new LoginGUI().getPanel()));
-
-        purchaseOrderManagementButton.addActionListener(e->
+        purchaseOrderManagementButton.addActionListener((e ->
         {
             mainWindowGUI.setJPanel(new PurchaseOrderGUI().getPanel());
-        });
+        }));
+
+        logoutButton.addActionListener(e ->
+                mainWindowGUI.setJPanel(new LoginGUI().getPanel()));
 
         //customer management
         customerManagementButton.addActionListener(e -> {
