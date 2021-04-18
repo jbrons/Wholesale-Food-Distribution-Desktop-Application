@@ -7,6 +7,7 @@ import GUI.InvoiceManagement.InvoiceGUI;
 import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
+import GUI.OverdueInvoicesSearch.OverdueInvoicesSearchGUI;
 import GUI.ProfitSearch.ProfitSearchGUI;
 import GUI.UserManagement.UserManagementGUI;
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
@@ -40,6 +41,7 @@ public class MainMenuGUI {
     private JButton expiredItemsButton;
     private JButton customerOrderSearchButton;
     private JButton purchaseOrderManagementButton;
+    private JButton overdueInvoicesSearchButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -88,6 +90,12 @@ public class MainMenuGUI {
         {
             customerOrderSearchButton.setEnabled(false);
             customerOrderSearchButton.setVisible(false);
+        }
+
+        if (database.getCurrentUser().getRole() != EnumUserRoles.OWNER)
+        {
+            overdueInvoicesSearchButton.setEnabled(false);
+            overdueInvoicesSearchButton.setVisible(false);
         }
 
         userManagementButton.addActionListener(e->
@@ -149,6 +157,10 @@ public class MainMenuGUI {
         // Customer Order Search
         customerOrderSearchButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new CustomerOrderSearchGUI().getPanel(), "Customer Order Search");
+        });
+
+        overdueInvoicesSearchButton.addActionListener(e -> {
+            mainWindowGUI.setJPanel(new OverdueInvoicesSearchGUI().getPanel(), "Overdue Invoices Search");
         });
     }
 
