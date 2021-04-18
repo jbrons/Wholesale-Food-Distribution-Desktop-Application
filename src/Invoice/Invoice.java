@@ -29,7 +29,6 @@ public class Invoice {
         this.items = order.getItems();
         setInvoiceDate();
         setInvoiceID();
-        this.customerName = getCustomerName();
         this.orderId = order.getOrderID();
     }
 
