@@ -11,7 +11,7 @@ package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.User.UserDatabase;
 import src.User.EnumUserRoles;
@@ -40,7 +40,7 @@ public class ItemsGUI implements FocusListener{
     private JList iList;
     private JLabel guiLabel;
     private JTextField focused = searchField;
-    private ArrayList<Items> itemsListCopy;
+    private ArrayList<Item> itemsListCopy;
     private MainWindowGUI mainWindowGUI;
     ItemsDatabase itemsList = ItemsDatabase.getInstance();
 

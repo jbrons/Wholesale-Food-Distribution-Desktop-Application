@@ -1,6 +1,6 @@
 package GUI.ExpiredItems;
 
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.Vendor.DateValidator;
 
@@ -12,7 +12,7 @@ public class ExpiredItemsLogic {
     ItemsDatabase itemsArray;
     DateValidator dateValidator;
     DateTimeFormatter dateFormatter;
-    ArrayList<Items> expiredItems;
+    ArrayList<Item> expiredItems;
 
     public ExpiredItemsLogic()
     {
@@ -21,13 +21,13 @@ public class ExpiredItemsLogic {
         dateValidator = new DateValidator(dateFormatter);
     }
 
-    public Items[] getAllExpiredItems()
+    public Item[] getAllExpiredItems()
     {
         expiredItems = new ArrayList<>();
-        Items[] allItems = itemsArray.getArray();
+        Item[] allItems = itemsArray.getArray();
         LocalDate today = LocalDate.now();
 
-        for(Items item : allItems)
+        for(Item item : allItems)
         {
             LocalDate expirationDate = dateValidator.getDate(item.getExpirationDate());
 
@@ -35,17 +35,17 @@ public class ExpiredItemsLogic {
                 expiredItems.add(item);
         }
 
-        return expiredItems.toArray(new Items[expiredItems.size()]);
+        return expiredItems.toArray(new Item[expiredItems.size()]);
     }
 
-    public Items getExpiredItem(String expiredItemName)
+    public Item getExpiredItem(String expiredItemName)
     {
         if(expiredItems.isEmpty())
             return null;
 
-        Items expiredItem = null;
+        Item expiredItem = null;
 
-        for (Items item : expiredItems)
+        for (Item item : expiredItems)
         {
             if(item.getName().equals(expiredItemName)) {
                 expiredItem = item;

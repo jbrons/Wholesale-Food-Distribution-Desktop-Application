@@ -13,7 +13,7 @@ import src.PurchaseOrder.ItemsAlert;
 import java.text.DecimalFormat;
 
 
-public class Items {
+public class Item {
     //variables
     private int id;
     private int vendorId;
@@ -26,7 +26,7 @@ public class Items {
     private double quantity;
 
     //constructors
-    public Items(){
+    public Item(){
         id = 0;
         vendorId = 0;
         name  = "";
@@ -37,7 +37,7 @@ public class Items {
         unit = "";
         quantity = 0;
     }
-    public Items(int i,int vi,String n,double sp,String c,String ed,double pp,String u,double q){
+    public Item(int i, int vi, String n, double sp, String c, String ed, double pp, String u, double q){
         id = i;
         vendorId = vi;
         name = n;

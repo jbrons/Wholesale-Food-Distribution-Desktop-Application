@@ -3,8 +3,7 @@ package GUI.ProfitSearch;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
-import com.sun.tools.javac.Main;
-import src.Item.Items;
+import src.Item.Item;
 import src.Vendor.DateValidator;
 
 import javax.swing.*;
@@ -53,7 +52,7 @@ public class ProfitSearchGUI {
             String itemName;
             LocalDate startDate;
             LocalDate endDate;
-            Items item;
+            Item item;
 
             itemName = itemNameTextField.getText();
             startDate = dateValidator.getDate(startDateTextField.getText());

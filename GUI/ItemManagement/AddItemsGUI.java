@@ -8,7 +8,7 @@
 package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.Item.ItemsValidation;
 import GUI.MainWindow.MainWindowGUI;
@@ -99,7 +99,7 @@ public class AddItemsGUI implements FocusListener {
                             expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Double.parseDouble(quantityField.getText()))){
 
 
-                        Items item = new Items(id,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
+                        Item item = new Item(id,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                                 (String) categoryCombo.getSelectedItem(),expirationFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
                                 (String) unitCombo.getSelectedItem(),Double.parseDouble(quantityField.getText()));
                         itemsList.addItem(item);

@@ -1,7 +1,5 @@
 package src.CustomerOrder;
 
-import src.Item.Items;
-
 import java.util.*;
 
 public class CustomerOrderDatabase {

@@ -4,7 +4,7 @@
 
 package src.CustomerOrder;
 
-import src.Item.Items;
+import src.Item.Item;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class CustomerOrder {
     /**
      * items - max 5
      */
-    private Map<Items, Double> items;
+    private Map<Item, Double> items;
     /**
      * need by date - format MM/dd/yyyy
      */
@@ -71,7 +71,7 @@ public class CustomerOrder {
      * get items
      * @return
      */
-    public Map<Items, Double> getItems() {
+    public Map<Item, Double> getItems() {
         return items;
     }
 
@@ -99,7 +99,7 @@ public class CustomerOrder {
         double price = 0;
 
         // get all data
-        for (Map.Entry<Items, Double> e : items.entrySet()) {
+        for (Map.Entry<Item, Double> e : items.entrySet()) {
             price += e.getKey().getSellingPrice() * e.getValue();
         }
 
@@ -111,7 +111,7 @@ public class CustomerOrder {
      * @param item item object
      * @param quantity quantity
      */
-    public void addItem(Items item, Double quantity) {
+    public void addItem(Item item, Double quantity) {
         if (items.size() < 5) {
             items.merge(item, quantity, Double::sum);
         }

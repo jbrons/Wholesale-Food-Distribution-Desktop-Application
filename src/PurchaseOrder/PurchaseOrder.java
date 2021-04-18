@@ -1,14 +1,13 @@
 package src.PurchaseOrder;
 
-import GUI.PurchaseOrderManagement.PurchaseOrderGUI;
-import src.Item.Items;
+import src.Item.Item;
 import src.Vendor.VendorList;
 
 import java.util.ArrayList;
 import java.util.Vector;
 
 public class PurchaseOrder {
-    private Vector<Items> itemsList = new Vector<>();
+    private Vector<Item> itemsList = new Vector<>();
     private static ArrayList<Integer> idList;
     VendorList vendorList = VendorList.getInstance();
     private int purchaseID;
@@ -24,7 +23,7 @@ public class PurchaseOrder {
         updateBalance();
     }
 
-    public void addItem(Items item) {
+    public void addItem(Item item) {
         if (itemsList.size() < 5) {
             itemsList.add(getItemDetails(item));
         } else {
@@ -61,8 +60,8 @@ public class PurchaseOrder {
         vendorList.getVendor(vendorID).setBalance(newBalance);
     }
 
-    public Items getItemDetails(Items item) {
-        return new Items(
+    public Item getItemDetails(Item item) {
+        return new Item(
                 item.getId(),
                 item.getVendorId(),
                 item.getName(),

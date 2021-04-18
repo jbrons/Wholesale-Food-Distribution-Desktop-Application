@@ -3,7 +3,7 @@ package GUI.ExpiredItems;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ public class ExpiredItemsGUI {
     private JPanel rootPanel;
     private JPanel mainPanel;
     private JPanel mainTopBarPanel;
-    private JList<Items> expiredItemsList;
+    private JList<Item> expiredItemsList;
     private JTextField searchTextField;
     private JButton searchButton;
     private JPanel buttonPanel;
@@ -62,7 +62,7 @@ public class ExpiredItemsGUI {
 
     private void searchList(String expiredItemName)
     {
-        Items[] list = new Items[1];
+        Item[] list = new Item[1];
         list[0] = expiredItemsLogic.getExpiredItem(expiredItemName);
 
         if(list[0] == null)

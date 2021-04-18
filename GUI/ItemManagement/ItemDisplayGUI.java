@@ -10,7 +10,7 @@
 package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
@@ -43,7 +43,7 @@ public class ItemDisplayGUI {
 
     private void setupGUI()
     {
-        Items item = itemsList.get(this.index);
+        Item item = itemsList.get(this.index);
         //sets label to the index of selected item
         contentLabel.setText(item.toString());
         //button actions

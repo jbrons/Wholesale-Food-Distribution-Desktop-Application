@@ -11,7 +11,7 @@ import src.Customer.CustomerProfile;
 import src.Customer.CustomerProfileDatabase;
 import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 
 import javax.swing.*;
@@ -198,7 +198,7 @@ public class CustomerOrderGUI {
             CustomerProfile profile = customerDB.getProfile(order.getCustomerID());
 
             // Loop all items in order
-            for (Map.Entry<Items, Double> entry : order.getItems().entrySet()) {
+            for (Map.Entry<Item, Double> entry : order.getItems().entrySet()) {
                 // Get price
                 float price = (float) (entry.getKey().getSellingPrice() * entry.getValue());
 
@@ -239,7 +239,7 @@ public class CustomerOrderGUI {
 
         for (int i = 0; i < itemCount; i++) {
             try {
-                Items items = itemDB.get(i);
+                Item items = itemDB.get(i);
                 Date expDate = new SimpleDateFormat("MM/dd/yyyy").parse(items.getExpirationDate());
                 Date today = new Date();
 
@@ -289,7 +289,7 @@ public class CustomerOrderGUI {
         }
 
         // Get selected item
-        Items item = itemDB.get(listItems.getSelectedIndex());
+        Item item = itemDB.get(listItems.getSelectedIndex());
 
         // Check quantity of item
         if (item.getQuantity() == 0) {
@@ -372,7 +372,7 @@ public class CustomerOrderGUI {
         } else if (quantity <= 0) {
             price = 0;
         } else {
-            Items item = itemDB.get(itemId);
+            Item item = itemDB.get(itemId);
             price = item.getSellingPrice() * quantity;
         }
 

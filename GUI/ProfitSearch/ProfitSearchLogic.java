@@ -2,7 +2,7 @@ package GUI.ProfitSearch;
 
 import src.Invoice.Invoice;
 import src.Invoice.InvoiceDatabase;
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 
 import javax.swing.*;
@@ -22,7 +22,7 @@ public class ProfitSearchLogic {
         invoiceListDatabase = InvoiceDatabase.getInstance();
     }
 
-    public double getProfit(Items item, LocalDate startDate, LocalDate endDate)
+    public double getProfit(Item item, LocalDate startDate, LocalDate endDate)
     {
         Vector<Invoice> invoiceList = invoiceListDatabase.getInvoiceList(startDate, endDate);
 
@@ -33,7 +33,7 @@ public class ProfitSearchLogic {
 
         for(Invoice invoice : invoiceList)
         {
-            Map<Items, Double> itemsList = invoice.getItems();
+            Map<Item, Double> itemsList = invoice.getItems();
 
             if(itemsList.get(item) != null) {
                 double quantitySold = itemsList.get(item);
@@ -46,7 +46,7 @@ public class ProfitSearchLogic {
         return totalProfit;
     }
 
-    public Items checkItemExists(String itemName)
+    public Item checkItemExists(String itemName)
     {
         if(itemsArray.isEmpty())
             return null;
@@ -56,7 +56,7 @@ public class ProfitSearchLogic {
             return null;
 
         // Set the item to be used in future methods
-        Items item = itemsArray.get(itemsArray.getId(itemList.get(0)));
+        Item item = itemsArray.get(itemsArray.getId(itemList.get(0)));
 
         return item;
     }

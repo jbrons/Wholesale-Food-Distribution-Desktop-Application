@@ -2,7 +2,7 @@ package src.Invoice;
 
 
 import src.CustomerOrder.CustomerOrder;
-import src.Item.Items;
+import src.Item.Item;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +19,7 @@ public class Invoice {
     private CustomerOrder customerOrder;
     private String customerName;
     private int orderId;
-    private Map<Items, Double> items;
+    private Map<Item, Double> items;
 
 
     public Invoice(CustomerOrder order) {
@@ -55,7 +55,7 @@ public class Invoice {
     public String getInvoiceDate(){ return this.invoiceDate; }
     public String getCustomerName(){ return ""; }
     public int getInvoiceID(){ return this.getInvoiceID(); }
-    public Map<Items, Double> getItems() {
+    public Map<Item, Double> getItems() {
         return this.items;
     }
     public double getTotalInvoiceAmount(){ return this.totalInvoiceAmount; }
@@ -67,7 +67,7 @@ public class Invoice {
 
     public String getItemDetails(){
         String details = "<html><body>";
-        for (Map.Entry<Items, Double> e : items.entrySet()) {
+        for (Map.Entry<Item, Double> e : items.entrySet()) {
             details += "Item Name: " + e.getKey().getName() +" Quantity: " + e.getValue() +
                     " cost: " +  e.getKey().getSellingPrice() * e.getValue() + "<br>";
         }

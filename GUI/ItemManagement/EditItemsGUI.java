@@ -9,7 +9,7 @@
 package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
-import src.Item.Items;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.Item.ItemsValidation;
 import javax.swing.*;
@@ -43,7 +43,7 @@ public class EditItemsGUI implements FocusListener {
     private JFormattedTextField sPriceFormattedText;
     private JFormattedTextField pPriceFormattedText;
     private int index;
-    private ArrayList<Items> itemsListCopy;
+    private ArrayList<Item> itemsListCopy;
     private JTextField focused = iNameField;
 
     private String[] cat = new String[]{"Vegetables", "Fruits", "Nuts", "Dairy", "Meat", "Snacks", "Soda", "Juice", "Bakery Products"};
@@ -62,7 +62,7 @@ public class EditItemsGUI implements FocusListener {
 
     public void setupGUI()
     {
-        Items item = itemsList.get(this.index);
+        Item item = itemsList.get(this.index);
         //setting combo boxes
         DefaultComboBoxModel<String> catModel = new DefaultComboBoxModel<>(cat);
         categoryCombo.setModel(catModel);
@@ -114,7 +114,7 @@ public class EditItemsGUI implements FocusListener {
                             Double.parseDouble(sPriceFormattedText.getText().replace(",","")), expFormattedText.getText(),
                             Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Double.parseDouble(quantityField.getText()))) {
                         //setting item information
-                        Items updatedItem = new Items(Integer.parseInt(iIDField.getText()) ,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
+                        Item updatedItem = new Item(Integer.parseInt(iIDField.getText()) ,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                                 (String) categoryCombo.getSelectedItem(),expFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),
                                 (String) unitCombo.getSelectedItem(),Double.parseDouble(quantityField.getText()));
                         itemsList.editItem(updatedItem,index);
