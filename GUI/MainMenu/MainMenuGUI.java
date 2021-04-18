@@ -1,5 +1,6 @@
 package GUI.MainMenu;
 
+import GUI.CustomerInvoiceSearch.CustomerInvoiceSearchGUI;
 import GUI.CustomerOrderManagement.CustomerOrderGUI;
 import GUI.CustomerOrderSearch.CustomerOrderSearchGUI;
 import GUI.ExpiredItems.ExpiredItemsGUI;
@@ -42,6 +43,7 @@ public class MainMenuGUI {
     private JButton customerOrderSearchButton;
     private JButton purchaseOrderManagementButton;
     private JButton overdueInvoicesSearchButton;
+    private JButton customerInvoiceSearchButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -49,6 +51,8 @@ public class MainMenuGUI {
     public MainMenuGUI()
     {
         mainWindowGUI.setTitle("Main Menu");
+
+        /** BUTTON VISIBILITY */
 
         if (database.getCurrentUser().getPermissionLevel() < EnumUserRoles.ADMINISTRATOR.getPermissionLevel())
         {
@@ -98,16 +102,16 @@ public class MainMenuGUI {
             overdueInvoicesSearchButton.setVisible(false);
         }
 
+        if (database.getCurrentUser().getRole() != EnumUserRoles.ACCOUNTANT)
+        {
+            customerInvoiceSearchButton.setEnabled(false);
+            customerInvoiceSearchButton.setVisible(false);
+        }
+
+        /** BUTTON FUNCTIONALITY */
+
         userManagementButton.addActionListener(e->
                 mainWindowGUI.setJPanel(new UserManagementGUI().getPanel()));
-
-        /*
-        customerManagementButton.addActionListener(e -> {
-            if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER)
-                mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel());
-            else
-                JOptionPane.showMessageDialog(null, "You are not OWNER user.");
-        });*/
 
         vendorManagementButton.addActionListener(e->
         {
@@ -161,6 +165,10 @@ public class MainMenuGUI {
 
         overdueInvoicesSearchButton.addActionListener(e -> {
             mainWindowGUI.setJPanel(new OverdueInvoicesSearchGUI().getPanel(), "Overdue Invoices Search");
+        });
+
+        customerInvoiceSearchButton.addActionListener(e -> {
+            mainWindowGUI.setJPanel(new CustomerInvoiceSearchGUI().getPanel(), "Customer Invoice Search");
         });
     }
 
