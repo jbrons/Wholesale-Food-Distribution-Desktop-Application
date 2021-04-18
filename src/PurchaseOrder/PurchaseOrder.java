@@ -1,15 +1,17 @@
 package src.PurchaseOrder;
 
+import GUI.PurchaseOrderManagement.PurchaseOrderGUI;
+import src.Invoice.Invoice;
 import src.Item.Item;
 import src.Vendor.VendorDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 
 public class PurchaseOrder {
-    private Vector<Item> itemsList = new Vector<>();
-    private static ArrayList<Integer> idList;
-    VendorDatabase vendorDatabase = VendorDatabase.getInstance();
+    private HashMap<Integer, Item> items = new HashMap<>();
+    private static VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private int purchaseID;
     private int vendorID;
     private double totalCost;
@@ -23,12 +25,16 @@ public class PurchaseOrder {
         updateBalance();
     }
 
-    public void addItem(Item item) {
-        if (itemsList.size() < 5) {
-            itemsList.add(getItemDetails(item));
-        } else {
-            // complain
+    public boolean addItem(Item item) {
+        if (items.size() < 5) {
+            items.put(item.getId(), getItemDetails(item));
+            return true;
         }
+        return false;
+    }
+
+    public boolean containsItem(int itemId) {
+        return items.containsKey(itemId);
     }
 
     private void setPurchaseID() {
@@ -41,7 +47,7 @@ public class PurchaseOrder {
     }
 
     private int findNewPurchaseID() {
-        while (idList.contains(idCount)) {
+        while (items.containsKey(idCount)) {
             ++idCount;
         }
         if (idCount < maxIDSize) {

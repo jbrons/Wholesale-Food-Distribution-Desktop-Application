@@ -12,10 +12,10 @@ import java.util.*;
  */
 public class VendorDatabase {
     private static VendorDatabase firstInstance = null;
-    private Vector<Vendor> vendordatabase = null;
+    private Vector<Vendor> vendorDatabase = null;
 
     private VendorDatabase() {
-        vendordatabase = new Vector<Vendor>();
+        vendorDatabase = new Vector<Vendor>();
     }
 
     public static VendorDatabase getInstance() {
@@ -27,20 +27,20 @@ public class VendorDatabase {
 
     public boolean addVendor(Vendor vendor) {
         if (getIndex(vendor.getId()) == -1) {
-            vendordatabase.add(vendor);
+            vendorDatabase.add(vendor);
             return true;
         }
         return false;
     }
 
     public boolean updateVendor(Vendor vendor) {
-        vendordatabase.set(vendordatabase.indexOf(vendor), vendor);
+        vendorDatabase.set(vendorDatabase.indexOf(vendor), vendor);
         return true;
     }
 
     public boolean deleteVendor(int index) {
-        if (vendordatabase.get(index).getBalance() == 0) {
-            vendordatabase.removeElementAt(index);
+        if (vendorDatabase.get(index).getBalance() == 0) {
+            vendorDatabase.removeElementAt(index);
             return true;
         }
         return false;
@@ -48,7 +48,7 @@ public class VendorDatabase {
 
     public String getVendorDetails(int index) {
         if (index > -1) {
-            return vendordatabase.get(index).toString();
+            return vendorDatabase.get(index).toString();
         }
         return null;
     }
@@ -56,14 +56,14 @@ public class VendorDatabase {
     public String getVendorDetails(String name) {
         int index = searchVendorDatabase(name);
         if (index > -1) {
-            return vendordatabase.get(index).toString();
+            return vendorDatabase.get(index).toString();
         }
         return null;
     }
 
     public Vector<String> getVendorDatabaseDetails() {
         Vector<String> vendors = new Vector<String>();
-        for (Vendor vendor : vendordatabase) {
+        for (Vendor vendor : vendorDatabase) {
             vendors.add(vendor.toString());
         }
         return vendors;
@@ -71,7 +71,7 @@ public class VendorDatabase {
 
     public Vector<Integer> getIdList() {
         Vector<Integer> idList = new Vector<Integer>();
-        for (Vendor vendor : vendordatabase) {
+        for (Vendor vendor : vendorDatabase) {
             idList.add(vendor.getId());
         }
         return idList;
@@ -90,27 +90,27 @@ public class VendorDatabase {
     }
 
     public int searchVendorDatabase(int id) {
-        for (Vendor vendor : vendordatabase) {
+        for (Vendor vendor : vendorDatabase) {
             if (id == vendor.getId()) {
-                return vendordatabase.indexOf(vendor);
+                return vendorDatabase.indexOf(vendor);
             }
         }
         return -1;
     }
 
     public int searchVendorDatabase(String name) {
-        for (Vendor vendor : vendordatabase) {
+        for (Vendor vendor : vendorDatabase) {
             if (name.equals(vendor.getName())) {
-                return vendordatabase.indexOf(vendor);
+                return vendorDatabase.indexOf(vendor);
             }
         }
         return -1;
     }
 
     public Vendor getVendor(int index) {
-        return vendordatabase.get(index);
+        return vendorDatabase.get(index);
     }
 
-    public boolean isEmpty() {return vendordatabase.isEmpty();}
-    public int size() { return vendordatabase.size();}
+    public boolean isEmpty() {return vendorDatabase.isEmpty();}
+    public int size() { return vendorDatabase.size();}
 }

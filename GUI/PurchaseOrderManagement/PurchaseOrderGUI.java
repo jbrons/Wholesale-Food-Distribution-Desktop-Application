@@ -10,6 +10,7 @@ import src.Vendor.VendorDatabase;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.file.attribute.AclEntry;
 import java.util.Vector;
 
 public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusListener {
@@ -24,7 +25,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
     private JButton btnCreatePO;
     private JButton btnCancelPO;
     private JButton btnViewPO;
-    private JPanel pnltems;
+    private JScrollPane scpDisplayList;
     private JPanel pnlList;
 
     private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
@@ -95,15 +96,30 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
             }
         });
 
-        lstItems.addMouseMotionListener(new MouseAdapter() {
+        lstItems.addMouseListener(new MouseAdapter() {
             /**
              * {@inheritDoc}
              *
              * @param e
-             * @since 1.6
+             */
+            @Override
+            public void mouseExited(MouseEvent e) {
+                System.out.println("Out");
+                lstItems.clearSelection();
+            }
+        });
+
+
+        lstItems.addMouseMotionListener(new MouseMotionAdapter() {
+            /**
+             * Invoked when the mouse button has been moved on a component
+             * (with no buttons no down).
+             *
+             * @param e
              */
             @Override
             public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
                 System.out.println("In list");
                 int index = lstItems.locationToIndex(e.getPoint());
                 Rectangle cellBounds = lstItems.getCellBounds(index, index);
@@ -112,19 +128,6 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
                 } else {
                     lstItems.clearSelection();
                 }
-            }
-        });
-
-        pnltems.addMouseMotionListener(new MouseAdapter() {
-            /**
-             * {@inheritDoc}
-             *
-             * @param e
-             * @since 1.6
-             */
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                lstItems.clearSelection();
             }
         });
     }
@@ -227,8 +230,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
                     DialogDisplay.displayError("No Vendors are available");
                 }
             } else {
-                int choice = DialogDisplay.displayQuestion("Discard Purchase Order?",
-                        "Cancel Purchase Order", new Object[] {"Confirm", "Cancel"});
+                int choice = cancelPurchaseOrder();
                 if (choice == JOptionPane.YES_OPTION){
                     txtSearchBar.setText(searchBarPrompt);
                     txtSearchBar.setEditable(true);
@@ -237,22 +239,25 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
             }
 
         } else if (userAction == btnCreatePO) {
+            lstItems.setListData(itemsDatabase.getAllItemDetails());
             if (vendorSelected) {
                 Vector<String> vendorItems = itemsDatabase.getItemsForVendor(vendorID);
                 if (vendorItems.size() == 0) {
                     DialogDisplay.displayError(vendorName + " does not have any items to choose from");
                 } else {
                     lstItems.setListData(vendorItems);
+                    setBtnCancelPO();
                 }
-                lstItems.setListData(itemsDatabase.getAllItemDetails());
             } else {
                 DialogDisplay.displayError("Must select a Vendor first");
             }
 
-
-
         } else if (userAction == btnCancelPO) {
-
+            int choice = cancelPurchaseOrder();
+            if (choice == JOptionPane.YES_OPTION){
+                txtSearchBar.setEditable(true);
+                vendorSelected = false;
+            }
         } else if (userAction == btnViewPO) {
 
         } else if (userAction == btnMainMenu) {
@@ -260,5 +265,15 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
         } else if (userAction == btnLogOut) {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
         }
+    }
+
+    private void setBtnCancelPO() {
+        btnCancelPO.setVisible(true);;
+        btnCancelPO.setEnabled(true);
+    }
+
+    private int cancelPurchaseOrder() {
+        return DialogDisplay.displayQuestion("Discard Purchase Order?",
+                "Cancel Purchase Order", new Object[] {"Confirm", "Cancel"});
     }
 }
