@@ -34,15 +34,6 @@ public class InvoiceDatabase {
         }
         return true;
     }
-
-    //probably wont need
-    public Vector<String> getAllInvoiceDetails() {
-        Vector<String> invoices = new Vector<String>();
-        for (Invoice invoice : invoiceList) {
-            invoices.add(invoice.toString());
-        }
-        return invoices;
-    }
     
     public boolean invoiceAlreadyExists(int orderId) {
 
