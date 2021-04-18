@@ -41,7 +41,9 @@ public class OverdueInvoicesLogic {
             int customerID = customerOrder.getCustomerID();
 
             CustomerProfile overdueCustomer = customerProfileDatabase.getProfile(customerID);
-            overdueCustomers.add(overdueCustomer);
+
+            if(!overdueCustomers.contains(overdueCustomer))
+                overdueCustomers.add(overdueCustomer);
         }
 
         return overdueCustomers.toArray(new CustomerProfile[overdueCustomers.size()]);
