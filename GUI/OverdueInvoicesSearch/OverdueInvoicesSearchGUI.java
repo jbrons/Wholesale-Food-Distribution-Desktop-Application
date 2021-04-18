@@ -1,25 +1,19 @@
 package GUI.OverdueInvoicesSearch;
 
-import GUI.InvoiceManagement.InvoiceDisplayGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
-import com.sun.tools.javac.Main;
-import src.Customer.CustomerProfile;
-import src.CustomerOrder.CustomerOrder;
-import src.CustomerOrder.CustomerOrderDatabase;
 import src.Invoice.Invoice;
 import src.Invoice.InvoiceDatabase;
+import src.OverdueCustomerInvoice.OverdueCustomerInvoice;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Vector;
 
 public class OverdueInvoicesSearchGUI {
     private JPanel rootPanel;
     private JPanel mainPanel;
     private JPanel buttonPanel;
-    private JList<CustomerProfile> overdueInvoicesList;
+    private JList<String> overdueInvoicesList;
     private JPanel mainTopBarPanel;
     private JButton mainMenuButton;
     private JButton logoutButton;
@@ -29,7 +23,7 @@ public class OverdueInvoicesSearchGUI {
     OverdueInvoicesLogic overdueInvoicesLogic;
 
     Invoice[] invoiceList;
-    CustomerProfile[] overdueCustomers;
+    OverdueCustomerInvoice[] overdueCustomers;
 
     public OverdueInvoicesSearchGUI()
     {
@@ -58,7 +52,11 @@ public class OverdueInvoicesSearchGUI {
     private void initializeList() {
         overdueCustomers = overdueInvoicesLogic.getOverdueCustomers();
 
-        overdueInvoicesList.setListData(overdueCustomers);
+        String[] resultList = new String[overdueCustomers.length];
+        for(int i = 0; i < overdueCustomers.length; i++)
+            resultList[i] =  overdueCustomers[i].toString();
+
+        overdueInvoicesList.setListData(resultList);
     }
 
     private void displayError(String message) {
