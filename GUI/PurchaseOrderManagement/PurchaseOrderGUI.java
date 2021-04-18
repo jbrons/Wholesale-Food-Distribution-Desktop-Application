@@ -2,39 +2,43 @@ package GUI.PurchaseOrderManagement;
 
 import GUI.MainWindow.MainWindowGUI;
 import src.Item.ItemsDatabase;
+import src.User.EnumUserRoles;
+import src.Vendor.VendorList;
 
 import javax.swing.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
-public class PurchaseOrderGUI implements MouseListener, FocusListener {
+public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusListener {
     private JList lstItems;
     private JPanel rootPanel;
     private JTextField txtSearchBar;
-    private JButton btnGo;
+    private JButton btnSelectVendor;
     private JTextField txtInstructions;
     private JLabel lblSearch;
     private JButton btnMainMenu;
     private JButton btnLogOut;
-    private JPanel pnlPurchaseOrderInfo;
+    private JButton btnCreatePO;
+    private JButton btnCancelPO;
+    private JButton btnViewPO;
 
-    ItemsDatabase itemsList = ItemsDatabase.getInstance();
+    VendorList vendorDatabase = VendorList.getInstance();
+    ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
 
     public PurchaseOrderGUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
         mainWindowGUI.setTitle("Purchase Order Management");
+
         setUpGUI();
     }
 
     private void setUpGUI() {
         addListeners();
+
+        txtSearchBar.requestFocusInWindow();
+        txtSearchBar.setText("Search by Vendor Name");
+
         lstItems.setListData(itemsList.getAllItemDetails());
-
-
-        txtSearchBar.setText("Search by Vendor Name...");
     }
 
     /**
@@ -43,6 +47,12 @@ public class PurchaseOrderGUI implements MouseListener, FocusListener {
     private void addListeners() {
         txtSearchBar.addFocusListener(this);
         lstItems.addMouseListener(this);
+        btnCreatePO.addActionListener(this);
+        btnCancelPO.addActionListener(this);
+        btnViewPO.addActionListener(this);
+        btnMainMenu.addActionListener(this);
+        btnLogOut.addActionListener(this);
+        btnSelectVendor.addActionListener(this);
     }
 
     public JPanel getPanel()
@@ -120,6 +130,37 @@ public class PurchaseOrderGUI implements MouseListener, FocusListener {
             if (txtSearchBar.getText().equals("")) {
                 txtSearchBar.setText("Search by Vendor Name...");
             }
+        }
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
+
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object userAction = e.getSource();
+
+        if (userAction == btnSelectVendor) {
+            String input = txtSearchBar.getText();
+            int index = vendorList.getIndex(input);
+                    lstDisplay.setSelectedIndex(index);
+
+        } else if (userAction == btnCreatePO) {
+
+        } else if (userAction == btnCancelPO) {
+
+        } else if (userAction == btnViewPO) {
+
+        } else if (userAction == btnMainMenu) {
+
+        } else if (userAction == btnLogOut) {
+
         }
     }
 }

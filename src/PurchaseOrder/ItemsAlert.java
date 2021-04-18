@@ -33,7 +33,7 @@ public class ItemsAlert  {
             stock.setItem(id, quantity);
 
             if (outOfStock == 3) {
-                ItemsAlertGUI.displayAlert("Two Items have gone out of Stock");
+                DialogDisplay.displayStockAlert("Two Items have gone out of Stock");
                 outOfStock = 0;
             }
         }

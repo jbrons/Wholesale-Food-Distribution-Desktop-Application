@@ -10,37 +10,37 @@ import java.util.*;
  * @date 03/18/2021
  *
  */
-public class VendorList {
-    private static VendorList firstInstance = null;
-    private Vector<Vendor> vendorList = null;
+public class VendorDatabase {
+    private static VendorDatabase firstInstance = null;
+    private Vector<Vendor> vendordatabase = null;
 
-    private VendorList() {
-        vendorList = new Vector<Vendor>();
+    private VendorDatabase() {
+        vendordatabase = new Vector<Vendor>();
     }
 
-    public static VendorList getInstance() {
+    public static VendorDatabase getInstance() {
         if (firstInstance == null) {
-            firstInstance = new VendorList();
+            firstInstance = new VendorDatabase();
         }
         return firstInstance;
     }
 
     public boolean addVendor(Vendor vendor) {
         if (getIndex(vendor.getId()) == -1) {
-            vendorList.add(vendor);
+            vendordatabase.add(vendor);
             return true;
         }
         return false;
     }
 
     public boolean updateVendor(Vendor vendor) {
-        vendorList.set(vendorList.indexOf(vendor), vendor);
+        vendordatabase.set(vendordatabase.indexOf(vendor), vendor);
         return true;
     }
 
     public boolean deleteVendor(int index) {
-        if (vendorList.get(index).getBalance() == 0) {
-            vendorList.removeElementAt(index);
+        if (vendordatabase.get(index).getBalance() == 0) {
+            vendordatabase.removeElementAt(index);
             return true;
         }
         return false;
@@ -48,22 +48,22 @@ public class VendorList {
 
     public String getVendorDetails(int index) {
         if (index > -1) {
-            return vendorList.get(index).toString();
+            return vendordatabase.get(index).toString();
         }
         return null;
     }
 
     public String getVendorDetails(String name) {
-        int index = searchVendorList(name);
+        int index = searchVendorDatabase(name);
         if (index > -1) {
-            return vendorList.get(index).toString();
+            return vendordatabase.get(index).toString();
         }
         return null;
     }
 
     public Vector<String> getVendorListDetails() {
         Vector<String> vendors = new Vector<String>();
-        for (Vendor vendor : vendorList) {
+        for (Vendor vendor : vendordatabase) {
             vendors.add(vendor.toString());
         }
         return vendors;
@@ -71,42 +71,42 @@ public class VendorList {
 
     public Vector<Integer> getIdList() {
         Vector<Integer> idList = new Vector<Integer>();
-        for (Vendor vendor : vendorList) {
+        for (Vendor vendor : vendordatabase) {
             idList.add(vendor.getId());
         }
         return idList;
     }
 
     public int getIndex(int id) {
-        return searchVendorList(id);
+        return searchVendorDatabase(id);
     }
 
     public int getIndex(String name) {
-        return searchVendorList(name);
+        return searchVendorDatabase(name);
     }
 
-    public int searchVendorList(int id) {
-        for (Vendor vendor : vendorList) {
+    public int searchVendorDatabase(int id) {
+        for (Vendor vendor : vendordatabase) {
             if (id == vendor.getId()) {
-                return vendorList.indexOf(vendor);
+                return vendordatabase.indexOf(vendor);
             }
         }
         return -1;
     }
 
-    public int searchVendorList(String name) {
-        for (Vendor vendor : vendorList) {
+    public int searchVendorDatabase(String name) {
+        for (Vendor vendor : vendordatabase) {
             if (name.equals(vendor.getName())) {
-                return vendorList.indexOf(vendor);
+                return vendordatabase.indexOf(vendor);
             }
         }
         return -1;
     }
 
     public Vendor getVendor(int index) {
-        return vendorList.get(index);
+        return vendordatabase.get(index);
     }
 
-    public boolean isEmpty() {return vendorList.isEmpty();}
-    public int size() { return vendorList.size();}
+    public boolean isEmpty() {return vendordatabase.isEmpty();}
+    public int size() { return vendordatabase.size();}
 }
