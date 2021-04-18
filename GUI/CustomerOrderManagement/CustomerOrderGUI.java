@@ -318,7 +318,6 @@ public class CustomerOrderGUI {
 
                 // Set item quantity
                 item.setQuantity(item.getQuantity() - quantity);
-                
                 // Add item
                 order.addItem(item, quantity);
             } else {
