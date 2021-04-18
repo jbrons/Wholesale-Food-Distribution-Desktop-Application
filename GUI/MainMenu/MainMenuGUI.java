@@ -8,6 +8,7 @@ import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.ProfitSearch.ProfitSearchGUI;
+import GUI.PurchaseOrderManagement.PurchaseOrderGUI;
 import GUI.UserManagement.UserManagementGUI;
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
 
@@ -36,8 +37,12 @@ public class MainMenuGUI {
     private JButton customerOrderManagementButton;
     private JButton customerInvoiceManagementButton;
     private JButton profitSearchButton;
+<<<<<<< Updated upstream
     private JButton expiredItemsButton;
     private JButton customerOrderSearchButton;
+=======
+    private JButton purchaseOrderManagementButton;
+>>>>>>> Stashed changes
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -82,6 +87,12 @@ public class MainMenuGUI {
             customerOrderSearchButton.setVisible(false);
         }
 
+        if (database.getCurrentUser().getPermissionLevel() != EnumUserRoles.PURCHASER.getPermissionLevel())
+        {
+            purchaseOrderManagementButton.setEnabled(false);
+            purchaseOrderManagementButton.setVisible(false);
+        }
+
         userManagementButton.addActionListener(e->
                 mainWindowGUI.setJPanel(new UserManagementGUI().getPanel()));
 
@@ -106,6 +117,10 @@ public class MainMenuGUI {
         logoutButton.addActionListener(e ->
                 mainWindowGUI.setJPanel(new LoginGUI().getPanel()));
 
+        purchaseOrderManagementButton.addActionListener(e->
+        {
+            mainWindowGUI.setJPanel(new PurchaseOrderGUI().getPanel());
+        });
 
        //customer management
         customerManagementButton.addActionListener(e -> {

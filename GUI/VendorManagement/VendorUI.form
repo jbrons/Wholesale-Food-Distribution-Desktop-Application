@@ -22,6 +22,7 @@
         </constraints>
         <properties>
           <foreground color="-16777216"/>
+          <requestFocusEnabled value="false"/>
           <text value="Search Profiles:"/>
         </properties>
       </component>

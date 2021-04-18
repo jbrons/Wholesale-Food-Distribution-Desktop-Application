@@ -57,7 +57,7 @@ public class VendorUI implements ActionListener {
     }
 
     private void setUpGUI() {
-        txtSearchBar.requestFocusInWindow();;
+        txtSearchBar.requestFocusInWindow();
         btnGo.setEnabled(false);
 
        if (database.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
