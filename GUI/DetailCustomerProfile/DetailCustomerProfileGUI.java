@@ -1,7 +1,7 @@
 package GUI.DetailCustomerProfile;
 /**
  *
- *
+ *Author : @Joyshree Chowdhury
  */
 
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;

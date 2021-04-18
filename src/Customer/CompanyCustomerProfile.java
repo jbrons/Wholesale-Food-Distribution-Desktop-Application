@@ -1,7 +1,7 @@
 package src.Customer;
 /**
  * Handles properties of Customer Profile
- *
+ * Author @Joyshree Chowdhury
  */
 
 

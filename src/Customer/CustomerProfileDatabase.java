@@ -1,3 +1,6 @@
+/**
+ * Customer profile database
+ */
 package src.Customer;
 
 

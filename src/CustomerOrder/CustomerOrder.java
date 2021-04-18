@@ -56,6 +56,7 @@ public class CustomerOrder {
      * @return
      */
     public int getOrderID() {
+
         return orderID;
     }
 
@@ -64,6 +65,7 @@ public class CustomerOrder {
      * @return
      */
     public int getCustomerID() {
+
         return customerID;
     }
 
@@ -72,6 +74,7 @@ public class CustomerOrder {
      * @return
      */
     public Map<Item, Double> getItems() {
+
         return items;
     }
 
@@ -80,6 +83,7 @@ public class CustomerOrder {
      * @return
      */
     public String getNeedByDate() {
+
         return needByDate;
     }
 
@@ -122,6 +126,7 @@ public class CustomerOrder {
      * @return
      */
     public int getItemCount() {
+
         return items.size();
     }
 

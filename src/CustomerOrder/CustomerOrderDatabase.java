@@ -15,6 +15,7 @@ public class CustomerOrderDatabase {
 
     private CustomerOrderDatabase()
     {
+
         database = new HashMap<>();
     }
 
@@ -51,6 +52,7 @@ public class CustomerOrderDatabase {
      * @return
      */
     public boolean deleteOrder(CustomerOrder order) {
+
         return database.remove(order.getOrderID(), order);
     }
 

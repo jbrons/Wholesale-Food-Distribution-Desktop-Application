@@ -1,6 +1,6 @@
 /**
  * Customer Order management
- *
+ * Author @Joyshree Chowdhury
  */
 package GUI.CustomerOrderManagement;
 
@@ -375,6 +375,7 @@ public class CustomerOrderGUI {
      * @return
      */
     public JPanel getPanel() {
+
         return mainPanel;
     }
 

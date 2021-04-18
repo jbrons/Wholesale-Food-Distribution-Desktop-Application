@@ -2,6 +2,7 @@ package GUI.CustomerProfileManager;
 /**
  *
  * Customer profile manager
+ * Author @Joyshree Chowdhury
  */
 
 import GUI.DetailCustomerProfile.DetailCustomerProfileGUI;
