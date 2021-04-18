@@ -24,10 +24,7 @@ public class InvoiceDatabase {
         invoiceList.add(invoice);
         return true;
     }
-    public boolean removeInvoice(int index){
-        invoiceList.removeElementAt(index);
-        return true;
-    }
+
 
     //probably wont need
     public Vector<String> getAllInvoiceDetails() {
@@ -39,9 +36,9 @@ public class InvoiceDatabase {
     }
     
     public boolean invoiceAlreadyExists(int orderId) {
-        Vector<String> invoices = new Vector<String>();
+
         for (Invoice invoice : invoiceList) {
-            if(invoice.getOrderId() == orderId ){
+            if(invoice.getOrderId() == orderId){
                 return false;
             }
         }

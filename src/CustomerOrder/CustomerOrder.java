@@ -44,7 +44,7 @@ public class CustomerOrder {
      * @param orderDate order date
      */
     public CustomerOrder(int customerID, String needByDate, String orderDate) {
-        orderID = ++ID;
+        this.orderID = ++ID;
         this.customerID = customerID;
         this.needByDate = needByDate;
         this.orderDate = orderDate;
