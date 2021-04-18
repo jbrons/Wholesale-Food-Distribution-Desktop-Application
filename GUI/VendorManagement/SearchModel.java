@@ -11,11 +11,8 @@ import javax.swing.*;
  *
  */
 public class SearchModel extends Model {
-    private DefaultListModel<String> searchModel;
-
     public SearchModel() {
-        searchModel = new DefaultListModel();
-        searchModel.addElement(null);
+        super();
+        add(null);
     }
-
 }

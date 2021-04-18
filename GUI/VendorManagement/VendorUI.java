@@ -169,7 +169,7 @@ public class VendorUI implements ActionListener {
                 if (deleteWarning() == JOptionPane.YES_OPTION) {
                     if (vendordatabase.deleteVendor(index)) {
                         /* delete purchase orders here */
-                        vendorModel.removeVendor(index);
+                        vendorModel.remove(index);
                         DialogDisplay.displayMessage("Vendor removed.");
                     } else {
                         DialogDisplay.displayError("Can only delete when balance = 0.");

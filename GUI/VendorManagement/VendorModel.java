@@ -14,14 +14,13 @@ import javax.swing.*;
  */
 public class VendorModel extends Model {
     private static VendorModel firstInstance = null;
-    private DefaultListModel<String> listModel;
 
     private VendorModel() {
-        listModel = new DefaultListModel();
+        super();
         VendorDatabase vendorDatabase = VendorDatabase.getInstance();
 
         for (String vendor : vendorDatabase.getVendorDatabaseDetails()) {
-            listModel.addElement(vendor);
+            add(vendor);
         }
     }
 
@@ -32,7 +31,7 @@ public class VendorModel extends Model {
         return firstInstance;
     }
 
-    public void removeVendor(int index) {
-        listModel.remove(index);
+    public void remove(int index) {
+        getDisplayListModel().remove(index);
     }
 }

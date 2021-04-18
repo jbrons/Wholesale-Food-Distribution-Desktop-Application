@@ -4,6 +4,8 @@ import GUI.ItemManagement.ItemDisplayGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
+import GUI.VendorManagement.SearchModel;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.Vendor.VendorDatabase;
 
@@ -12,8 +14,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.nio.file.attribute.AclEntry;
 import java.util.Vector;
+import java.util.stream.Stream;
 
-public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusListener {
+public class PurchaseOrderGUI implements ActionListener {
     private JPanel rootPanel;
     private JList lstItems;
     private JTextField txtSearchBar;
@@ -27,6 +30,8 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
     private JButton btnViewPO;
     private JScrollPane scpDisplayList;
     private JPanel pnlList;
+
+    ItemModel itemModel = new ItemModel();
 
     private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
@@ -48,6 +53,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
 
     private void setUpGUI() {
         txtSearchBar.setText(searchBarPrompt);
+        lstItems.setModel(itemModel.getDisplayListModel());
 
         //lstItems.setListData(itemsDatabase.getAllItemDetails());
 
@@ -62,8 +68,8 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
      * Invoked to add a ActionListener to JButtons and JTextFields
      */
     private void addListeners() {
-        txtSearchBar.addFocusListener(this);
-        lstItems.addMouseListener(this);
+        //txtSearchBar.addFocusListener(this);
+        //lstItems.addMouseListener(this);
         btnCreatePO.addActionListener(this);
         btnCancelPO.addActionListener(this);
         btnViewPO.addActionListener(this);
@@ -96,6 +102,36 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
             }
         });
 
+        txtSearchBar.addFocusListener(new FocusAdapter() {
+            /**
+             * Invoked when a component gains the keyboard focus.
+             *
+             * @param e
+             */
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtSearchBar.getText().equals(searchBarPrompt)) {
+                    txtSearchBar.setText("");
+                }
+            }
+
+            /**
+             * Invoked when a component loses the keyboard focus.
+             *
+             * @param e
+             */
+            @Override
+            public void focusLost(FocusEvent e) {
+                Object userAction = e.getSource();
+
+                if (userAction == txtSearchBar) {
+                    if (txtSearchBar.getText().equals("")) {
+                        txtSearchBar.setText(searchBarPrompt);
+                    }
+                }
+            }
+        });
+
         lstItems.addMouseListener(new MouseAdapter() {
             /**
              * {@inheritDoc}
@@ -103,12 +139,21 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
              * @param e
              */
             @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = lstItems.getSelectedIndex();
+                mainWindowGUI.setJPanel(new ItemPOInfo().getPanel());
+            }
+
+            /**
+             * {@inheritDoc}
+             *
+             * @param e
+             */
+            @Override
             public void mouseExited(MouseEvent e) {
-                System.out.println("Out");
                 lstItems.clearSelection();
             }
         });
-
 
         lstItems.addMouseMotionListener(new MouseMotionAdapter() {
             /**
@@ -120,86 +165,17 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
             @Override
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
-                System.out.println("In list");
-                int index = lstItems.locationToIndex(e.getPoint());
-                Rectangle cellBounds = lstItems.getCellBounds(index, index);
-                if (cellBounds.contains(e.getPoint())) {
-                    lstItems.setSelectedIndex(index);
-                } else {
-                    lstItems.clearSelection();
+                if (lstItems.isEnabled()) {
+                    int index = lstItems.locationToIndex(e.getPoint());
+                    Rectangle cellBounds = lstItems.getCellBounds(index, index);
+                    if (cellBounds.contains(e.getPoint())) {
+                        lstItems.setSelectedIndex(index);
+                    } else {
+                        lstItems.clearSelection();
+                    }
                 }
             }
         });
-    }
-
-    /**
-     * Invoked when the mouse button has been clicked (pressed
-     * and released) on a component.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {}
-
-    /**
-     * Invoked when a mouse button has been pressed on a component.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void mousePressed(MouseEvent e) {}
-
-    /**
-     * Invoked when a mouse button has been released on a component.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-
-    /**
-     * Invoked when the mouse enters a component.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    /**
-     * Invoked when the mouse exits a component.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void mouseExited(MouseEvent e) {}
-
-    /**
-     * Invoked when a component gains the keyboard focus.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void focusGained(FocusEvent e) {
-        if (txtSearchBar.getText().equals(searchBarPrompt)) {
-            txtSearchBar.setText("");
-        }
-    }
-
-    /**
-     * Invoked when a component loses the keyboard focus.
-     *
-     * @param e the event to be processed
-     */
-    @Override
-    public void focusLost(FocusEvent e) {
-        Object userAction = e.getSource();
-
-        if (userAction == txtSearchBar) {
-            if (txtSearchBar.getText().equals("")) {
-                txtSearchBar.setText(searchBarPrompt);
-            }
-        }
     }
 
     /**
@@ -218,16 +194,18 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
             }
 
             if (!vendorSelected) {
-                int id = PurchaseOrderLogic.searchForVendor(vendorName);
+                if (vendorDatabase.isEmpty()) {
+                    DialogDisplay.displayError("No Vendors are available");
+                }
 
-                if (id > 0) {
+                int index = vendorDatabase.searchVendorDatabase(vendorName);
+                if (index > -1) {
+                    vendorID = vendorDatabase.getId(index);
                     txtSearchBar.setEditable(false);
                     btnSelectVendor.setText("Select New Vendor");
                     vendorSelected = true;
-                } else if (id < 0 ){
-                    DialogDisplay.displayError("No Vendors by the name of " + vendorName);
                 } else {
-                    DialogDisplay.displayError("No Vendors are available");
+                    DialogDisplay.displayError("No Vendors by the name of " + vendorName);
                 }
             } else {
                 int choice = cancelPurchaseOrder();
@@ -240,11 +218,11 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
 
         } else if (userAction == btnCreatePO) {
             if (vendorSelected) {
-                Vector<String> vendorItems = itemsDatabase.getItemsForVendor(vendorID);
+                Vector<Item> vendorItems = itemsDatabase.getItemsForVendor(vendorID);
                 if (vendorItems.size() == 0) {
                     DialogDisplay.displayError(vendorName + " does not have any items to choose from");
                 } else {
-                    lstItems.setListData(vendorItems);
+                    itemModel.updateModel(vendorItems);
                     setBtnCancelPO();
                 }
             } else {
@@ -253,8 +231,10 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
 
         } else if (userAction == btnCancelPO) {
             int choice = cancelPurchaseOrder();
+            itemModel.clearModel();
             if (choice == JOptionPane.YES_OPTION){
                 txtSearchBar.setEditable(true);
+                lstItems.setEnabled(false);
                 vendorSelected = false;
             }
         } else if (userAction == btnViewPO) {

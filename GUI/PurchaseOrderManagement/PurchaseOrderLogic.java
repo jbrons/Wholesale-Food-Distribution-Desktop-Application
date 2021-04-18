@@ -11,8 +11,6 @@ public class PurchaseOrderLogic {
             return 0;
         }
 
-
-
         int index = vendorDatabase.getIndex(name);
         if (index < 0) {
             return -1;

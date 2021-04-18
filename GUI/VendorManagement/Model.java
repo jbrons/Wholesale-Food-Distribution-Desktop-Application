@@ -5,6 +5,10 @@ import javax.swing.*;
 public abstract class Model {
     private DefaultListModel<String> model;
 
+    public Model() {
+        model = new DefaultListModel<>();
+    }
+
     public DefaultListModel<String> getDisplayListModel() {
         return model;
     }
