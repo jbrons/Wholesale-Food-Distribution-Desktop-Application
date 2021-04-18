@@ -42,7 +42,7 @@ public class VendorUI implements ActionListener {
     private static boolean viewProfiles = true;
 
     VendorDatabase vendordatabase = VendorDatabase.getInstance();
-    ListModel vendorModel = ListModel.getInstance();  // fix resetting it each time?
+    VendorModel vendorModel = VendorModel.getInstance();  // fix resetting it each time?
     UserDatabase database = UserDatabase.getInstance();
 
     SearchModel searchModel = new SearchModel();
@@ -108,7 +108,7 @@ public class VendorUI implements ActionListener {
                         return;
                     }
                 } else {
-
+                    // what to do here? id wrong length
                 }
             } else if (option == JOptionPane.NO_OPTION) {
                 index = vendordatabase.getIndex(input);
@@ -116,11 +116,16 @@ public class VendorUI implements ActionListener {
             if (index > -1) {
                 if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER) {
                     if (viewProfiles) {
-                        displayListSettings();
+                        displayList();
                     }
                     lstDisplay.setSelectedIndex(index);
                 } else {
-                    searchModel.updateVendor(vendordatabase.getVendorDetails(index), 0);
+                    if (searchModel.isEmpty()) {
+                        searchModel.add(vendordatabase.getVendorDetails(index));
+                    } else {
+                        searchModel.update(vendordatabase.getVendorDetails(index), 0);
+                    }
+                    lstSearchResults.setSelectedIndex(index);
                     lstSearchResults.setSelectedIndex(index);
                 }
             } else {
@@ -133,10 +138,10 @@ public class VendorUI implements ActionListener {
                 if (vendorModel.isEmpty()) {
                     DialogDisplay.displayError("No Vendors to view");
                 } else {
-                    displayListSettings();
+                    displayList();
                 }
             } else {
-                displayListSettings();
+                displayList();
             }
         } else if (userAction == btnCreateProfile) {
             mainWindowGUI.setJPanel(new VendorCreation().getPanel());
@@ -178,7 +183,7 @@ public class VendorUI implements ActionListener {
         }
     }
 
-    private void displayListSettings() {
+    private void displayList() {
         String hideMessage = "Hide Profiles";
         String viewMessage = "View Profiles";
 

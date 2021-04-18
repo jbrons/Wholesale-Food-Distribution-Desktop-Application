@@ -12,11 +12,11 @@ import javax.swing.*;
  * @date 03/18/2021
  *
  */
-public class ListModel implements IModel {
-    private static ListModel firstInstance = null;
+public class VendorModel extends Model {
+    private static VendorModel firstInstance = null;
     private DefaultListModel<String> listModel;
 
-    private ListModel() {
+    private VendorModel() {
         listModel = new DefaultListModel();
         VendorDatabase vendorDatabase = VendorDatabase.getInstance();
 
@@ -25,30 +25,14 @@ public class ListModel implements IModel {
         }
     }
 
-    public static ListModel getInstance() {
+    public static VendorModel getInstance() {
         if (firstInstance == null) {
-            firstInstance = new ListModel();
+            firstInstance = new VendorModel();
         }
         return firstInstance;
     }
 
-    public DefaultListModel<String> getDisplayListModel() {
-        return listModel;
-    }
-
-    public void addVendor(String vendor) {
-        listModel.addElement(vendor);
-    }
-
-    public void updateVendor(String vendor, int index) {
-        listModel.setElementAt(vendor, index);
-    }
-
     public void removeVendor(int index) {
         listModel.remove(index);
-    }
-
-    public boolean isEmpty() {
-       return listModel.isEmpty();
     }
 }

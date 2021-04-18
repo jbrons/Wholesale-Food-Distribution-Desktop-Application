@@ -239,7 +239,6 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
             }
 
         } else if (userAction == btnCreatePO) {
-            lstItems.setListData(itemsDatabase.getAllItemDetails());
             if (vendorSelected) {
                 Vector<String> vendorItems = itemsDatabase.getItemsForVendor(vendorID);
                 if (vendorItems.size() == 0) {

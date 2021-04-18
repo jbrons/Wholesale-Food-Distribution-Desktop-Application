@@ -84,11 +84,11 @@ public class ItemsDatabase {
         return items;
     }
 
-    public Vector<String> getItemsForVendor(int vendorId) {
-        Vector<String> items = new Vector<String>();
+    public Vector<Item> getItemsForVendor(int vendorId) {
+        Vector<Item> items = new Vector<>();
         for (Item item : itemsList) {
             if(vendorId == item.getVendorId()) {
-                items.add(item.toString());
+                items.add(item);
             }
         }
         return items;

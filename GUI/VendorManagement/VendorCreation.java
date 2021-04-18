@@ -57,7 +57,7 @@ public class VendorCreation implements ActionListener, KeyListener {
     private JButton btnLogOut;
 
     private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
-    private ListModel displayModel = ListModel.getInstance();
+    private VendorModel displayModel = VendorModel.getInstance();
     private Vendor vendor = null;
 
     private String name, streetAddress, city, phoneNum;
@@ -264,12 +264,12 @@ public class VendorCreation implements ActionListener, KeyListener {
                     updateInputs();
                     vendorDatabase.updateVendor(vendor);
                     System.out.println(vendorDatabase.searchVendorDatabase(vendor.getId()));
-                    displayModel.updateVendor(vendor.toString(), vendorDatabase.searchVendorDatabase(vendor.getId()));
+                    displayModel.update(vendor.toString(), vendorDatabase.searchVendorDatabase(vendor.getId()));
                 } else {
                     Vendor vendor = new Vendor(name, streetAddress, city, state, phoneNum, balance,
                             lastPaidAmount, lastOrderDate, seasonalDiscDate);
                     vendorDatabase.addVendor(vendor);
-                   displayModel.addVendor(vendor.toString());
+                   displayModel.add(vendor.toString());
                 }
                 closeCreationGUI();
             }
