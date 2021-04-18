@@ -27,7 +27,11 @@ In [Sprint 2](https://git.wayne.edu/gt2533/group2/-/tree/master#sprint-2-functio
 ## Sprint 1 Functionalities
 
 #### Feature 1: Login and Logout
-
+- Create a user profile to login/logout
+- Create, update or delete a user
+- View list of all users
+- Search for a specified user
+- View specific details of a chosen user
 
 #### Feature 2: Customer Profiles
 
@@ -75,9 +79,8 @@ In [Sprint 2](https://git.wayne.edu/gt2533/group2/-/tree/master#sprint-2-functio
 
 #### Feature 8: Other Functions
 
-
-
-
-
-
-
+- Alert owner users to current seasonal discounts
+- Find profits of a specified item with a given date range
+- View customers who are past 30 days on their due invoices
+- Search for expired items in the inventory
+- View a specified customer's orders or invoices
