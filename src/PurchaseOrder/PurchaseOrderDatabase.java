@@ -23,7 +23,7 @@ public class PurchaseOrderDatabase {
         return firstInstance;
     }
 
-    public boolean isItemInPurchaseOrder(int itemId, int vendorId) {
+    public boolean containsItem(int itemId, int vendorId) {
         return purchaseOrders.get(vendorId).containsItem(itemId);
     }
 }
