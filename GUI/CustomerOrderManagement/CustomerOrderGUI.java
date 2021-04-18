@@ -204,8 +204,8 @@ public class CustomerOrderGUI {
 
                 // Set item quantity
                 entry.getKey().setQuantity(entry.getKey().getQuantity() + entry.getValue());
-                // Set balance of customer
-                profile.setBalance(price + profile.getBalance());
+
+
             }
 
             orderDB.deleteOrder(order);
@@ -316,18 +316,9 @@ public class CustomerOrderGUI {
                 // Get price of it
                 double price = quantity * item.getSellingPrice();
 
-                // Check customer has enough balance
-                if (customer.getBalance() < price) {
-                    JOptionPane.showMessageDialog(null, "Customer has no enough balance");
-                    return false;
-                }
-
                 // Set item quantity
                 item.setQuantity(item.getQuantity() - quantity);
-
-                // Set customer quantity
-                customer.setBalance((float) (customer.getBalance() - price));
-
+                
                 // Add item
                 order.addItem(item, quantity);
             } else {
