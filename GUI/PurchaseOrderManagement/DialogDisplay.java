@@ -12,6 +12,6 @@ public class DialogDisplay {
     }
 
     private void displayMessage(String message) {
-        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Message" JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 }

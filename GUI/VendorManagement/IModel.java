@@ -1,7 +1,5 @@
 package GUI.VendorManagement;
 
-import src.Vendor.VendorList;
-
 import javax.swing.*;
 
 public interface IModel {

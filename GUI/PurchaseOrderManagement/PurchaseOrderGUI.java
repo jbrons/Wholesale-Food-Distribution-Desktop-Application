@@ -3,7 +3,7 @@ package GUI.PurchaseOrderManagement;
 import GUI.MainWindow.MainWindowGUI;
 import src.Item.ItemsDatabase;
 import src.User.EnumUserRoles;
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -21,7 +21,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
     private JButton btnCancelPO;
     private JButton btnViewPO;
 
-    VendorList vendorDatabase = VendorList.getInstance();
+    VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
 
@@ -38,7 +38,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
         txtSearchBar.requestFocusInWindow();
         txtSearchBar.setText("Search by Vendor Name");
 
-        lstItems.setListData(itemsList.getAllItemDetails());
+        lstItems.setListData(itemsDatabase.getAllItemDetails());
     }
 
     /**
@@ -148,8 +148,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
 
         if (userAction == btnSelectVendor) {
             String input = txtSearchBar.getText();
-            int index = vendorList.getIndex(input);
-                    lstDisplay.setSelectedIndex(index);
+            int index = vendorDatabase.getIndex(input);
 
         } else if (userAction == btnCreatePO) {
 

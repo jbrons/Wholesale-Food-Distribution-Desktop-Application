@@ -1,7 +1,7 @@
 package src.PurchaseOrder;
 
 import src.Item.Item;
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -9,7 +9,7 @@ import java.util.Vector;
 public class PurchaseOrder {
     private Vector<Item> itemsList = new Vector<>();
     private static ArrayList<Integer> idList;
-    VendorList vendorList = VendorList.getInstance();
+    VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private int purchaseID;
     private int vendorID;
     private double totalCost;
@@ -56,8 +56,8 @@ public class PurchaseOrder {
     }
 
     private void updateBalance() {
-        double newBalance = vendorList.getVendor(vendorID).getBalance() - totalCost;
-        vendorList.getVendor(vendorID).setBalance(newBalance);
+        double newBalance = vendorDatabase.getVendor(vendorID).getBalance() - totalCost;
+        vendorDatabase.getVendor(vendorID).setBalance(newBalance);
     }
 
     public Item getItemDetails(Item item) {

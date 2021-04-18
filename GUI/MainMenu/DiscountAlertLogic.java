@@ -1,7 +1,7 @@
 package GUI.MainMenu;
 
 import src.Vendor.Vendor;
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class DiscountAlertLogic implements IDiscountAlertLogic{
     public ArrayList<Vendor> getCurrentDiscounts()
     {
-        VendorList vendorList = VendorList.getInstance();
+        VendorDatabase vendorList = VendorDatabase.getInstance();
         ArrayList<Vendor> currentDiscounts = new ArrayList<>();
 
         if(!vendorList.isEmpty())

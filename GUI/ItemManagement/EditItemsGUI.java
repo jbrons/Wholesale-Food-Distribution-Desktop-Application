@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import src.User.UserDatabase;
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 import GUI.MainWindow.MainWindowGUI;
 
 
@@ -50,7 +50,7 @@ public class EditItemsGUI implements FocusListener {
     private String[] unit = new String[]{"Pound","Gallon","Dozen","Ounce","Per Unit"};
     UserDatabase dataBase = UserDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
-    VendorList vendorList = VendorList.getInstance();
+    VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     ItemsDatabase itemsList = ItemsDatabase.getInstance();
 
 
@@ -69,7 +69,7 @@ public class EditItemsGUI implements FocusListener {
         DefaultComboBoxModel<String> unitModel = new DefaultComboBoxModel<>(unit);
         unitCombo.setModel(unitModel);
         //putting current vendor ids in combo box
-        vendorCombo.setModel(new DefaultComboBoxModel(vendorList.getIdList()));
+        vendorCombo.setModel(new DefaultComboBoxModel(vendorDatabase.getIdList()));
 
         expFormattedText.setFormatterFactory(new DefaultFormatterFactory(format("##/##/####")));
         sPriceFormattedText.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getInstance())));

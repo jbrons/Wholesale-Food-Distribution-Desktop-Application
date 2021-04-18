@@ -20,7 +20,7 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.util.Random;
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 
 
 public class AddItemsGUI implements FocusListener {
@@ -44,7 +44,7 @@ public class AddItemsGUI implements FocusListener {
 
     //getting the current vendor list and item list
     ItemsDatabase itemsList = ItemsDatabase.getInstance();
-    VendorList vendorList = VendorList.getInstance();
+    VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     NumberFormat nf = new DecimalFormat();
 
     private static int id = 9999;
@@ -80,7 +80,7 @@ public class AddItemsGUI implements FocusListener {
         DefaultComboBoxModel<String> unitModel = new DefaultComboBoxModel<>(unit);
         unitCombo.setModel(unitModel);
         //putting current vendor ids in combo box
-        vendorCombo.setModel(new DefaultComboBoxModel(vendorList.getIdList()));
+        vendorCombo.setModel(new DefaultComboBoxModel(vendorDatabase.getIdList()));
 
         //button action listeners
         leaveButton.addActionListener(new ActionListener() {

@@ -1,6 +1,6 @@
 package GUI.VendorManagement;
 
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 import javax.swing.*;
 
 // make singleton?
@@ -18,7 +18,7 @@ public class SearchModel implements IModel {
 
     public SearchModel() {
         searchModel = new DefaultListModel();
-        VendorList vendorList = VendorList.getInstance();
+        VendorDatabase vendorDatabase = VendorDatabase.getInstance();
         searchModel.addElement(null);
     }
 

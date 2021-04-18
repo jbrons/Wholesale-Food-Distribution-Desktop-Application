@@ -7,7 +7,7 @@ import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 import GUI.MainWindow.MainWindowGUI;
 
 /**
@@ -40,7 +40,7 @@ public class VendorUI implements ActionListener {
     private JLabel lblListInfo;
     private static boolean viewProfiles = true;
 
-    VendorList vendorList = VendorList.getInstance();
+    VendorDatabase vendordatabase = VendorDatabase.getInstance();
     ListModel vendorModel = ListModel.getInstance();  // fix resetting it each time?
     UserDatabase database = UserDatabase.getInstance();
 
@@ -100,7 +100,7 @@ public class VendorUI implements ActionListener {
                 if (input.length() <= idLength) {
                     try {
                         int vendorId = Integer.parseInt(input);
-                        index = vendorList.getIndex(vendorId);
+                        index = vendordatabase.getIndex(vendorId);
                     } catch (NumberFormatException ex) {
                         displayError("Not a valid ID.");
                         return;
@@ -109,7 +109,7 @@ public class VendorUI implements ActionListener {
 
                 }
             } else if (option == JOptionPane.NO_OPTION) {
-                index = vendorList.getIndex(input);
+                index = vendordatabase.getIndex(input);
             }
             if (index > -1) {
                 if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER) {
@@ -118,7 +118,7 @@ public class VendorUI implements ActionListener {
                     }
                     lstDisplay.setSelectedIndex(index);
                 } else {
-                    searchModel.updateVendor(vendorList.getVendorDetails(index), 0);
+                    searchModel.updateVendor(vendordatabase.getVendorDetails(index), 0);
                     lstSearchResults.setSelectedIndex(index);
                 }
             } else {
@@ -148,7 +148,7 @@ public class VendorUI implements ActionListener {
             if (index < 0) {
                 displayError("Please select a Vendor to update");
             } else {
-                mainWindowGUI.setJPanel(new VendorCreation(vendorList.getVendor(index)).getPanel());
+                mainWindowGUI.setJPanel(new VendorCreation(vendordatabase.getVendor(index)).getPanel());
             }
         } else if (userAction == btnDeleteProfile) {
             if (lstDisplay.isVisible()) {
@@ -160,7 +160,7 @@ public class VendorUI implements ActionListener {
                 displayMessage("Please select a Vendor to delete");
             } else {
                 if (deleteWarning() == JOptionPane.YES_OPTION) {
-                    if (vendorList.deleteVendor(index)) {
+                    if (vendordatabase.deleteVendor(index)) {
                         /* delete purchase orders here */
                         vendorModel.removeVendor(index);
                         displayMessage("Vendor removed.");

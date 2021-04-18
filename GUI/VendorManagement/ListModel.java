@@ -1,6 +1,6 @@
 package GUI.VendorManagement;
 
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 import javax.swing.*;
 
 /**
@@ -18,9 +18,9 @@ public class ListModel implements IModel {
 
     private ListModel() {
         listModel = new DefaultListModel();
-        VendorList vendorList = VendorList.getInstance();
+        VendorDatabase vendorDatabase = VendorDatabase.getInstance();
 
-        for (String vendor : vendorList.getVendorListDetails()) {
+        for (String vendor : vendorDatabase.getVendorListDetails()) {
             listModel.addElement(vendor);
         }
     }

@@ -2,7 +2,7 @@ package GUI.VendorManagement;
 
 import src.User.UserDatabase;
 import src.Vendor.StateAbbrs;
-import src.Vendor.VendorList;
+import src.Vendor.VendorDatabase;
 import src.Vendor.Vendor;
 import src.Vendor.DateValidator;
 import GUI.MainWindow.MainWindowGUI;
@@ -56,7 +56,7 @@ public class VendorCreation implements ActionListener, KeyListener {
     private JButton btnCancel;
     private JButton btnLogOut;
 
-    private VendorList vendorList = VendorList.getInstance();
+    private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private ListModel displayModel = ListModel.getInstance();
     private Vendor vendor = null;
 
@@ -126,7 +126,7 @@ public class VendorCreation implements ActionListener, KeyListener {
             displayError("Full Name" + message);
             return false;
         } else {
-            if (vendorList.searchVendorList(txtFullName.getText()) > -1 && vendor == null) {
+            if (vendorDatabase.searchVendorDatabase(txtFullName.getText()) > -1 && vendor == null) {
                 displayError(txtFullName.getText() + " already has a profile");
                 return false;
             }
@@ -262,13 +262,13 @@ public class VendorCreation implements ActionListener, KeyListener {
             if (getInputs()) {
                 if (vendor != null) {
                     updateInputs();
-                    vendorList.updateVendor(vendor);
-                    System.out.println(vendorList.searchVendorList(vendor.getId()));
-                    displayModel.updateVendor(vendor.toString(), vendorList.searchVendorList(vendor.getId()));
+                    vendorDatabase.updateVendor(vendor);
+                    System.out.println(vendorDatabase.searchVendorDatabase(vendor.getId()));
+                    displayModel.updateVendor(vendor.toString(), vendorDatabase.searchVendorDatabase(vendor.getId()));
                 } else {
                     Vendor vendor = new Vendor(name, streetAddress, city, state, phoneNum, balance,
                             lastPaidAmount, lastOrderDate, seasonalDiscDate);
-                    vendorList.addVendor(vendor);
+                    vendorDatabase.addVendor(vendor);
                    displayModel.addVendor(vendor.toString());
                 }
                 closeCreationGUI();
