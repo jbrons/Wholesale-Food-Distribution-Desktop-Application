@@ -28,7 +28,7 @@ public class InvoiceGUI implements FocusListener {
     private JTextField focused = searchField;
     private MainWindowGUI mainWindowGUI;
 
-    InvoiceDatabase invoiceList = InvoiceDatabase.getInstance();
+    InvoiceDatabase invoiceDatabase = InvoiceDatabase.getInstance();
     CustomerProfileDatabase customerProfileDatabase = CustomerProfileDatabase.getInstance();
     CustomerOrderDatabase customerOrderDatabase = CustomerOrderDatabase.getInstance();
 
@@ -77,19 +77,24 @@ public class InvoiceGUI implements FocusListener {
                         }
                         i++;
                     }
-                    for (CustomerProfile customer : customerProfileDatabase.getAllProfiles()) {
-                        if (selectedOrder.getCustomerID() == customer.getCustomerID()) {
-                            if (customer.getBalance() >= (float) selectedOrder.getPrice()) {
-                                customer.setBalance(customer.getBalance() - (float) selectedOrder.getPrice());
-                                Invoice invoice = new Invoice(selectedOrder);
-                                invoiceList.addInvoice(invoice);
-                                InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
-                                mainWindowGUI.setJPanel(dis.getPanel());
-                            }
-                            else {
-                                JOptionPane.showMessageDialog(null, "Customer Does not have enough balance");
+                    if(invoiceDatabase.invoiceAlreadyExists(selectedOrder.getOrderID())) {
+                        for (CustomerProfile customer : customerProfileDatabase.getAllProfiles()) {
+                            if (selectedOrder.getCustomerID() == customer.getCustomerID()) {
+                                if (customer.getBalance() >= (float) selectedOrder.getPrice()) {
+                                    customer.setBalance(customer.getBalance() - (float) selectedOrder.getPrice());
+                                    Invoice invoice = new Invoice(selectedOrder);
+                                    invoiceDatabase.addInvoice(invoice);
+                                    System.out.println("order added");
+                                    InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
+                                    mainWindowGUI.setJPanel(dis.getPanel());
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Customer Does not have enough balance");
+                                }
                             }
                         }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Invoice already created for this customer order");
                     }
             }
             catch(IndexOutOfBoundsException ex){
@@ -115,6 +120,15 @@ public class InvoiceGUI implements FocusListener {
     public void setCatalog(Vector<CustomerOrder> v){
         iList.setListData(v);
         iList.setFont(new Font("Arial",Font.BOLD,12));
+    }
+    public boolean isDuplicate(CustomerOrder order){
+        for(Invoice invoice: invoiceDatabase.getInvoiceList()){
+            if(invoice.getOrderId() == order.getOrderID()){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public int searchIndex(int index){

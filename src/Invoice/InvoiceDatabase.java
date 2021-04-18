@@ -38,14 +38,14 @@ public class InvoiceDatabase {
         return invoices;
     }
     
-    public boolean InvoiceAlreadyExists(int orderId) {
+    public boolean invoiceAlreadyExists(int orderId) {
         Vector<String> invoices = new Vector<String>();
         for (Invoice invoice : invoiceList) {
             if(invoice.getOrderId() == orderId ){
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public int getId(String s){
