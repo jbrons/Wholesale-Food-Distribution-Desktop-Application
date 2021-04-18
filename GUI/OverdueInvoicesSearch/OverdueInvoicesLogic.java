@@ -1,5 +1,6 @@
 package GUI.OverdueInvoicesSearch;
 
+import src.OverdueCustomerInvoice.OverdueCustomerInvoice;
 import src.Customer.CustomerProfile;
 import src.Customer.CustomerProfileDatabase;
 import src.CustomerOrder.CustomerOrder;
@@ -27,9 +28,9 @@ public class OverdueInvoicesLogic {
         customerOrderDatabase = CustomerOrderDatabase.getInstance();
     }
 
-    public CustomerProfile[] getOverdueCustomers()
+    public OverdueCustomerInvoice[] getOverdueCustomers()
     {
-        ArrayList<CustomerProfile> overdueCustomers = new ArrayList<>();
+        ArrayList<OverdueCustomerInvoice> overdueCustomers = new ArrayList<>();
 
         Invoice[] invoiceList = getOverdueInvoices();
 
@@ -40,13 +41,19 @@ public class OverdueInvoicesLogic {
             CustomerOrder customerOrder = customerOrderDatabase.get(orderNumber);
             int customerID = customerOrder.getCustomerID();
 
-            CustomerProfile overdueCustomer = customerProfileDatabase.getProfile(customerID);
+            CustomerProfile overdueCustomerProfile = customerProfileDatabase.getProfile(customerID);
 
-            if(!overdueCustomers.contains(overdueCustomer))
-                overdueCustomers.add(overdueCustomer);
+            String customerName = overdueCustomerProfile.getCustomerName();
+            String invoiceDate = orderInvoice.getInvoiceDate();
+            double invoiceTotal = orderInvoice.getTotalInvoiceAmount();
+
+            OverdueCustomerInvoice overdueCustomerInvoice;
+            overdueCustomerInvoice = new OverdueCustomerInvoice(customerName, invoiceDate, orderNumber, invoiceTotal);
+
+            overdueCustomers.add(overdueCustomerInvoice);
         }
 
-        return overdueCustomers.toArray(new CustomerProfile[overdueCustomers.size()]);
+        return overdueCustomers.toArray(new OverdueCustomerInvoice[overdueCustomers.size()]);
     }
 
     public Invoice[] getOverdueInvoices()
