@@ -67,25 +67,35 @@ public class InvoiceGUI implements FocusListener {
             });
         createInvoiceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                int index = searchIndex(iList.getSelectedIndex());
+                try{
+                    int index = searchIndex(iList.getSelectedIndex());
+                    CustomerOrder selectedOrder = null;
+                    int i = 0;
+                    for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
+                        if (i == index) {
+                             selectedOrder = order;
+                        }
+                        i++;
+                    }
+                    for (CustomerProfile customer : customerProfileDatabase.getAllProfiles()) {
+                        if (selectedOrder.getCustomerID() == customer.getCustomerID()) {
+                            if (customer.getBalance() >= (float) selectedOrder.getPrice()) {
+                                customer.setBalance(customer.getBalance() - (float) selectedOrder.getPrice());
+                                Invoice invoice = new Invoice(selectedOrder);
+                                invoiceList.addInvoice(invoice);
+                                InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
+                                mainWindowGUI.setJPanel(dis.getPanel());
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null, "Customer Does not have enough balance");
+                            }
+                        }
+                    }
+            }
+            catch(IndexOutOfBoundsException ex){
+                JOptionPane.showMessageDialog(null, "Please Select a customer order");
+            }
 
-                CustomerOrder selectedOrder = null;
-                int i = 0;
-                for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
-                    if (i == index) {
-                         selectedOrder = order;
-                    }
-                    i++;
-                }
-                Invoice invoice = new Invoice(selectedOrder);
-                invoiceList.addInvoice(invoice);
-                for(CustomerProfile customer: customerProfileDatabase.getAllProfiles()){
-                    if(selectedOrder.getCustomerID() == customer.getCustomerID()){
-                        customer.setBalance(customer.getBalance() - (float)selectedOrder.getPrice());
-                    }
-                }
-                InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
-                mainWindowGUI.setJPanel(dis.getPanel());
             }
         });
         leaveButton.addActionListener(new ActionListener() {
@@ -94,22 +104,6 @@ public class InvoiceGUI implements FocusListener {
             }});
 
 
-        iList.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent evt) {
-                try {
-
-                    JList jList = (JList) evt.getSource();
-
-                        /*
-                        ItemDisplayGUI dis = new ItemDisplayGUI(index);
-                        mainWindowGUI.setJPanel(dis.getPanel());*/
-
-                }
-                catch(ArrayIndexOutOfBoundsException a){
-                    JOptionPane.showMessageDialog(null, "Please make sure you have selected an item.");
-                }
-            }
-        });
         logoutButton.addActionListener(e ->
         {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
