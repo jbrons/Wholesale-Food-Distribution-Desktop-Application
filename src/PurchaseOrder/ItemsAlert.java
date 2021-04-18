@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class ItemsAlert  {
     private static ItemsStock stock = ItemsStock.getInstance();
-    private static int outOfStock = 0;  /* may hold value between 0-2 */
+    private static int outOfStock = 0;  /* may hold value between 0-3 */
     private static UserDatabase database = UserDatabase.getInstance();
 
     // private ItemsAlert() {}
@@ -32,7 +32,7 @@ public class ItemsAlert  {
             incrementOutOfStock();  // fix NAMESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
             stock.setItem(id, quantity);
 
-            if (outOfStock == 2) {
+            if (outOfStock == 3) {
                 ItemsAlertGUI.displayAlert("Two Items have gone out of Stock");
                 outOfStock = 0;
             }
@@ -48,7 +48,7 @@ public class ItemsAlert  {
     }
 
     private static void incrementOutOfStock() {
-        if (outOfStock < 2) {
+        if (outOfStock < 3) {
             ++outOfStock;
         }
     }

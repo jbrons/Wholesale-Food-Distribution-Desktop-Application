@@ -90,6 +90,7 @@ public class VendorCreation implements ActionListener, KeyListener {
         String phoneFormat = "###-###-####";
         String dateFormat = "##/##/####";
 
+        txtFullName.requestFocusInWindow();
         cboState.setEditable(false);
         txtPhoneNum.setFormatterFactory(new DefaultFormatterFactory(formatter(phoneFormat, ' ')));
         txtBalance.setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
