@@ -57,7 +57,9 @@ public class InvoiceGUI implements FocusListener {
                 for(int i=0;i<customerIds.size();i++) {
                     for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
                         if (order.getCustomerID() == customerIds.get(i)) {
-                        orders.add(order);
+                            if(invoiceDatabase.invoiceAlreadyExists(order.getOrderID())) {
+                                orders.add(order);
+                            }
                         }
                     }
                 }
