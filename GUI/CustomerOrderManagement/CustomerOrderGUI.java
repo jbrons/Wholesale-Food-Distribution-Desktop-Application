@@ -12,7 +12,7 @@ import src.Customer.CustomerProfileDatabase;
 import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
 import src.Item.Items;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -53,7 +53,7 @@ public class CustomerOrderGUI {
     /**
      * item database
      */
-    private final ItemsArray itemDB;
+    private final ItemsDatabase itemDB;
     /**
      * order database
      */
@@ -65,7 +65,7 @@ public class CustomerOrderGUI {
     public CustomerOrderGUI() {
         // Initialize databases
         customerDB = CustomerProfileDatabase.getInstance();
-        itemDB = ItemsArray.getInstance();
+        itemDB = ItemsDatabase.getInstance();
         orderDB = CustomerOrderDatabase.getInstance();
         mainWindowGUI = MainWindowGUI.getInstance();
 

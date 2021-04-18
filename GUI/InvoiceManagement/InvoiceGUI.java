@@ -1,18 +1,14 @@
 package GUI.InvoiceManagement;
 
-import GUI.ItemManagement.AddItemsGUI;
-import GUI.ItemManagement.ItemDisplayGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import src.Customer.CustomerProfileDatabase;
 import src.Customer.CustomerProfile;
-import src.Customer.CustomerProfileDatabase;
 import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
 import src.Invoice.Invoice;
-import src.Invoice.InvoiceList;
-import src.User.EnumUserRoles;
+import src.Invoice.InvoiceDatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +28,7 @@ public class InvoiceGUI implements FocusListener {
     private JTextField focused = searchField;
     private MainWindowGUI mainWindowGUI;
 
-    InvoiceList invoiceList = InvoiceList.getInstance();
+    InvoiceDatabase invoiceList = InvoiceDatabase.getInstance();
     CustomerProfileDatabase customerProfileDatabase = CustomerProfileDatabase.getInstance();
     CustomerOrderDatabase customerOrderDatabase = CustomerOrderDatabase.getInstance();
 

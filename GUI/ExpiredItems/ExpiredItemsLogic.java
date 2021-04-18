@@ -1,23 +1,22 @@
 package GUI.ExpiredItems;
 
 import src.Item.Items;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 import src.Vendor.DateValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class ExpiredItemsLogic {
-    ItemsArray itemsArray;
+    ItemsDatabase itemsArray;
     DateValidator dateValidator;
     DateTimeFormatter dateFormatter;
     ArrayList<Items> expiredItems;
 
     public ExpiredItemsLogic()
     {
-        itemsArray = ItemsArray.getInstance();
+        itemsArray = ItemsDatabase.getInstance();
         dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         dateValidator = new DateValidator(dateFormatter);
     }

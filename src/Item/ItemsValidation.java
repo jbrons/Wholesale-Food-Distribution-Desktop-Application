@@ -19,7 +19,7 @@ import java.util.Date;
 
 
 public class ItemsValidation {
-    ItemsArray itemsList = ItemsArray.getInstance();
+    ItemsDatabase itemsList = ItemsDatabase.getInstance();
     public ItemsValidation(){
     }
     //validation method that returns true assuming all user input is correct

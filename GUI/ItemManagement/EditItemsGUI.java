@@ -10,7 +10,7 @@ package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import src.Item.Items;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 import src.Item.ItemsValidation;
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
@@ -51,7 +51,7 @@ public class EditItemsGUI implements FocusListener {
     UserDatabase dataBase = UserDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
     VendorList vendorList = VendorList.getInstance();
-    ItemsArray itemsList = ItemsArray.getInstance();
+    ItemsDatabase itemsList = ItemsDatabase.getInstance();
 
 
     public EditItemsGUI(int i) {

@@ -1,7 +1,7 @@
 package GUI.PurchaseOrderManagement;
 
 import GUI.MainWindow.MainWindowGUI;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 
 import javax.swing.*;
 import java.awt.event.FocusEvent;
@@ -20,7 +20,7 @@ public class PurchaseOrderGUI implements MouseListener, FocusListener {
     private JButton btnLogOut;
     private JPanel pnlPurchaseOrderInfo;
 
-    ItemsArray itemsList = ItemsArray.getInstance();
+    ItemsDatabase itemsList = ItemsDatabase.getInstance();
     MainWindowGUI mainWindowGUI;
 
     public PurchaseOrderGUI() {

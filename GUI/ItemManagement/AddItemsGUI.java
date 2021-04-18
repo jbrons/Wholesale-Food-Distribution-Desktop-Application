@@ -9,7 +9,7 @@ package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import src.Item.Items;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 import src.Item.ItemsValidation;
 import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
@@ -43,7 +43,7 @@ public class AddItemsGUI implements FocusListener {
     //Item variables
 
     //getting the current vendor list and item list
-    ItemsArray itemsList = ItemsArray.getInstance();
+    ItemsDatabase itemsList = ItemsDatabase.getInstance();
     VendorList vendorList = VendorList.getInstance();
     NumberFormat nf = new DecimalFormat();
 

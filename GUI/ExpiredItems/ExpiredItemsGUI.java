@@ -4,7 +4,7 @@ import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import src.Item.Items;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 
 import javax.swing.*;
 
@@ -21,13 +21,13 @@ public class ExpiredItemsGUI {
     private JButton viewAllButton;
 
     MainWindowGUI mainWindowGUI;
-    ItemsArray itemsArray;
+    ItemsDatabase itemsArray;
     ExpiredItemsLogic expiredItemsLogic;
 
     public ExpiredItemsGUI()
     {
         mainWindowGUI = MainWindowGUI.getInstance();
-        itemsArray = ItemsArray.getInstance();
+        itemsArray = ItemsDatabase.getInstance();
 
         expiredItemsLogic = new ExpiredItemsLogic();
 

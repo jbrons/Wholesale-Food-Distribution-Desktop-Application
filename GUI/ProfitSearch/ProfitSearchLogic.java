@@ -1,10 +1,9 @@
 package GUI.ProfitSearch;
 
 import src.Invoice.Invoice;
-import src.Invoice.InvoiceList;
+import src.Invoice.InvoiceDatabase;
 import src.Item.Items;
-import src.Item.ItemsArray;
-import src.Vendor.Vendor;
+import src.Item.ItemsDatabase;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -13,14 +12,14 @@ import java.util.Vector;
 
 public class ProfitSearchLogic {
     double totalProfit;
-    ItemsArray itemsArray;
-    InvoiceList invoiceListDatabase;
+    ItemsDatabase itemsArray;
+    InvoiceDatabase invoiceListDatabase;
 
     public ProfitSearchLogic()
     {
         totalProfit = 0.0;
-        itemsArray = ItemsArray.getInstance();
-        invoiceListDatabase = InvoiceList.getInstance();
+        itemsArray = ItemsDatabase.getInstance();
+        invoiceListDatabase = InvoiceDatabase.getInstance();
     }
 
     public double getProfit(Items item, LocalDate startDate, LocalDate endDate)

@@ -11,7 +11,7 @@ package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import src.Item.Items;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +30,7 @@ public class ItemDisplayGUI {
     private JLabel contentLabel;
     private JButton logoutButton;
     private int index;
-    ItemsArray itemsList = ItemsArray.getInstance();
+    ItemsDatabase itemsList = ItemsDatabase.getInstance();
     private MainWindowGUI mainWindowGUI;
     UserDatabase dataBase = UserDatabase.getInstance();
 

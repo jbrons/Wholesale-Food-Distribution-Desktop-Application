@@ -1,14 +1,13 @@
 package src.PurchaseOrder;
 
-import src.Item.Items;
-import src.Item.ItemsArray;
+import src.Item.ItemsDatabase;
 import src.Vendor.DateValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ItemDetails {
-    ItemsArray itemsList = ItemsArray.getInstance();
+    ItemsDatabase itemsList = ItemsDatabase.getInstance();
     private LocalDate needByDate = null;
     /* can also change quantity value */
     private double subtotalCost;

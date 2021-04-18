@@ -1,15 +1,10 @@
 package GUI.InvoiceManagement;
 
-import GUI.ItemManagement.EditItemsGUI;
-import GUI.ItemManagement.ItemsGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
-import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
 import src.Invoice.Invoice;
-import src.Invoice.InvoiceList;
-import src.Item.Items;
-import src.User.EnumUserRoles;
+import src.Invoice.InvoiceDatabase;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +25,7 @@ public class InvoiceDisplayGUI {
     private Invoice invoice;
 
     CustomerOrderDatabase customerOrderDatabase = CustomerOrderDatabase.getInstance();
-    InvoiceList invoiceList = InvoiceList.getInstance();
+    InvoiceDatabase invoiceList = InvoiceDatabase.getInstance();
     public InvoiceDisplayGUI(Invoice inv){
         mainWindowGUI = MainWindowGUI.getInstance();
 

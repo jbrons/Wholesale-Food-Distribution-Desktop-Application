@@ -6,16 +6,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
-public class InvoiceList {
-    private static InvoiceList firstInstance = null;
+public class InvoiceDatabase {
+    private static InvoiceDatabase firstInstance = null;
     private Vector<Invoice> invoiceList = null;
 
-    private InvoiceList(){
+    private InvoiceDatabase(){
         invoiceList = new Vector<Invoice>();
     }
-    public static InvoiceList getInstance() {
+    public static InvoiceDatabase getInstance() {
         if (firstInstance == null) {
-            firstInstance = new InvoiceList();
+            firstInstance = new InvoiceDatabase();
         }
         return firstInstance;
     }

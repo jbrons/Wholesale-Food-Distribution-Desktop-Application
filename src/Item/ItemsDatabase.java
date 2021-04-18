@@ -12,11 +12,11 @@ package src.Item;
 
 import java.util.Vector;
 
-public class ItemsArray {
-    private static ItemsArray firstInstance = null;
+public class ItemsDatabase {
+    private static ItemsDatabase firstInstance = null;
     private Vector<Items> itemsList = null;
 
-    private ItemsArray(){
+    private ItemsDatabase(){
         itemsList = new Vector<Items>();
         /*
         Just For testing customer order
@@ -28,9 +28,9 @@ public class ItemsArray {
         itemsList.add(new Items(5, 1, "milk", 34, "full cream", "12/12/2021", 2, "pound", 9));
         itemsList.add(new Items(6, 1, "rice", 43, "brown", "12/12/2020", 11, "pound", 2));
     }
-    public static ItemsArray getInstance() {
+    public static ItemsDatabase getInstance() {
         if (firstInstance == null) {
-            firstInstance = new ItemsArray();
+            firstInstance = new ItemsDatabase();
         }
         return firstInstance;
     }
