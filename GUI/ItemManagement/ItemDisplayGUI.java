@@ -10,6 +10,7 @@
 package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
+import src.Invoice.InvoiceDatabase;
 import src.Item.Item;
 import src.Item.ItemsDatabase;
 import GUI.MainWindow.MainWindowGUI;
@@ -33,6 +34,7 @@ public class ItemDisplayGUI {
     ItemsDatabase itemsList = ItemsDatabase.getInstance();
     private MainWindowGUI mainWindowGUI;
     UserDatabase dataBase = UserDatabase.getInstance();
+    InvoiceDatabase invoiceDatabase = InvoiceDatabase.getInstance();
 
     public ItemDisplayGUI(int i){
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -61,8 +63,13 @@ public class ItemDisplayGUI {
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER
                 || dataBase.getCurrentUser().getRole() == EnumUserRoles.INVENTORY_MANAGER) {
-                    itemsList.removeItem(index);
-                    closeItemEdit();
+                    if (invoiceDatabase.itemInList(itemsList.get(index).getId())) {
+                        itemsList.removeItem(index);
+                        closeItemEdit();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "There are associated invoices or purchase orders");
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "You must be a owner or purchase user");

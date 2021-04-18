@@ -1,9 +1,11 @@
 package src.Invoice;
 
+import src.Item.Item;
 import src.Vendor.DateValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Vector;
 
 public class InvoiceDatabase {
@@ -24,7 +26,14 @@ public class InvoiceDatabase {
         invoiceList.add(invoice);
         return true;
     }
-
+    public boolean itemInList(int itemId){
+        for(Invoice invoice : invoiceList){
+           if(invoice.itemInObject(itemId)){
+               return false;
+           }
+        }
+        return true;
+    }
 
     //probably wont need
     public Vector<String> getAllInvoiceDetails() {
@@ -85,4 +94,5 @@ public class InvoiceDatabase {
 
         return invoices;
     }
+
 }

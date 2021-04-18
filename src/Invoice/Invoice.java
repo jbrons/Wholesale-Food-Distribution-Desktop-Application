@@ -62,7 +62,15 @@ public class Invoice {
     public int getOrderId(){return this.orderId;}
 
 
+    public boolean itemInObject(int id){
 
+        for (Map.Entry<Item, Double> e : items.entrySet()) {
+           if(e.getKey().getId() == id){
+               return true;
+           }
+        }
+        return false;
+    }
 
     public String getItemDetails(){
         DecimalFormat df = new DecimalFormat("#.00");
