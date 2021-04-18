@@ -47,17 +47,7 @@ public class InvoiceDatabase {
         }
         return false;
     }
-    /*
-    public Vector<String> getSearchDetails(String search){
-        Vector<String> invoices = new Vector<String>();
-        for (Invoice invoice : invoiceList) {
-            if(invoice.getCustomerName().equals(search) ) {
-                invoices.add(//add the customers  );
-            }
-        }
-        return items;
-    }
-*/
+
     public int getId(String s){
         int i=0;
         for (Invoice invoice : invoiceList) {
