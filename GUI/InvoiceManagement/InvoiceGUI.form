@@ -100,7 +100,7 @@
         </constraints>
         <properties>
           <foreground color="-16777216"/>
-          <text value="Customer Orders With Searhed Name"/>
+          <text value="Customer Orders With Searched Name"/>
         </properties>
       </component>
     </children>

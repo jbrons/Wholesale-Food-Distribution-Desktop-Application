@@ -65,10 +65,11 @@ public class Invoice {
 
 
     public String getItemDetails(){
+        DecimalFormat df = new DecimalFormat("#.00");
         String details = "<html><body>";
         for (Map.Entry<Item, Double> e : items.entrySet()) {
             details += "Item Name: " + e.getKey().getName() +" Quantity: " + e.getValue() +
-                    " cost: " +  e.getKey().getSellingPrice() * e.getValue() + "<br>";
+                    " cost: $" +  df.format(e.getKey().getSellingPrice() * e.getValue()) + "<br>";
         }
         details+="</body></html>";
         return details;
@@ -79,6 +80,6 @@ public class Invoice {
     public String toString(){
         DecimalFormat df = new DecimalFormat("#.00");
         return "Invoice Date: " + this.invoiceDate + " Order Date: " + this.orderDate + " Customer Order Number: " +
-                customerOrder.getOrderID() + " Total Invoice Price: " + totalInvoiceAmount;
+                customerOrder.getOrderID() + " Total Invoice Price: $" + df.format(totalInvoiceAmount);
     }
 }
