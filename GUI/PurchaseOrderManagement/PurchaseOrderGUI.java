@@ -1,5 +1,6 @@
 package GUI.PurchaseOrderManagement;
 
+import GUI.ItemManagement.ItemDisplayGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
@@ -7,7 +8,9 @@ import src.Item.ItemsDatabase;
 import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
 
 public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusListener {
     private JPanel rootPanel;
@@ -21,6 +24,8 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
     private JButton btnCreatePO;
     private JButton btnCancelPO;
     private JButton btnViewPO;
+    private JPanel pnltems;
+    private JPanel pnlList;
 
     private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
@@ -30,6 +35,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
     private int vendorID;
     private String vendorName;
     private boolean vendorSelected = false;
+    private boolean mouseInList = true;
 
     public PurchaseOrderGUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -43,6 +49,7 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
         txtSearchBar.setText(searchBarPrompt);
 
         //lstItems.setListData(itemsDatabase.getAllItemDetails());
+
     }
 
     public JPanel getPanel()
@@ -71,8 +78,13 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
          * @param e the event to be processed
          */
 
-        /*
-        txtSearchBar.addKeyListener(new KeyListener() {
+        txtSearchBar.addKeyListener(new KeyAdapter() {
+            /**
+             * Invoked when a key has been typed.
+             * This event occurs when a key press is followed by a key release.
+             *
+             * @param e
+             */
             @Override
             public void keyTyped(KeyEvent e) {
                 int maxChars = 20;
@@ -81,14 +93,40 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
                     e.consume();
                 }
             }
-
-            @Override
-            public void keyPressed(KeyEvent e) {}
-
-            @Override
-            public void keyReleased(KeyEvent e) {}
         });
-        */
+
+        lstItems.addMouseMotionListener(new MouseAdapter() {
+            /**
+             * {@inheritDoc}
+             *
+             * @param e
+             * @since 1.6
+             */
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                System.out.println("In list");
+                int index = lstItems.locationToIndex(e.getPoint());
+                Rectangle cellBounds = lstItems.getCellBounds(index, index);
+                if (cellBounds.contains(e.getPoint())) {
+                    lstItems.setSelectedIndex(index);
+                } else {
+                    lstItems.clearSelection();
+                }
+            }
+        });
+
+        pnltems.addMouseMotionListener(new MouseAdapter() {
+            /**
+             * {@inheritDoc}
+             *
+             * @param e
+             * @since 1.6
+             */
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                lstItems.clearSelection();
+            }
+        });
     }
 
     /**
@@ -161,10 +199,6 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
         }
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
-
     /**
      * Invoked when an action occurs.
      *
@@ -175,20 +209,20 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
         Object userAction = e.getSource();
 
         if (userAction == btnSelectVendor) {
-            String name = txtSearchBar.getText();
-            if (name.equals("") || name.equals(searchBarPrompt)) {
+            vendorName = txtSearchBar.getText();
+            if (vendorName.equals("") || vendorName.equals(searchBarPrompt)) {
                 return;
             }
 
             if (!vendorSelected) {
-                int id = PurchaseOrderLogic.searchForVendor(name);
+                int id = PurchaseOrderLogic.searchForVendor(vendorName);
 
                 if (id > 0) {
                     txtSearchBar.setEditable(false);
                     btnSelectVendor.setText("Select New Vendor");
                     vendorSelected = true;
                 } else if (id < 0 ){
-                    DialogDisplay.displayError("No Vendors by the name of " + name);
+                    DialogDisplay.displayError("No Vendors by the name of " + vendorName);
                 } else {
                     DialogDisplay.displayError("No Vendors are available");
                 }
@@ -204,7 +238,12 @@ public class PurchaseOrderGUI implements ActionListener, MouseListener, FocusLis
 
         } else if (userAction == btnCreatePO) {
             if (vendorSelected) {
-                vendorID
+                Vector<String> vendorItems = itemsDatabase.getItemsForVendor(vendorID);
+                if (vendorItems.size() == 0) {
+                    DialogDisplay.displayError(vendorName + " does not have any items to choose from");
+                } else {
+                    lstItems.setListData(vendorItems);
+                }
                 lstItems.setListData(itemsDatabase.getAllItemDetails());
             } else {
                 DialogDisplay.displayError("Must select a Vendor first");
