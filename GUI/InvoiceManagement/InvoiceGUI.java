@@ -123,10 +123,8 @@ public class InvoiceGUI implements FocusListener {
         int i=0;
         for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
             if (order ==iList.getModel().getElementAt(index)) {
-                System.out.println(i);
                 return i;
             }
-            i++;
         }
         System.out.println("-1");
         return -1;

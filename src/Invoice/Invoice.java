@@ -71,7 +71,6 @@ public class Invoice {
                     " cost: " +  e.getKey().getSellingPrice() * e.getValue() + "<br>";
         }
         details+="</body></html>";
-        System.out.println(details);
         return details;
     }
 
