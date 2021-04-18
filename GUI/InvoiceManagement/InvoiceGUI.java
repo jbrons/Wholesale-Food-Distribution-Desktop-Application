@@ -68,15 +68,8 @@ public class InvoiceGUI implements FocusListener {
         createInvoiceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 try{
-                    int index = searchIndex(iList.getSelectedIndex());
-                    CustomerOrder selectedOrder = null;
-                    int i = 0;
-                    for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
-                        if (i == index) {
-                             selectedOrder = order;
-                        }
-                        i++;
-                    }
+                    CustomerOrder selectedOrder = (CustomerOrder) iList.getSelectedValue();
+
                     if(invoiceDatabase.invoiceAlreadyExists(selectedOrder.getOrderID())) {
                         for (CustomerProfile customer : customerProfileDatabase.getAllProfiles()) {
                             if (selectedOrder.getCustomerID() == customer.getCustomerID()) {
@@ -105,6 +98,7 @@ public class InvoiceGUI implements FocusListener {
         });
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+                //iList.setListData(invoiceDatabase.getInvoiceList());
                 closeCatalog();
             }});
 
@@ -112,6 +106,7 @@ public class InvoiceGUI implements FocusListener {
         logoutButton.addActionListener(e ->
         {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
+            //iList.setListData(customerOrderDatabase.getAllOrders());
         });
     }
 
