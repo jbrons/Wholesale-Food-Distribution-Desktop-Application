@@ -17,6 +17,8 @@ import GUI.MainWindow.MainWindowGUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import src.PurchaseOrder.PurchaseOrderDatabase;
 import src.User.UserDatabase;
 import src.User.EnumUserRoles;
 
@@ -35,6 +37,7 @@ public class ItemDisplayGUI {
     private MainWindowGUI mainWindowGUI;
     UserDatabase dataBase = UserDatabase.getInstance();
     InvoiceDatabase invoiceDatabase = InvoiceDatabase.getInstance();
+    PurchaseOrderDatabase purchaseOrderDatabase = PurchaseOrderDatabase.getInstance();
 
     public ItemDisplayGUI(int i){
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -63,7 +66,7 @@ public class ItemDisplayGUI {
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER
                 || dataBase.getCurrentUser().getRole() == EnumUserRoles.INVENTORY_MANAGER) {
-                    if (invoiceDatabase.itemInList(itemsList.get(index).getId())) {
+                    if (invoiceDatabase.itemInList(itemsList.get(index).getId()) && purchaseOrderDatabase.containsItem(itemsList.get(index).getId(),itemsList.get(index).getVendorId())) {
                         itemsList.removeItem(index);
                         closeItemEdit();
                     }
