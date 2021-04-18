@@ -250,7 +250,7 @@ public class CustomerOrderGUI {
             }
         }
 
-        if (expireCount >= 2)
+        if (expireCount > 2)
             JOptionPane.showMessageDialog(null, "There are two more expired items");
     }
 
