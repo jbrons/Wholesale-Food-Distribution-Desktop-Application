@@ -10,6 +10,7 @@ import GUI.MainWindow.MainWindowGUI;
 import GUI.ProfitSearch.ProfitSearchGUI;
 import GUI.UserManagement.UserManagementGUI;
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
+import GUI.PurchaseOrderManagement.PurchaseOrderGUI;
 
 import GUI.VendorManagement.VendorUI;
 import src.User.EnumUserRoles;
@@ -38,6 +39,7 @@ public class MainMenuGUI {
     private JButton profitSearchButton;
     private JButton expiredItemsButton;
     private JButton customerOrderSearchButton;
+    private JButton purchaseOrderManagementButton;
 
     MainWindowGUI mainWindowGUI = MainWindowGUI.getInstance();
     UserDatabase database = UserDatabase.getInstance();
@@ -56,6 +58,12 @@ public class MainMenuGUI {
                 database.getCurrentUser().getRole() != EnumUserRoles.OWNER) {
             vendorManagementButton.setEnabled(false);
             vendorManagementButton.setVisible(false);
+        }
+
+        if (database.getCurrentUser().getPermissionLevel() != EnumUserRoles.PURCHASER.getPermissionLevel())
+        {
+            purchaseOrderManagementButton.setEnabled(false);
+            purchaseOrderManagementButton.setVisible(false);
         }
 
         if (database.getCurrentUser().getRole() != EnumUserRoles.SALES_PERSON &&
@@ -106,8 +114,12 @@ public class MainMenuGUI {
         logoutButton.addActionListener(e ->
                 mainWindowGUI.setJPanel(new LoginGUI().getPanel()));
 
-
-       //customer management
+        purchaseOrderManagementButton.addActionListener(e->
+        {
+            mainWindowGUI.setJPanel(new PurchaseOrderGUI().getPanel());
+        });
+        
+        //customer management
         customerManagementButton.addActionListener(e -> {
             if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER)
                 mainWindowGUI.setJPanel(new CustomerProfileManagerGUI().getPanel(), "Customer Profile Management");
