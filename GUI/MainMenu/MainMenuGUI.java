@@ -118,7 +118,7 @@ public class MainMenuGUI {
         {
             mainWindowGUI.setJPanel(new PurchaseOrderGUI().getPanel());
         });
-        
+
         //customer management
         customerManagementButton.addActionListener(e -> {
             if (database.getCurrentUser().getRole() == EnumUserRoles.OWNER)
