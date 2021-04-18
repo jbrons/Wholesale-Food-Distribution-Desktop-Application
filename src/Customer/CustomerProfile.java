@@ -1,7 +1,7 @@
 package src.Customer;
 
 /**
- * Interface of Profile
+ * Interface of customer Profile
  * Author @Joyshree Chowdhury
 
  */
