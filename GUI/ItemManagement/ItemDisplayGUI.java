@@ -66,7 +66,7 @@ public class ItemDisplayGUI {
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER
                 || dataBase.getCurrentUser().getRole() == EnumUserRoles.INVENTORY_MANAGER) {
-                    if (invoiceDatabase.itemInList(itemsList.get(index).getId()) && purchaseOrderDatabase.containsItem(itemsList.get(index).getId(),itemsList.get(index).getVendorId())) {
+                    if (invoiceDatabase.itemInList(itemsList.get(index).getId()) /*&& purchaseOrderDatabase.containsItem(itemsList.get(index).getId(),itemsList.get(index).getVendorId())*/) {
                         itemsList.removeItem(index);
                         closeItemEdit();
                     }
