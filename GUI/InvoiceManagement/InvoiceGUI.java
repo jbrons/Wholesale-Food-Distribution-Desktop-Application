@@ -40,6 +40,10 @@ public class InvoiceGUI implements FocusListener {
 
     public void setupGUI()
     {
+        if((customerOrderDatabase.getAllOrders().length - invoiceDatabase.getInvoiceList().size())>2){
+            JOptionPane.showMessageDialog(null, "There are more than two customer orders available");
+        }
+
         //button actions
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -90,9 +94,12 @@ public class InvoiceGUI implements FocusListener {
                         JOptionPane.showMessageDialog(null, "Invoice already created for this customer order");
                     }
             }
-            catch(IndexOutOfBoundsException ex){
-                JOptionPane.showMessageDialog(null, "Please Select a customer order");
-            }
+                catch(IndexOutOfBoundsException ex) {
+                    JOptionPane.showMessageDialog(null, "Please Select a customer order");
+                }
+                catch(NullPointerException ex){
+                    JOptionPane.showMessageDialog(null, "Please make sure you have selected a customer order");
+                }
 
             }
         });
@@ -110,35 +117,11 @@ public class InvoiceGUI implements FocusListener {
         });
     }
 
-  //  int customerId(
 
     public void setCatalog(Vector<CustomerOrder> v){
         iList.setListData(v);
         iList.setFont(new Font("Arial",Font.BOLD,12));
     }
-    public boolean isDuplicate(CustomerOrder order){
-        for(Invoice invoice: invoiceDatabase.getInvoiceList()){
-            if(invoice.getOrderId() == order.getOrderID()){
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public int searchIndex(int index){
-        System.out.println(iList.getModel().getElementAt(index));
-
-        int i=0;
-        for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
-            if (order ==iList.getModel().getElementAt(index)) {
-                return i;
-            }
-        }
-        System.out.println("-1");
-        return -1;
-    }
-
 
     public void closeCatalog(){
         mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
