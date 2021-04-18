@@ -83,6 +83,11 @@ public class InvoiceGUI implements FocusListener {
                 }
                 Invoice invoice = new Invoice(selectedOrder);
                 invoiceList.addInvoice(invoice);
+                for(CustomerProfile customer: customerProfileDatabase.getAllProfiles()){
+                    if(selectedOrder.getCustomerID() == customer.getCustomerID()){
+                        customer.setBalance(customer.getBalance() - (int)selectedOrder.getPrice());
+                    }
+                }
                 InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
                 mainWindowGUI.setJPanel(dis.getPanel());
             }
