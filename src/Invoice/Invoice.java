@@ -17,19 +17,18 @@ public class Invoice {
     private String orderDate;
     private double totalInvoiceAmount;
     private CustomerOrder customerOrder;
-    private String customerName;
     private int orderId;
     private Map<Item, Double> items;
 
 
     public Invoice(CustomerOrder order) {
-        this.customerOrder = order;
+        setInvoiceID();
+        setInvoiceDate();
         this.orderDate = order.getOrderDate();
         this.totalInvoiceAmount = order.getPrice();
-        this.items = order.getItems();
-        setInvoiceDate();
-        setInvoiceID();
+        this.customerOrder = order;
         this.orderId = order.getOrderID();
+        this.items = order.getItems();
     }
 
     //set methods
@@ -46,13 +45,17 @@ public class Invoice {
         Random r = new Random();
         this.invoiceId += r.nextInt(10)+1;
     }
-    public void setCustomerName(){}
     public void setTotalInvoiceAmount(double total){ this.totalInvoiceAmount = total; }
     public void setOrderDate(double od){ this.orderDate = orderDate; }
+    public void setOrderId(int i){
+        this.orderId = i;
+    }
+    public void setItems(Map<Item, Double> items){
+        this.items = items;
+    }
 
     //get methods
     public String getInvoiceDate(){ return this.invoiceDate; }
-    public String getCustomerName(){ return ""; }
     public int getInvoiceID(){ return this.getInvoiceID(); }
     public Map<Item, Double> getItems() {
         return this.items;
