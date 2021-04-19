@@ -3,7 +3,6 @@ package GUI.PurchaseOrderManagement;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
-import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.PurchaseOrder.PurchaseOrder;
 import src.PurchaseOrder.PurchaseOrderDatabase;
@@ -13,6 +12,14 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Vector;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public class PurchaseOrderGUI implements ActionListener {
     private JPanel rootPanel;
     private JList lstPurchaseOrders;

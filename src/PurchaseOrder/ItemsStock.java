@@ -2,6 +2,14 @@ package src.PurchaseOrder;
 
 import java.util.HashMap;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public class ItemsStock{
     private static ItemsStock stockInstance = null;
     private HashMap<Integer, Double> stock;

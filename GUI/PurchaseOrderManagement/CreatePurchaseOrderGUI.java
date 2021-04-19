@@ -14,6 +14,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public class CreatePurchaseOrderGUI implements ActionListener {
     private JPanel rootPanel;
     private JButton btnLogOut;

@@ -1,14 +1,10 @@
 package GUI.PurchaseOrderManagement;
 
-import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
-import GUI.VendorManagement.VendorUI;
 import src.Item.Item;
 import src.PurchaseOrder.PurchaseOrder;
-import src.PurchaseOrder.PurchaseOrderDatabase;
 import src.PurchaseOrder.PurchaseOrderDetails;
 import src.Vendor.DateValidator;
-import src.Vendor.Vendor;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
@@ -23,6 +19,14 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public class ItemPOInfo implements ActionListener {
     private JPanel rootPanel;
     private JFormattedTextField txtNeedByDate;

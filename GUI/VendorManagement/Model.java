@@ -2,6 +2,14 @@ package GUI.VendorManagement;
 
 import javax.swing.*;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public abstract class Model {
     private DefaultListModel<String> model;
 

@@ -6,6 +6,14 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.stream.IntStream;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public class PurchaseOrderDatabase {
     private static PurchaseOrderDatabase firstInstance = null;
     /* HashMap<VendorID, PurchaseOrders> */
@@ -31,7 +39,7 @@ public class PurchaseOrderDatabase {
         } else {
             newPOs = purchaseOrders.get(vendorId);
         }
-        
+
         newPOs.add(purchaseOrder);
         purchaseOrders.put(vendorId, newPOs);
         purchaseOrder.updateBalance(vendorId);

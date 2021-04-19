@@ -2,12 +2,19 @@ package GUI.PurchaseOrderManagement;
 
 import src.Item.Item;
 import src.PurchaseOrder.PurchaseOrder;
-import src.Vendor.Vendor;
 import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
 import java.util.Vector;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public class PurchaseOrderLogic {
     private static VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private static String searchBarPrompt = "Search by Vendor Name";

@@ -11,6 +11,14 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.stream.IntStream;
 
+/**
+ *  This class implements the Vendor profile for the owner
+ *  and purchaser users to create, update, and delete Vendors
+ *
+ * @author Jordan Bronstetter
+ * @date 04/06/2021
+ *
+ */
 public class PurchaseOrder {
     /* HashMap<Need by Date and Quantity, Item> */
     private HashMap<PurchaseOrderDetails, Item> purchaseOrder = new HashMap<>();
