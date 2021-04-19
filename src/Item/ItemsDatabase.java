@@ -27,7 +27,7 @@ public class ItemsDatabase {
         itemsList.add(new Item(4, 1, "egg", 48, "organic", "12/12/2021", 4, "pound", 17));
         itemsList.add(new Item(5, 1, "milk", 34, "full cream", "12/12/2021", 2, "pound", 9));
         itemsList.add(new Item(6, 1, "rice", 43, "brown", "12/12/2020", 11, "pound", 2));
-        
+
     }
     public static ItemsDatabase getInstance() {
         if (firstInstance == null) {

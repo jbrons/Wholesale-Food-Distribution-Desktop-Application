@@ -139,7 +139,7 @@ public class EditItemsGUI implements FocusListener {
     }
 
     public void closeItemEdit(){
-        mainWindowGUI.setJPanel(new ItemDisplayGUI(index).getPanel());
+        mainWindowGUI.setJPanel(new ItemDisplayGUI(index).getPanel(),"Item Profile Management/View Item");
     }
 
     public int getIndex(){
