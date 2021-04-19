@@ -97,7 +97,7 @@ public class PurchaseOrder {
 
     public void updateBalance(int vendorId) {
         int index = vendorDatabase.getIndex(vendorId);
-        double newBalance = vendorDatabase.getVendor(index).getBalance() - totalCost;
+        double newBalance = vendorDatabase.getVendor(index).getBalance() + totalCost;
         vendorDatabase.getVendor(index).setBalance(newBalance);
     }
 
