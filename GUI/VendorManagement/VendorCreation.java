@@ -1,5 +1,6 @@
 package GUI.VendorManagement;
 
+import GUI.PurchaseOrderManagement.DialogDisplay;
 import src.User.UserDatabase;
 import src.Vendor.StateAbbrs;
 import src.Vendor.VendorDatabase;
@@ -123,39 +124,39 @@ public class VendorCreation implements ActionListener, KeyListener {
         String message = " cannot be blank.";
 
         if (txtFullName.getText().isEmpty()) {
-            displayError("Full Name" + message);
+            DialogDisplay.displayError("Full Name" + message);
             return false;
         } else {
             if (vendorDatabase.searchVendorDatabase(txtFullName.getText()) > -1 && vendor == null) {
-                displayError(txtFullName.getText() + " already has a profile");
+                DialogDisplay.displayError(txtFullName.getText() + " already has a profile");
                 return false;
             }
             name = txtFullName.getText();
         }
 
         if (txtStreetAddress.getText().isEmpty()) {
-            displayError("Street Address" + message);
+            DialogDisplay.displayError("Street Address" + message);
             return false;
         } else {
             streetAddress = txtStreetAddress.getText();
         }
 
         if (txtCity.getText().isEmpty()) {
-            displayError("City" + message);
+            DialogDisplay.displayError("City" + message);
             return false;
         } else {
             city = txtCity.getText();
         }
 
         if (cboState.getSelectedIndex() < 0) {
-            displayError("State" + message);
+            DialogDisplay.displayError("State" + message);
             return false;
         } else {
             state = (StateAbbrs) cboState.getSelectedItem();
         }
 
         if (!txtPhoneNum.isEditValid()) {
-            displayError("Phone number" + message);
+            DialogDisplay.displayError("Phone number" + message);
             return false;
         } else {
             phoneNum = txtPhoneNum.getText();
@@ -180,23 +181,23 @@ public class VendorCreation implements ActionListener, KeyListener {
         }
 
         if (!txtLastOrderDate.isEditValid()) {
-            displayError("Last Order Date" + message);
+            DialogDisplay.displayError("Last Order Date" + message);
             return false;
         } else {
             lastOrderDate = validator.getDate(txtLastOrderDate.getText());
             if (lastOrderDate == null) {
-                displayError("Incorrect Last Order Date");
+                DialogDisplay.displayError("Incorrect Last Order Date");
                 return false;
             }
         }
 
         if (!txtSeasonalDiscDate.isEditValid()) {
-            displayError("Seasonal Discount Start Date" + message);
+            DialogDisplay.displayError("Seasonal Discount Start Date" + message);
             return false;
         } else {
             seasonalDiscDate = validator.getDate(txtSeasonalDiscDate.getText());
             if (seasonalDiscDate == null) {
-                displayError("Incorrect Seasonal Discount Start Date");
+                DialogDisplay.displayError("Incorrect Seasonal Discount Start Date");
                 return false;
             }
         }
@@ -291,10 +292,6 @@ public class VendorCreation implements ActionListener, KeyListener {
         }
     }
 
-    private void displayError(String message) {
-        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
     /**
      * Invoked when a key has been typed.
      * See the class description for {@link KeyEvent} for a definition of
@@ -315,7 +312,6 @@ public class VendorCreation implements ActionListener, KeyListener {
             String text = ((JFormattedTextField) action).getText();
             int decimalIndex = text.indexOf('.');
 
-            // for txtBalance
             if (e.getKeyChar() == '.') {
                 if (decimalIndex != -1) {
                     e.consume();
