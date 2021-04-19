@@ -1,5 +1,6 @@
 package GUI.PurchaseOrderManagement;
 
+import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.VendorManagement.VendorUI;
 import src.Item.Item;
@@ -23,13 +24,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ItemPOInfo implements ActionListener {
+    private JPanel rootPanel;
     private JFormattedTextField txtNeedByDate;
     private JFormattedTextField txtQuantity;
-    private JPanel rootPanel;
     private JLabel lblNeedByDate;
     private JLabel lblQuantity;
     private JButton btnAdd;
     private JButton btnCancel;
+    private JList lstPurchaseOrders;
 
     private LocalDate needByDate;
     private double quantity;
@@ -40,16 +42,20 @@ public class ItemPOInfo implements ActionListener {
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private DateValidator validator = new DateValidator(dateFormat);
 
+    private JPanel pnlPurchaseOrder;
     private PurchaseOrder purchaseOrder;
     private MainWindowGUI mainWindowGUI;
     private Item item;
 
-    public ItemPOInfo(PurchaseOrder purchaseOrder, Item item) {
+    public ItemPOInfo(JPanel pnlPurchaseOrder, PurchaseOrder purchaseOrder, Item item) {
         mainWindowGUI = MainWindowGUI.getInstance();
         mainWindowGUI.setTitle("Purchase Order Management");
+
+        this.pnlPurchaseOrder = pnlPurchaseOrder;
         this.item = item;
         vendorId = item.getVendorId();
         this.purchaseOrder = purchaseOrder;
+
         setUpGUI();
         addListeners();
     }
@@ -73,7 +79,7 @@ public class ItemPOInfo implements ActionListener {
         return formatter;
     }
 
-    private boolean getInputs() {
+    private boolean checkInputs() {
         String message = " cannot be blank";
 
         if (!txtNeedByDate.isEditValid()) {
@@ -159,16 +165,17 @@ public class ItemPOInfo implements ActionListener {
         Object userAction = e.getSource();
 
         if (userAction == btnAdd) {
-            if (getInputs()) {
-                purchaseOrder.addItem(new PurchaseOrderDetails(item.getPurchasePrice(), needByDate, quantity), item);
-                closeCreationGUI();
+            if (checkInputs()) {
+                PurchaseOrderDetails details = new PurchaseOrderDetails(item.getPurchasePrice(), needByDate, quantity);
+                purchaseOrder.addItem(details, item);
+                closeGUI();
             }
         } else {
-            closeCreationGUI();
+            closeGUI();
         }
     }
 
-    private void closeCreationGUI() {
-        mainWindowGUI.setJPanel(new PurchaseOrderGUI().getPanel());
+    private void closeGUI() {
+        mainWindowGUI.setJPanel(pnlPurchaseOrder);
     }
 }

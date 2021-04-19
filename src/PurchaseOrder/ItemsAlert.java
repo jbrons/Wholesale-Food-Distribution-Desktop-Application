@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class ItemsAlert  {
     private static ItemsStock stock = ItemsStock.getInstance();
-    private static int outOfStock = 0;  /* may hold value between 0-3 */
+    private static int outOfStock = 0;
     private static UserDatabase database = UserDatabase.getInstance();
 
     // private ItemsAlert() {}
@@ -18,38 +18,42 @@ public class ItemsAlert  {
             return;
         }
 
-        // the item has been accounted for already
+        /* the item has been accounted for already */
         if (stock.isInInventory(id)) {
-            if (stock.getItem(id) == quantity) {
+            if (stock.getQuantity(id) == quantity) {
                 return;
-            } else if (stock.getItem(id) == 0) {
-                decrementOutOfStock();
-                stock.deleteItem(id);
+            } else if (stock.getQuantity(id) == 0) {
+                inStock();
+                stock.deleteQuantity(id);
                 return;
             }
         }
         if (quantity == 0) {
-            incrementOutOfStock();  // fix NAMESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-            stock.setItem(id, quantity);
+            outOfStock();
+            stock.setQuantity(id, quantity);
 
-            if (outOfStock == 3) {
-                DialogDisplay.displayStockAlert("Two Items have gone out of Stock");
+            if (outOfStock > 2) {
+                DialogDisplay.displayStockAlert("More than two items are out of Stock.");
                 outOfStock = 0;
             }
         }
     }
 
-    private static void decrementOutOfStock() {  // rename to something less stupid
-        if (outOfStock > 0) {
-            --outOfStock;
-        } else {
-            // throw error
+    public static void alertStock() {
+        if (database.getCurrentUser().getRole() != EnumUserRoles.PURCHASER) {
+            return;
+        }
+        if (outOfStock > 2) {
+            DialogDisplay.displayStockAlert("More than two items are out of Stock.");
+            outOfStock = 0;
         }
     }
 
-    private static void incrementOutOfStock() {
-        if (outOfStock < 3) {
+    private static void inStock() {
+            --outOfStock;
+    }
+
+    private static void outOfStock() {
             ++outOfStock;
-        }
     }
 }

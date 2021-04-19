@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import java.util.stream.IntStream;
 
 public class PurchaseOrder {
     /* HashMap<Need by Date and Quantity, Item> */
-    private HashMap<PurchaseOrderDetails, Item> items = new HashMap<>();
+    private HashMap<PurchaseOrderDetails, Item> purchaseOrder = new HashMap<>();
     private static VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private int purchaseID;
-    private int vendorID;
-    private double totalCost;
+    private double totalCost = 0;
     private static int idCount;
     private static int maxIDSize = 1000000;
     private static int minimumItems = 1;
@@ -24,27 +24,27 @@ public class PurchaseOrder {
 
     public PurchaseOrder() {
         setPurchaseID();
-        updateBalance();
-
-       // items.put(2, new Item(2, 1, "potato", 12,
-       //         "sweet potato", "12/12/2020", 3, "pound", 8));
     }
 
     public boolean addItem(PurchaseOrderDetails details, Item item) {
-        if (items.size() < 5) {
-            items.put(details, getItemDetails(item));
+        if (purchaseOrder.size() < 5) {
+            purchaseOrder.put(details, getItemDetails(item));
+            calculateTotalCost(details.getSubtotalCost());
             return true;
         }
         return false;
     }
     public boolean containsItem(int itemId) {
-        for (Map.Entry<PurchaseOrderDetails, Item> entry : items.entrySet()) {
+        for (Map.Entry<PurchaseOrderDetails, Item> entry : purchaseOrder.entrySet()) {
             if (itemId == entry.getValue().getId()) {
                 return true;
             }
         }
-
         return false;
+    }
+
+    private int getPurchaseID() {
+        return purchaseID;
     }
 
     private void setPurchaseID() {
@@ -57,7 +57,7 @@ public class PurchaseOrder {
     }
 
     private int findNewPurchaseID() {
-        while (items.containsKey(idCount)) {
+        while (purchaseOrder.containsKey(idCount)) {
             ++idCount;
         }
         if (idCount < maxIDSize) {
@@ -68,12 +68,29 @@ public class PurchaseOrder {
     }
 
     public boolean isFull() {
-        return true;
+        return purchaseOrder.size() >= 5;
     }
 
-    private void updateBalance() {
-        double newBalance = vendorDatabase.getVendor(vendorID).getBalance() - totalCost;
-        vendorDatabase.getVendor(vendorID).setBalance(newBalance);
+    public int size() {
+        return purchaseOrder.size();
+    }
+
+    public boolean isEmpty() {
+        return purchaseOrder.isEmpty();
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void calculateTotalCost(double subCost) {
+        totalCost += subCost;
+    }
+
+    public void updateBalance(int vendorId) {
+        int index = vendorDatabase.getIndex(vendorId);
+        double newBalance = vendorDatabase.getVendor(index).getBalance() - totalCost;
+        vendorDatabase.getVendor(index).setBalance(newBalance);
     }
 
     public Item getItemDetails(Item item) {
@@ -87,5 +104,15 @@ public class PurchaseOrder {
                 item.getPurchasePrice(),
                 item.getUnit(),
                 item.getQuantity());
+    }
+
+    @Override
+    public String toString() {
+        String details = "";
+        String nL = "<br>";
+        for (Map.Entry<PurchaseOrderDetails, Item> item : purchaseOrder.entrySet()) {
+            details += item.getValue().getName() + nL + item.getKey().toString();
+        }
+        return details + totalCost;
     }
 }

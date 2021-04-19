@@ -19,16 +19,16 @@ public class ItemsStock{
         return stockInstance;
     }
 
-    public void setItem(int id, double quantity) {
+    public void setQuantity(int id, double quantity) {
        stock.put(id, quantity);
     }
 
-    public double getItem(int id) {
+    public double getQuantity(int id) {
        return stock.get(id);
     }
 
     // fix delete function
-    public void deleteItem(int id) {
+    public void deleteQuantity(int id) {
         stock.remove(id);
     }
 

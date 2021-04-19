@@ -1,10 +1,8 @@
 package GUI.PurchaseOrderManagement;
 
-import GUI.ItemManagement.ItemDisplayGUI;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
-import GUI.VendorManagement.SearchModel;
 import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.PurchaseOrder.PurchaseOrder;
@@ -12,40 +10,43 @@ import src.PurchaseOrder.PurchaseOrderDatabase;
 import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.nio.file.attribute.AclEntry;
 import java.util.Vector;
-import java.util.stream.Stream;
 
 public class PurchaseOrderGUI implements ActionListener {
     private JPanel rootPanel;
-    private JList lstItems;
+    private JList lstPurchaseOrders;
     private JTextField txtSearchBar;
     private JButton btnSelectVendor;
-    private JTextField txtInstructions;
     private JLabel lblSearch;
     private JButton btnMainMenu;
     private JButton btnLogOut;
     private JButton btnCreatePO;
     private JButton btnCancelPO;
+    private JButton btnStartPO;
     private JButton btnViewPO;
     private JScrollPane scpDisplayList;
+    private JPanel pnlFormatDisplay;
+    private JLabel lblListInfo;
     private JPanel pnlList;
 
-    ItemModel itemModel = new ItemModel();
-    Vector<Item> vendorItems = null;
+    PurchaseOrderModel purchaseOrderModel = new PurchaseOrderModel();
+    Vector<PurchaseOrder> vendorPOs = null;
 
+    private PurchaseOrder purchaseOrder = new PurchaseOrder();
     private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
     private PurchaseOrderDatabase purchaseOrderDatabase = PurchaseOrderDatabase.getInstance();
     private MainWindowGUI mainWindowGUI;
 
+    private boolean toggle = true;
+    private boolean vendorSelected = false;
+
     private String searchBarPrompt = "Search by Vendor Name";
+    private String searchLabel = "Search for Vendor:";
+    private String selectedLabel = "Selected Vendor:";
     private int vendorID;
     private String vendorName;
-    private boolean vendorSelected = false;
-    private boolean mouseInList = true;
 
     public PurchaseOrderGUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -57,13 +58,7 @@ public class PurchaseOrderGUI implements ActionListener {
 
     private void setUpGUI() {
         txtSearchBar.setText(searchBarPrompt);
-        lstItems.setModel(itemModel.getDisplayListModel());
-
-        Vector<String> vector = new Vector<>();
-        vector.add("ID: 1, Item Name: apple, Need By: 04/20/2021, Quantity: 5, Total Cost: $15.00");
-        //lstItems.setListData(vector);
-        //lstItems.setListData(itemsDatabase.getAllItemDetails());
-
+        lstPurchaseOrders.setModel(purchaseOrderModel.getDisplayListModel());
     }
 
     public JPanel getPanel()
@@ -75,10 +70,7 @@ public class PurchaseOrderGUI implements ActionListener {
      * Invoked to add a ActionListener to JButtons and JTextFields
      */
     private void addListeners() {
-        //txtSearchBar.addFocusListener(this);
-        //lstItems.addMouseListener(this);
-        btnCreatePO.addActionListener(this);
-        btnCancelPO.addActionListener(this);
+        btnStartPO.addActionListener(this);
         btnViewPO.addActionListener(this);
         btnMainMenu.addActionListener(this);
         btnLogOut.addActionListener(this);
@@ -138,54 +130,6 @@ public class PurchaseOrderGUI implements ActionListener {
                 }
             }
         });
-
-        lstItems.addMouseListener(new MouseAdapter() {
-            /**
-             * {@inheritDoc}
-             *
-             * @param e
-             */
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int index = lstItems.getSelectedIndex();
-                Item item = vendorItems.get(index);
-                PurchaseOrder purchaseOrder = new PurchaseOrder();
-                mainWindowGUI.setJPanel(new ItemPOInfo(purchaseOrder, item).getPanel());
-                purchaseOrderDatabase.add(vendorID, purchaseOrder);
-            }
-
-            /**
-             * {@inheritDoc}
-             *
-             * @param e
-             */
-            @Override
-            public void mouseExited(MouseEvent e) {
-                lstItems.clearSelection();
-            }
-        });
-
-        lstItems.addMouseMotionListener(new MouseMotionAdapter() {
-            /**
-             * Invoked when the mouse button has been moved on a component
-             * (with no buttons no down).
-             *
-             * @param e
-             */
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                super.mouseMoved(e);
-                if (!itemModel.isEmpty()) {
-                    int index = lstItems.locationToIndex(e.getPoint());
-                    Rectangle cellBounds = lstItems.getCellBounds(index, index);
-                    if (cellBounds.contains(e.getPoint())) {
-                        lstItems.setSelectedIndex(index);
-                    } else {
-                        lstItems.clearSelection();
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -198,64 +142,37 @@ public class PurchaseOrderGUI implements ActionListener {
         Object userAction = e.getSource();
 
         if (userAction == btnSelectVendor) {
-            vendorName = txtSearchBar.getText();
-            if (vendorName.equals("") || vendorName.equals(searchBarPrompt)) {
-                return;
-            }
-
-            if (!vendorSelected) {
-                if (vendorDatabase.isEmpty()) {
-                    DialogDisplay.displayError("No Vendors are available");
-                }
-
-                int index = vendorDatabase.searchVendorDatabase(vendorName);
-                if (index > -1) {
-                    vendorID = vendorDatabase.getId(index);
-                    txtSearchBar.setEditable(false);
-                    btnSelectVendor.setText("Select New Vendor");
-                    vendorSelected = true;
-                } else {
-                    DialogDisplay.displayError("No Vendors by the name of " + vendorName);
-                }
-            } else {
-                int choice = cancelPurchaseOrder();
-                if (choice == JOptionPane.YES_OPTION){
-                    txtSearchBar.setText(searchBarPrompt);
-                    txtSearchBar.setEditable(true);
-                    vendorSelected = false;
-                }
-            }
-
-        } else if (userAction == btnCreatePO) {
             if (vendorSelected) {
-                vendorItems = itemsDatabase.getItemsForVendor(vendorID);
-                if (vendorItems.size() == 0) {
-                    DialogDisplay.displayError(vendorName + " does not have any items to choose from");
+                toggleSearchInfo();
+            } else {
+                vendorName = txtSearchBar.getText();
+                vendorID = PurchaseOrderLogic.selectVendor(vendorName);
+                if (vendorID > -1) {
+                    toggleSearchInfo();
+                }
+            }
+        } else if (userAction == btnStartPO) {
+            if (vendorSelected) {
+                if (!itemsDatabase.getItemsForVendor(vendorID).isEmpty()) {
+                    mainWindowGUI.setJPanel(new CreatePurchaseOrderGUI(rootPanel, vendorID, vendorName).getPanel());
                 } else {
-                    itemModel.updateModel(vendorItems);
-                    setBtnCancelPO();
-                    btnViewPO.setVisible(false);
-                    btnViewPO.setEnabled(false);
+                    DialogDisplay.displayError(vendorName + " does not have any items to choose from");
                 }
             } else {
-                DialogDisplay.displayError("Must select a Vendor first");
-            }
-
-        } else if (userAction == btnCancelPO) {
-            int choice = cancelPurchaseOrder();
-            itemModel.clearModel();
-            if (choice == JOptionPane.YES_OPTION){
-                txtSearchBar.setEditable(true);
-                txtSearchBar.setText(searchBarPrompt);
-                vendorSelected = false;
-                btnCancelPO.setVisible(false);
-                btnCancelPO.setEnabled(false);
-                btnViewPO.setVisible(true);
-                btnViewPO.setEnabled(true);
-
+                DialogDisplay.displayError("Please select a Vendor first");
             }
         } else if (userAction == btnViewPO) {
-
+            if (vendorSelected) {
+                if (purchaseOrderDatabase.containsVendor(vendorID)) {
+                    setUpVendorPOs();
+                    btnViewPO.setText("Hide Purchase Orders");
+                } else {
+                    DialogDisplay.displayError(vendorName + " does not have any Purchase Orders");
+                }
+            } else {
+                DialogDisplay.displayError("Please select a Vendor first");
+            }
+            purchaseOrderModel.clearModel();
         } else if (userAction == btnMainMenu) {
             mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
         } else if (userAction == btnLogOut) {
@@ -263,13 +180,24 @@ public class PurchaseOrderGUI implements ActionListener {
         }
     }
 
-    private void setBtnCancelPO() {
-        btnCancelPO.setVisible(true);
-        btnCancelPO.setEnabled(true);
+    private void toggleSearchInfo() {
+        if (lblSearch.getText().equals(searchLabel)) {
+            vendorSelected = true;
+            lblSearch.setText(selectedLabel);
+            txtSearchBar.setEditable(false);
+            btnSelectVendor.setText("Select New Vendor");
+        } else {
+            vendorSelected = false;
+            lblSearch.setText(searchLabel);
+            txtSearchBar.setText(searchBarPrompt);
+            txtSearchBar.setEditable(true);
+            btnSelectVendor.setText("Select Vendor");
+        }
     }
 
-    private int cancelPurchaseOrder() {
-        return DialogDisplay.displayQuestion("Discard Purchase Order?",
-                "Cancel Purchase Order", new Object[] {"Confirm", "Cancel"});
+    private void setUpVendorPOs() {
+        lblListInfo.setText("Purchase Orders for " + vendorName);
+        vendorPOs = purchaseOrderDatabase.getPurchaseOrders(vendorID);
+        purchaseOrderModel.updateModel(vendorPOs);
     }
 }

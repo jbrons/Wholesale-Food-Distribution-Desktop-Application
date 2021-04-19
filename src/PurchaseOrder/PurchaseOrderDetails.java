@@ -15,17 +15,21 @@ public class PurchaseOrderDetails {
     public PurchaseOrderDetails(double purchasingPrice, LocalDate needByDate, double quantity) {
         setNeedByDate(needByDate);
         setQuantity(quantity);
-        calculateTotalCost(purchasingPrice);
+        calculateSubtotalCost(purchasingPrice);
     }
 
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private DateValidator validator = new DateValidator(dateFormat);
 
+    public LocalDate getNeedByDate() {
+        return needByDate;
+    }
+
     public void setNeedByDate(LocalDate needByDate) {
         this.needByDate = needByDate;
     }
 
-    private void calculateTotalCost(double purchasingPrice) {
+    private void calculateSubtotalCost(double purchasingPrice) {
         subtotalCost = quantity * purchasingPrice;
     }
 
@@ -35,5 +39,12 @@ public class PurchaseOrderDetails {
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        String nL = "<br>";
+        return needByDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+                + nL + quantity + nL + subtotalCost + nL ;
     }
 }

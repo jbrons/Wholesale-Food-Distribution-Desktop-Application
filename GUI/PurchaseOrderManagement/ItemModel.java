@@ -10,20 +10,6 @@ import javax.swing.*;
 import java.util.Vector;
 
 public class ItemModel extends Model {
-
-    public ItemModel() {
-        super();
-    }
-
-    public ItemModel(Vector<Item> items) {
-        super();
-        updateModel(items);
-    }
-
-    public void clearModel() {
-        getDisplayListModel().removeAllElements();
-    }
-
     public void updateModel(Vector<Item> items) {
         if (!getDisplayListModel().isEmpty()) {
             clearModel();

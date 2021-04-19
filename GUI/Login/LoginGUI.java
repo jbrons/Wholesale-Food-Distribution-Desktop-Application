@@ -7,6 +7,8 @@ import GUI.MainMenu.DiscountAlertLogic;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import GUI.PasswordChange.PasswordChangeGUI;
+import GUI.PurchaseOrderManagement.DialogDisplay;
+import src.PurchaseOrder.ItemsAlert;
 import src.User.EnumUserRoles;
 import src.User.User;
 import src.User.UserDatabase;
@@ -73,8 +75,11 @@ public class LoginGUI {
                     MainMenuGUI mainMenuGUI = new MainMenuGUI();
                     mainWindowGUI.setJPanel(mainMenuGUI.getPanel());
                     mainMenuGUI.currentDiscountsAlert();
-                }
-                else
+                } else if(currentUser.getRole() == EnumUserRoles.PURCHASER) {
+                    MainMenuGUI mainMenuGUI = new MainMenuGUI();
+                    mainWindowGUI.setJPanel(mainMenuGUI.getPanel());
+                    ItemsAlert.alertStock();
+                } else
                     mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
 
                 System.out.println("Success!");

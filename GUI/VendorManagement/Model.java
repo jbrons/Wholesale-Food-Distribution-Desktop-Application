@@ -21,6 +21,10 @@ public abstract class Model {
         model.set(index, element);
     }
 
+    public void clearModel() {
+        getDisplayListModel().removeAllElements();
+    }
+
     public boolean isEmpty() {
         return model.isEmpty();
     }
