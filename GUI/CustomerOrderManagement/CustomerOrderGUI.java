@@ -1,5 +1,5 @@
 /**
- * Customer Order management
+ * Customer Order user interface management
  * Author @Joyshree Chowdhury
  */
 package GUI.CustomerOrderManagement;
@@ -160,7 +160,10 @@ public class CustomerOrderGUI {
 
         });
 
-        // append item to existing order
+        /**
+         *  append item to existing order
+         */
+
         btnAppendItem.addActionListener(e -> {
             // Get order
             CustomerOrder order = listCOrders.getSelectedValue();
@@ -214,7 +217,10 @@ public class CustomerOrderGUI {
             setLists();
         });
 
-        // Get quantity and calculate the price
+        /**
+         * Get quantity and calculate the price
+         */
+
         textQuantity.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 showPrice();
@@ -301,7 +307,9 @@ public class CustomerOrderGUI {
             return false;
         }
 
-        // Get quantity
+        /**
+         * Get quantity
+         */
         double quantity;
         try {
             quantity = Double.parseDouble(textQuantity.getText());
