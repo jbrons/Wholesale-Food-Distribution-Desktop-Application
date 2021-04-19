@@ -12,7 +12,6 @@ import GUI.MainWindow.MainWindowGUI;
 import src.CustomerOrder.CustomerOrderDatabase;
 import src.Invoice.Invoice;
 import src.Invoice.InvoiceDatabase;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

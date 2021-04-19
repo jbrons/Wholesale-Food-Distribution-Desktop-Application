@@ -19,7 +19,6 @@ import src.Invoice.Invoice;
 import src.Invoice.InvoiceDatabase;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
