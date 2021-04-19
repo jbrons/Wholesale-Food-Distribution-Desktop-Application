@@ -120,7 +120,7 @@ public class MainMenuGUI {
 
         itemManagementButton.addActionListener((e ->
         {
-            mainWindowGUI.setJPanel(new ItemsGUI().getPanel());
+            mainWindowGUI.setJPanel(new ItemsGUI().getPanel(),"Item Profile Management");
         }));
 
         purchaseOrderManagementButton.addActionListener((e ->

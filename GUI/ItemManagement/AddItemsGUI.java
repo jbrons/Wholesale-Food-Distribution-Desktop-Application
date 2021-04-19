@@ -125,7 +125,7 @@ public class AddItemsGUI implements FocusListener {
     }
 
     public void closeItemAdd(){
-        mainWindowGUI.setJPanel(new ItemsGUI().getPanel());
+        mainWindowGUI.setJPanel(new ItemsGUI().getPanel(),"Item Profile Management");
     }
 
     //methods required for implementing focus listener

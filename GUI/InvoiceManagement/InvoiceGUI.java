@@ -83,9 +83,8 @@ public class InvoiceGUI implements FocusListener {
                                     customer.setBalance(customer.getBalance() - (float) selectedOrder.getPrice());
                                     Invoice invoice = new Invoice(selectedOrder);
                                     invoiceDatabase.addInvoice(invoice);
-                                    System.out.println("order added");
                                     InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
-                                    mainWindowGUI.setJPanel(dis.getPanel());
+                                    mainWindowGUI.setJPanel(dis.getPanel(),"Customer Invoice Management/View Invoice");
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Customer Does not have enough balance");
                                 }

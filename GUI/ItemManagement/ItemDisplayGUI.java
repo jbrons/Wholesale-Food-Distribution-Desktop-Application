@@ -56,7 +56,7 @@ public class ItemDisplayGUI {
             public void actionPerformed(ActionEvent evt) {
                 if(dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.PURCHASER) {
                     EditItemsGUI edit = new EditItemsGUI(index);
-                    mainWindowGUI.setJPanel(edit.getPanel());
+                    mainWindowGUI.setJPanel(edit.getPanel(),"Item Profile Management/Edit Item");
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "You must be a owner or purchase user");
@@ -96,7 +96,7 @@ public class ItemDisplayGUI {
         this.index = i;
     }
     public void closeItemEdit(){
-        mainWindowGUI.setJPanel(new ItemsGUI().getPanel());
+        mainWindowGUI.setJPanel(new ItemsGUI().getPanel(),"Item Profile Management");
     }
 
     public JPanel getPanel()

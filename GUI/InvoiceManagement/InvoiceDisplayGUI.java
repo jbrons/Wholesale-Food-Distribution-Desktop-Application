@@ -57,7 +57,7 @@ public class InvoiceDisplayGUI {
         this.invoice = inv;
     }
     public void closeInvoiceDisplay(){
-        mainWindowGUI.setJPanel(new InvoiceGUI().getPanel());
+        mainWindowGUI.setJPanel(new InvoiceGUI().getPanel(),"Customer Invoice Management");
     }
 
     public JPanel getPanel()

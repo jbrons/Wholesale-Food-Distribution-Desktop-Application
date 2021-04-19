@@ -73,7 +73,7 @@ public class ItemsGUI implements FocusListener{
             public void actionPerformed(ActionEvent evt) {
                 if (dataBase.getCurrentUser().getRole() == EnumUserRoles.OWNER || dataBase.getCurrentUser().getRole() ==
                         EnumUserRoles.PURCHASER ||dataBase.getCurrentUser().getRole() == EnumUserRoles.INVENTORY_MANAGER) {
-                    mainWindowGUI.setJPanel(new AddItemsGUI().getPanel());
+                    mainWindowGUI.setJPanel(new AddItemsGUI().getPanel(),"Item Profile Management/Add Item");
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "You must be a Owner, Purchaser, or Inventory Manager");
@@ -102,7 +102,7 @@ public class ItemsGUI implements FocusListener{
                         //index of selected jList is stored and then ItemsGUI displays selectedIndex
                         int index = searchIndex(iList.locationToIndex(evt.getPoint()));
                         ItemDisplayGUI dis = new ItemDisplayGUI(index);
-                        mainWindowGUI.setJPanel(dis.getPanel());
+                        mainWindowGUI.setJPanel(dis.getPanel(),"Item Profile Management/View Item");
                     }
                 }
                 catch(ArrayIndexOutOfBoundsException a){
