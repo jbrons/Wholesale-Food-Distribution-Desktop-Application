@@ -24,6 +24,9 @@ public class PurchaseOrderDatabase {
     }
 
     public boolean containsItem(int itemId, int vendorId) {
-        return purchaseOrders.get(vendorId).containsItem(itemId);
+        if (purchaseOrders.containsKey(vendorId)) {
+            return purchaseOrders.get(vendorId).containsItem(itemId);
+        }
+        return false;
     }
 }
