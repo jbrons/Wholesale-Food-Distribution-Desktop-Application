@@ -13,6 +13,12 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * GUI for users to find the profit of a given item
+ * withing a specified date range.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class ProfitSearchGUI {
     private JPanel rootPanel;
     private JPanel profitSearchPanel;

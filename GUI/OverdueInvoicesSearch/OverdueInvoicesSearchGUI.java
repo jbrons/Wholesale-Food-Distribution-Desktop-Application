@@ -9,6 +9,12 @@ import src.OverdueCustomerInvoice.OverdueCustomerInvoice;
 
 import javax.swing.*;
 
+/**
+ * GUI for users to view and search all
+ * overdue customer invoices (past 30 days).
+ *
+ * @author Jacob Price | ga4116
+ */
 public class OverdueInvoicesSearchGUI {
     private JPanel rootPanel;
     private JPanel mainPanel;

@@ -8,6 +8,12 @@ import src.Item.ItemsDatabase;
 
 import javax.swing.*;
 
+/**
+ * GUI for users to search and view expired
+ * items within the inventory.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class ExpiredItemsGUI {
     private JPanel rootPanel;
     private JPanel mainPanel;

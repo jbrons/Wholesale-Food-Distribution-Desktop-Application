@@ -15,6 +15,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Vector;
 
+/**
+ * Handles all the logic needed for retrieving
+ * overdue customer invoices (past 30 days).
+ *
+ * @author Jacob Price | ga4116
+ */
 public class OverdueInvoicesLogic {
 
     InvoiceDatabase invoiceDatabase;

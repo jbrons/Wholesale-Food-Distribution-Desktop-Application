@@ -10,6 +10,12 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Vector;
 
+/**
+ * Handles all the logic needed for finding the profit
+ * of a given item within a specified date range.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class ProfitSearchLogic {
     double totalProfit;
     ItemsDatabase itemsArray;

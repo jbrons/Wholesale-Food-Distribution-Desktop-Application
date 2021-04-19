@@ -7,6 +7,12 @@ import src.CustomerOrder.CustomerOrderDatabase;
 
 import java.util.ArrayList;
 
+/**
+ * Handles all the logic needed for
+ * retrieving customer orders.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class CustomerOrderSearchLogic {
     CustomerOrderDatabase customerOrderDatabase;
     CustomerProfileDatabase customerProfileDatabase;

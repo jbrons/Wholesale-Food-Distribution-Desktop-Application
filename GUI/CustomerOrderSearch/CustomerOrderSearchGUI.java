@@ -8,6 +8,11 @@ import src.CustomerOrder.CustomerOrderDatabase;
 
 import javax.swing.*;
 
+/**
+ * GUI for users to view and search for customer's orders.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class CustomerOrderSearchGUI {
     private JPanel rootPanel;
     private JPanel buttonPanel;
