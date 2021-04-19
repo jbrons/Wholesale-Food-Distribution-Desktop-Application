@@ -20,14 +20,14 @@ public class ItemsDatabase {
         itemsList = new Vector<Item>();
         /*
         Just For testing customer order
-         *//*
+         */
         itemsList.add(new Item(1, 1, "mango", 20, "ripe mango", "12/12/2021", 5, "pound", 6));
         itemsList.add(new Item(2, 1, "potato", 12, "sweet potato", "12/12/2020", 3, "pound", 8));
         itemsList.add(new Item(3, 1, "apple", 32, "green apple", "12/12/2020", 5, "pound", 12));
         itemsList.add(new Item(4, 1, "egg", 48, "organic", "12/12/2021", 4, "pound", 17));
         itemsList.add(new Item(5, 1, "milk", 34, "full cream", "12/12/2021", 2, "pound", 9));
         itemsList.add(new Item(6, 1, "rice", 43, "brown", "12/12/2020", 11, "pound", 2));
-        */
+        
     }
     public static ItemsDatabase getInstance() {
         if (firstInstance == null) {
