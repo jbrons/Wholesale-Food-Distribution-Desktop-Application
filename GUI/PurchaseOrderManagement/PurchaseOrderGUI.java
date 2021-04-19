@@ -7,6 +7,8 @@ import GUI.MainWindow.MainWindowGUI;
 import GUI.VendorManagement.SearchModel;
 import src.Item.Item;
 import src.Item.ItemsDatabase;
+import src.PurchaseOrder.PurchaseOrder;
+import src.PurchaseOrder.PurchaseOrderDatabase;
 import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
@@ -32,9 +34,11 @@ public class PurchaseOrderGUI implements ActionListener {
     private JPanel pnlList;
 
     ItemModel itemModel = new ItemModel();
+    Vector<Item> vendorItems = null;
 
     private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
+    private PurchaseOrderDatabase purchaseOrderDatabase = PurchaseOrderDatabase.getInstance();
     private MainWindowGUI mainWindowGUI;
 
     private String searchBarPrompt = "Search by Vendor Name";
@@ -55,6 +59,9 @@ public class PurchaseOrderGUI implements ActionListener {
         txtSearchBar.setText(searchBarPrompt);
         lstItems.setModel(itemModel.getDisplayListModel());
 
+        Vector<String> vector = new Vector<>();
+        vector.add("ID: 1, Item Name: apple, Need By: 04/20/2021, Quantity: 5, Total Cost: $15.00");
+        //lstItems.setListData(vector);
         //lstItems.setListData(itemsDatabase.getAllItemDetails());
 
     }
@@ -141,7 +148,10 @@ public class PurchaseOrderGUI implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int index = lstItems.getSelectedIndex();
-                mainWindowGUI.setJPanel(new ItemPOInfo().getPanel());
+                Item item = vendorItems.get(index);
+                PurchaseOrder purchaseOrder = new PurchaseOrder();
+                mainWindowGUI.setJPanel(new ItemPOInfo(purchaseOrder, item).getPanel());
+                purchaseOrderDatabase.add(vendorID, purchaseOrder);
             }
 
             /**
@@ -218,12 +228,14 @@ public class PurchaseOrderGUI implements ActionListener {
 
         } else if (userAction == btnCreatePO) {
             if (vendorSelected) {
-                Vector<Item> vendorItems = itemsDatabase.getItemsForVendor(vendorID);
+                vendorItems = itemsDatabase.getItemsForVendor(vendorID);
                 if (vendorItems.size() == 0) {
                     DialogDisplay.displayError(vendorName + " does not have any items to choose from");
                 } else {
                     itemModel.updateModel(vendorItems);
                     setBtnCancelPO();
+                    btnViewPO.setVisible(false);
+                    btnViewPO.setEnabled(false);
                 }
             } else {
                 DialogDisplay.displayError("Must select a Vendor first");
@@ -234,8 +246,13 @@ public class PurchaseOrderGUI implements ActionListener {
             itemModel.clearModel();
             if (choice == JOptionPane.YES_OPTION){
                 txtSearchBar.setEditable(true);
-                lstItems.setEnabled(false);
+                txtSearchBar.setText(searchBarPrompt);
                 vendorSelected = false;
+                btnCancelPO.setVisible(false);
+                btnCancelPO.setEnabled(false);
+                btnViewPO.setVisible(true);
+                btnViewPO.setEnabled(true);
+
             }
         } else if (userAction == btnViewPO) {
 
@@ -247,7 +264,7 @@ public class PurchaseOrderGUI implements ActionListener {
     }
 
     private void setBtnCancelPO() {
-        btnCancelPO.setVisible(true);;
+        btnCancelPO.setVisible(true);
         btnCancelPO.setEnabled(true);
     }
 

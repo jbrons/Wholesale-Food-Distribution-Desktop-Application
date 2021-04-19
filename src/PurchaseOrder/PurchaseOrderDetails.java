@@ -1,21 +1,21 @@
 package src.PurchaseOrder;
 
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.Vendor.DateValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class ItemDetails {
-    ItemsDatabase itemsList = ItemsDatabase.getInstance();
+public class PurchaseOrderDetails {
     private LocalDate needByDate = null;
-    /* can also change quantity value */
+    private double quantity;
     private double subtotalCost;
-    private int itemId;
 
-    public ItemDetails(int itemId) {
-        this.itemId = itemId;
-        calculateSubtotalCost();
+    public PurchaseOrderDetails(double purchasingPrice, LocalDate needByDate, double quantity) {
+        setNeedByDate(needByDate);
+        setQuantity(quantity);
+        calculateTotalCost(purchasingPrice);
     }
 
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -25,9 +25,8 @@ public class ItemDetails {
         this.needByDate = needByDate;
     }
 
-    private void calculateSubtotalCost() {
-        // itemsList.get(itemId).getUn what do I use?
-        this.subtotalCost = subtotalCost;
+    private void calculateTotalCost(double purchasingPrice) {
+        subtotalCost = quantity * purchasingPrice;
     }
 
     public double getSubtotalCost() {
@@ -35,6 +34,6 @@ public class ItemDetails {
     }
 
     public void setQuantity(double quantity) {
-        itemsList.get(itemId).setQuantity(quantity);
+        this.quantity = quantity;
     }
 }

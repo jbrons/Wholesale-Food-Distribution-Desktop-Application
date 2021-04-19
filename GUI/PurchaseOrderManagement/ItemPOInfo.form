@@ -10,7 +10,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <component id="f049f" class="javax.swing.JLabel">
+      <component id="f049f" class="javax.swing.JLabel" binding="lblNeedByDate">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -18,7 +18,7 @@
           <text value="Need by Date:"/>
         </properties>
       </component>
-      <component id="8e4b2" class="javax.swing.JLabel">
+      <component id="8e4b2" class="javax.swing.JLabel" binding="lblQuantity">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -26,19 +26,19 @@
           <text value="Quantity:"/>
         </properties>
       </component>
-      <component id="9e12b" class="javax.swing.JFormattedTextField" binding="formattedTextField2" default-binding="true">
+      <component id="9e12b" class="javax.swing.JFormattedTextField" binding="txtQuantity">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="e535e" class="javax.swing.JFormattedTextField" binding="formattedTextField1" default-binding="true">
+      <component id="e535e" class="javax.swing.JFormattedTextField" binding="txtNeedByDate">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="421d2" class="javax.swing.JButton" default-binding="true">
+      <component id="421d2" class="javax.swing.JButton" binding="btnCancel">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -46,7 +46,7 @@
           <text value="Cancel "/>
         </properties>
       </component>
-      <component id="2d101" class="javax.swing.JButton" default-binding="true">
+      <component id="2d101" class="javax.swing.JButton" binding="btnAdd">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>

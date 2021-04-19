@@ -7,10 +7,12 @@ import src.Vendor.VendorDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class PurchaseOrder {
-    private HashMap<Integer, Item> items = new HashMap<>();
+    /* HashMap<Need by Date and Quantity, Item> */
+    private HashMap<PurchaseOrderDetails, Item> items = new HashMap<>();
     private static VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private int purchaseID;
     private int vendorID;
@@ -24,20 +26,25 @@ public class PurchaseOrder {
         setPurchaseID();
         updateBalance();
 
-        items.put(2, new Item(2, 1, "potato", 12,
-                "sweet potato", "12/12/2020", 3, "pound", 8));
+       // items.put(2, new Item(2, 1, "potato", 12,
+       //         "sweet potato", "12/12/2020", 3, "pound", 8));
     }
 
-    public boolean addItem(Item item) {
+    public boolean addItem(PurchaseOrderDetails details, Item item) {
         if (items.size() < 5) {
-            items.put(item.getId(), getItemDetails(item));
+            items.put(details, getItemDetails(item));
             return true;
         }
         return false;
     }
-
     public boolean containsItem(int itemId) {
-        return items.containsKey(itemId);
+        for (Map.Entry<PurchaseOrderDetails, Item> entry : items.entrySet()) {
+            if (itemId == entry.getValue().getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void setPurchaseID() {

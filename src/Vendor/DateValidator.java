@@ -1,5 +1,6 @@
 package src.Vendor;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -26,6 +27,11 @@ public class DateValidator {
             return false;
         }
         return true;
+    }
+
+    public boolean isFutureDate(LocalDate date) {
+        LocalDate today = LocalDate.now();
+        return today.isBefore(date);
     }
 
     public LocalDate getDate(String date) {
