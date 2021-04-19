@@ -1,5 +1,10 @@
 package src.OverdueCustomerInvoice;
 
+/**
+ * Class to store basic information about overdue customer invoices.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class OverdueCustomerInvoice {
 
     String customerName;

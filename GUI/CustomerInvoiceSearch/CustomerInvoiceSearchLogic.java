@@ -7,10 +7,14 @@ import src.CustomerOrder.CustomerOrderDatabase;
 import src.Invoice.Invoice;
 import src.Invoice.InvoiceDatabase;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
+/**
+ * Handles all the logic needed for
+ * retrieving customer invoices.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class CustomerInvoiceSearchLogic {
 
     InvoiceDatabase invoiceDatabase;

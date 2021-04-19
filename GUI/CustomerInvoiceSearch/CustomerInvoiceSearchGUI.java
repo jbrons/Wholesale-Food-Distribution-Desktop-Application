@@ -26,6 +26,11 @@ public class CustomerInvoiceSearchGUI {
 
     CustomerInvoiceSearchLogic customerInvoiceSearchLogic;
 
+    /**
+     * GUI for users to search for and view customer invoices.
+     *
+     * @author Jacob Price | ga4116
+     */
     public CustomerInvoiceSearchGUI()
     {
         mainWindowGUI = MainWindowGUI.getInstance();

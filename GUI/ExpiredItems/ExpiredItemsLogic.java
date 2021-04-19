@@ -8,6 +8,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Handles all the logic needed for
+ * retrieving expired items within the inventory.
+ *
+ * @author Jacob Price | ga4116
+ */
 public class ExpiredItemsLogic {
     ItemsDatabase itemsArray;
     DateValidator dateValidator;
