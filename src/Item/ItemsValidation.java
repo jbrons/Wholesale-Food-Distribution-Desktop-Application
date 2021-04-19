@@ -1,8 +1,9 @@
-/*
- * Author: Zachary Nicolai
- * Class Name: ItemsValidation
- * Class Description: This class ensures that Item input from user is valid. The class has a validation method
+/**
+ * This class ensures that Item input from user is valid. The class has a validation method
  * which calls on other methods in the class to ensure that all item input is correct.
+ *
+ * @Author Zachary Nicolai
+ * @Date 03/15/2021
  */
 
 package src.Item;
@@ -74,7 +75,7 @@ public class ItemsValidation {
         }
 
     public boolean checkDate(String d){
-      
+
         String f = "MM/dd/yyyy" ;
         DateTimeFormatter format = DateTimeFormatter.ofPattern(f);
         LocalDate date = LocalDate.now();

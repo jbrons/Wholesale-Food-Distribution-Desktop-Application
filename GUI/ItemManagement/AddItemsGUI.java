@@ -1,11 +1,14 @@
-/*
+package GUI.ItemManagement;
+
+/**
  * Name:Zachary Nicolai
  * Class Name: AddItemsGUI
  * Class Description: This class controls the AddItemsGUI. it gives instructions for all of the buttons text fields, and
  * combo boxes. The GUI allows users to add new Item profiles.
+ *
+ * @author Zachary Nicolai
+ * @date 03/15/2021
  */
-
-package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import src.Item.Item;
@@ -97,7 +100,6 @@ public class AddItemsGUI implements FocusListener {
                     //validation call ensures there is no other types of bad user input
                     if(val.validation(id,iNameField.getText(), (int) vendorCombo.getSelectedItem(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                             expirationFormattedText.getText(), Double.parseDouble(pPriceFormattedText.getText().replace(",","")),Double.parseDouble(quantityField.getText()))){
-
 
                         Item item = new Item(id,(int) vendorCombo.getSelectedItem(),iNameField.getText(),Double.parseDouble(sPriceFormattedText.getText().replace(",","")),
                                 (String) categoryCombo.getSelectedItem(),expirationFormattedText.getText(),Double.parseDouble(pPriceFormattedText.getText().replace(",","")),

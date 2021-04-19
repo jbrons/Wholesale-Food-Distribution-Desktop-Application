@@ -1,13 +1,13 @@
-/*
- * Name:Zachary Nicolai
- * Class Name: ItemDisplayGUI
+package GUI.ItemManagement;
+
+/**
  * Class Description: This class controls the ItemDisplayGUI. it gives instructions for all of the buttons and
  * labels. The GUI allows users view the item they selected and then choose to edit or delete it. It ensures only
  * correct users can edit or delete an item
+ *
+ * @author Zachary Nicolai
+ * @date 03/15/2021
  */
-
-
-package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import src.Invoice.InvoiceDatabase;

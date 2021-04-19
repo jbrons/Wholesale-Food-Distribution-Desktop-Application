@@ -1,17 +1,20 @@
-/*
- * Author: Zachary Nicolai
- * Class Name: Items
- * Class Description: This class class is used for creating a new Item object.
- * it contains all the item profile details as variables as well as get and set
- * methods to access them. It also contains a toString() override which is
- * called upon to display the item profile details.
-*/
+
 package src.Item;
 
 import src.PurchaseOrder.ItemsAlert;
 
 import java.text.DecimalFormat;
 
+/**
+ * This class class is used for creating a new Item object.
+ * it contains all the item profile details as variables as well as get and set
+ * methods to access them. It also contains a toString() override which is
+ * called upon to display the item profile details.
+ *
+ * @Author Zachary Nicolai
+ * @Date 03/15/2021
+ *
+ */
 
 public class Item {
     //variables

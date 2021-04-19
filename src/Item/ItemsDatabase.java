@@ -1,10 +1,8 @@
-/*
- * Author: Zachary Nicolai
- * Class Name: ItemsArray
- * Class Description: This Class contains the ItemsArray ItemsList which stores all of the item profiles
- * as an Item Object. the constructor adds a new Items object to the Array list. It contains methods to set
- * a variable of Items object in the ArrayList as well as methods that return the itemsList as a String array or as an
- * arrayList.
+/**
+ * This Class contains implements a list to store, modify, and delete all Item Profiles. it uses a singleton list design pattern
+ *
+ * @Author Zachary Nicolai
+ * @Date 03/15/2021
 */
 
 

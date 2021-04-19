@@ -1,5 +1,12 @@
 package GUI.InvoiceManagement;
 
+/**
+ *  This class allows the user to view invoice header details and item details of the created invoice
+ *
+ *
+ * @author Zachary Nicolai
+ * @date 04/18/2021
+ */
 import GUI.Login.LoginGUI;
 import GUI.MainWindow.MainWindowGUI;
 import src.CustomerOrder.CustomerOrderDatabase;
@@ -9,7 +16,7 @@ import src.Invoice.InvoiceDatabase;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//testing git on new pc
+
 
 public class InvoiceDisplayGUI {
     private JPanel rootPanel;
@@ -34,11 +41,12 @@ public class InvoiceDisplayGUI {
 
     private void setupGUI()
     {
+        //setting header details and item details
         invoiceHeader.setText(this.invoice.toString());
         invoiceDetails.setText(this.invoice.getItemDetails());
+
+
         //button actions
-
-
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 closeInvoiceDisplay();

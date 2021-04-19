@@ -1,5 +1,13 @@
 package GUI.InvoiceManagement;
 
+/**
+ *  This class is the main GUI for invoices. It allows account users to search for an invoice and create an invoice.
+ *
+ *
+ * @author Zachary Nicolai
+ * @date 04/18/2021
+ */
+
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
@@ -9,7 +17,6 @@ import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
 import src.Invoice.Invoice;
 import src.Invoice.InvoiceDatabase;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -50,8 +57,9 @@ public class InvoiceGUI implements FocusListener {
 
                 Vector<Integer> customerIds = new Vector<>();
                 for (CustomerProfile profile : customerProfileDatabase.getAllProfiles()) {
-                    if (profile.getCustomerName().contains(searchField.getText()))
+                    if (profile.getCustomerName().contains(searchField.getText())) {
                         customerIds.add(profile.getCustomerID());
+                    }
                 }
                 Vector<CustomerOrder> orders = new Vector<>();
                 for(int i=0;i<customerIds.size();i++) {
@@ -75,10 +83,11 @@ public class InvoiceGUI implements FocusListener {
             public void actionPerformed(ActionEvent evt) {
                 try{
                     CustomerOrder selectedOrder = (CustomerOrder) iList.getSelectedValue();
-
+                    //checks if invoice exists
                     if(invoiceDatabase.invoiceAlreadyExists(selectedOrder.getOrderID())) {
                         for (CustomerProfile customer : customerProfileDatabase.getAllProfiles()) {
                             if (selectedOrder.getCustomerID() == customer.getCustomerID()) {
+                                //ensures customer has enough balance
                                 if (customer.getBalance() >= (float) selectedOrder.getPrice()) {
                                     customer.setBalance(customer.getBalance() - (float) selectedOrder.getPrice());
                                     Invoice invoice = new Invoice(selectedOrder);
@@ -94,7 +103,7 @@ public class InvoiceGUI implements FocusListener {
                     else{
                         JOptionPane.showMessageDialog(null, "Invoice already created for this customer order");
                     }
-            }
+                }
                 catch(IndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, "Please Select a customer order");
                 }
@@ -106,7 +115,6 @@ public class InvoiceGUI implements FocusListener {
         });
         leaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                //iList.setListData(invoiceDatabase.getInvoiceList());
                 closeCatalog();
             }});
 
@@ -114,10 +122,8 @@ public class InvoiceGUI implements FocusListener {
         logoutButton.addActionListener(e ->
         {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
-            //iList.setListData(customerOrderDatabase.getAllOrders());
         });
     }
-
 
     public void setCatalog(Vector<CustomerOrder> v){
         iList.setListData(v);
@@ -127,6 +133,7 @@ public class InvoiceGUI implements FocusListener {
     public void closeCatalog(){
         mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
     }
+
     //methods required for implementing focusListener
     public void focusGained(FocusEvent e) {
         if (e.getSource() instanceof JTextField) {
@@ -135,8 +142,5 @@ public class InvoiceGUI implements FocusListener {
     }
     public void focusLost(FocusEvent e) {
     }
-    public JPanel getPanel()
-    {
-        return rootPanel;
-    }
+    public JPanel getPanel() { return rootPanel; }
 }

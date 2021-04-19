@@ -1,13 +1,13 @@
-/*
- * Name:Zachary Nicolai
- * Class Name: ItemsGUI
+package GUI.ItemManagement;
+
+/**
  * Class Description: This class controls the ItemsGUI. it gives instructions for all of the buttons and text fields. It
  * allows users to double click an item to access ItemDisplayGUI, access addItemsGUI if the add button is pressed, or search
  * for an Item. it ensures that only the correct types of users can do specific tasks.
- * */
-
-
-package GUI.ItemManagement;
+ *
+ * @author Zachary Nicolai
+ * @date 03/15/2021
+ */
 
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;

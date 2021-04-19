@@ -1,12 +1,12 @@
-/*
- * Name:Zachary Nicolai
- * Class Name: EditItemsGUI
+package GUI.ItemManagement;
+
+/**
  * Class Description: This class controls the EditItemsGUI. it gives instructions for all of the buttons text fields, and
  * combo boxes. The GUI allows users to edit current Item profiles. It will show information about selected item when editing.
+ *
+ * @author Zachary Nicolai
+ * @date 03/15/2021
  */
-
-
-package GUI.ItemManagement;
 
 import GUI.Login.LoginGUI;
 import src.Item.Item;

@@ -1,11 +1,15 @@
 package src.Invoice;
 
-import src.Item.Item;
-import src.Vendor.DateValidator;
+/**
+ *  This class implements a list to store and modify all Invoice profiles. It uses a singleton design pattern.
+ *
+ * @author Zachary Nicolai
+ * @date 04/18/2021
+ */
 
+import src.Vendor.DateValidator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import java.util.Vector;
 
 public class InvoiceDatabase {

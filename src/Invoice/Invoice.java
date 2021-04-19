@@ -1,5 +1,12 @@
 package src.Invoice;
 
+/**
+ *  This class implements the Invoice profile so accountant users
+ *  can create, search, and view invoices
+ *
+ * @author Zachary Nicolai
+ * @date 04/18/2021
+ */
 
 import src.CustomerOrder.CustomerOrder;
 import src.Item.Item;
@@ -12,6 +19,7 @@ import java.util.Random;
 
 public class Invoice {
 
+    //variables
     public static int invoiceId = 100;
     private String invoiceDate;
     private String orderDate;
@@ -20,7 +28,7 @@ public class Invoice {
     private int orderId;
     private Map<Item, Double> items;
 
-
+    //constructor
     public Invoice(CustomerOrder order) {
         setInvoiceID();
         setInvoiceDate();
@@ -32,9 +40,11 @@ public class Invoice {
     }
 
     //set methods
-    public void set(CustomerOrder order){
-        this.customerOrder = order;
-    }
+    public void set(CustomerOrder order){ this.customerOrder = order; }
+    public void setTotalInvoiceAmount(double total){ this.totalInvoiceAmount = total; }
+    public void setOrderDate(double od){ this.orderDate = orderDate; }
+    public void setOrderId(int i){ this.orderId = i; }
+    public void setItems(Map<Item, Double> items){ this.items = items; }
     public void setInvoiceDate(){
         LocalDate today = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -45,26 +55,18 @@ public class Invoice {
         Random r = new Random();
         this.invoiceId += r.nextInt(10)+1;
     }
-    public void setTotalInvoiceAmount(double total){ this.totalInvoiceAmount = total; }
-    public void setOrderDate(double od){ this.orderDate = orderDate; }
-    public void setOrderId(int i){
-        this.orderId = i;
-    }
-    public void setItems(Map<Item, Double> items){
-        this.items = items;
-    }
+
 
     //get methods
     public String getInvoiceDate(){ return this.invoiceDate; }
     public int getInvoiceID(){ return this.getInvoiceID(); }
-    public Map<Item, Double> getItems() {
-        return this.items;
-    }
+    public Map<Item, Double> getItems() { return this.items; }
     public double getTotalInvoiceAmount(){ return this.totalInvoiceAmount; }
     public String getOrderDate(){ return this.orderDate; }
     public int getOrderId(){return this.orderId;}
 
 
+    //method checks if an item is is in a invoice
     public boolean itemInObject(int id){
 
         for (Map.Entry<Item, Double> e : items.entrySet()) {
@@ -75,6 +77,7 @@ public class Invoice {
         return false;
     }
 
+    //returns all item details as a string
     public String getItemDetails(){
         DecimalFormat df = new DecimalFormat("#.00");
         String details = "<html><body>";
@@ -86,7 +89,7 @@ public class Invoice {
         return details;
     }
 
-    //toString() override which displays Item profile details
+    //toString() override which displays invoice header details
     @Override
     public String toString(){
         DecimalFormat df = new DecimalFormat("#.00");
