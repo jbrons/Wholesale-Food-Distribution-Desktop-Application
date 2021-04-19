@@ -28,7 +28,6 @@ public class InvoiceDisplayGUI {
     InvoiceDatabase invoiceList = InvoiceDatabase.getInstance();
     public InvoiceDisplayGUI(Invoice inv){
         mainWindowGUI = MainWindowGUI.getInstance();
-
         this.setInvoice(inv);
         setupGUI();
     }

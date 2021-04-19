@@ -74,14 +74,16 @@ public class ItemsValidation {
         }
 
     public boolean checkDate(String d){
+      
         String f = "MM/dd/yyyy" ;
         DateTimeFormatter format = DateTimeFormatter.ofPattern(f);
-        Date today = new Date();
+        LocalDate date = LocalDate.now();
+        String td = date.format(format);
         Date givenDate = new Date();
         SimpleDateFormat smf = new SimpleDateFormat(f);
         try {
             LocalDate dt = LocalDate.parse(d, format);
-            today = smf.parse("03/24/2021");
+            Date today = smf.parse(td);
             givenDate = smf.parse(d);
 
             if(givenDate.after(today) || givenDate.equals(today)){
