@@ -40,7 +40,6 @@ public class ProfitSearchLogic {
 
                 totalProfit += quantitySold * itemMargin;
             }
-
         }
 
         return totalProfit;

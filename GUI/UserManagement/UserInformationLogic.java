@@ -1,5 +1,6 @@
 package GUI.UserManagement;
 
+import src.User.EnumUserRoles;
 import src.User.User;
 import src.User.UserDatabase;
 
@@ -71,7 +72,7 @@ public class UserInformationLogic implements IUserInformationLogic {
         int newUserRole = newUser.getRole().getPermissionLevel();
         int currentUserRole = database.getCurrentUser().getRole().getPermissionLevel();
 
-        if(newUserRole >= currentUserRole)
+        if(newUserRole >= currentUserRole && currentUserRole != EnumUserRoles.OWNER.getPermissionLevel())
         {
             displayError("Cannot create a new user with a role higher than you!"
             + "\nYour role is: " + database.getCurrentUser().getRole());
@@ -120,7 +121,7 @@ public class UserInformationLogic implements IUserInformationLogic {
         int newUserRole = newUser.getRole().getPermissionLevel();
         int currentUserRole = database.getCurrentUser().getRole().getPermissionLevel();
 
-        if(newUserRole >= currentUserRole)
+        if(newUserRole >= currentUserRole && currentUserRole != EnumUserRoles.OWNER.getPermissionLevel())
         {
             displayError("Cannot create a new user with a role higher than you!"
                     + "\nYour role is: " + database.getCurrentUser().getRole());

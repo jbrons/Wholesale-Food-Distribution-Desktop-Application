@@ -3,6 +3,7 @@ package GUI.UserManagement;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
+import src.User.EnumUserRoles;
 import src.User.User;
 import src.User.UserDatabase;
 
@@ -70,7 +71,7 @@ public class UserManagementGUI {
             int currentUserRole = database.getCurrentUser().getRole().getPermissionLevel();
             int selectedUserRole = selectedUser.getRole().getPermissionLevel();
 
-            if (currentUserRole <= selectedUserRole)
+            if (currentUserRole <= selectedUserRole && currentUserRole != EnumUserRoles.OWNER.getPermissionLevel())
             {
                 displayError("Your role cannot edit this user"
                 + "\nYour role: " + database.getCurrentUser().getRole());
@@ -94,11 +95,17 @@ public class UserManagementGUI {
             int currentUserRole = database.getCurrentUser().getRole().getPermissionLevel();
             int selectedUserRole = selectedUser.getRole().getPermissionLevel();
 
-            if (currentUserRole <= selectedUserRole)
+            if (currentUserRole <= selectedUserRole && currentUserRole != EnumUserRoles.OWNER.getPermissionLevel())
             {
                 displayError("Your role cannot delete this user"
                         + "\nYour role: " + database.getCurrentUser().getRole());
 
+                return;
+            }
+
+            if(selectedUser == database.getCurrentUser())
+            {
+                displayError("You cannot delete yourself from the system!");
                 return;
             }
 
