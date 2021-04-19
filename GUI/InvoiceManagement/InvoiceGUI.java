@@ -17,6 +17,9 @@ import src.CustomerOrder.CustomerOrder;
 import src.CustomerOrder.CustomerOrderDatabase;
 import src.Invoice.Invoice;
 import src.Invoice.InvoiceDatabase;
+import src.User.EnumUserRoles;
+import src.User.UserDatabase;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -38,6 +41,7 @@ public class InvoiceGUI implements FocusListener {
     InvoiceDatabase invoiceDatabase = InvoiceDatabase.getInstance();
     CustomerProfileDatabase customerProfileDatabase = CustomerProfileDatabase.getInstance();
     CustomerOrderDatabase customerOrderDatabase = CustomerOrderDatabase.getInstance();
+    UserDatabase dataBase = UserDatabase.getInstance();
 
 
     public InvoiceGUI(){
@@ -47,35 +51,41 @@ public class InvoiceGUI implements FocusListener {
 
     public void setupGUI()
     {
-        if((customerOrderDatabase.getAllOrders().length - invoiceDatabase.getInvoiceList().size())>2){
-            JOptionPane.showMessageDialog(null, "There are more than two customer orders available");
+        if(dataBase.getCurrentUser().getRole() == EnumUserRoles.ACCOUNTANT) {
+            if ((customerOrderDatabase.getAllOrders().length - invoiceDatabase.getInvoiceList().size()) > 2) {
+                JOptionPane.showMessageDialog(null, "There are more than two customer orders available");
+            }
         }
 
         //button actions
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-
-                Vector<Integer> customerIds = new Vector<>();
-                for (CustomerProfile profile : customerProfileDatabase.getAllProfiles()) {
-                    if (profile.getCustomerName().contains(searchField.getText())) {
-                        customerIds.add(profile.getCustomerID());
+                if (dataBase.getCurrentUser().getRole() == EnumUserRoles.ACCOUNTANT) {
+                    Vector<Integer> customerIds = new Vector<>();
+                    for (CustomerProfile profile : customerProfileDatabase.getAllProfiles()) {
+                        if (profile.getCustomerName().contains(searchField.getText())) {
+                            customerIds.add(profile.getCustomerID());
+                        }
                     }
-                }
-                Vector<CustomerOrder> orders = new Vector<>();
-                for(int i=0;i<customerIds.size();i++) {
-                    for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
-                        if (order.getCustomerID() == customerIds.get(i)) {
-                            if(invoiceDatabase.invoiceAlreadyExists(order.getOrderID())) {
-                                orders.add(order);
+                    Vector<CustomerOrder> orders = new Vector<>();
+                    for (int i = 0; i < customerIds.size(); i++) {
+                        for (CustomerOrder order : customerOrderDatabase.getAllOrders()) {
+                            if (order.getCustomerID() == customerIds.get(i)) {
+                                if (invoiceDatabase.invoiceAlreadyExists(order.getOrderID())) {
+                                    orders.add(order);
+                                }
                             }
                         }
                     }
-                }
                     setCatalog(orders);
-                if(iList.getModel().getSize() == 0 ){
-                    JOptionPane.showMessageDialog(null, searchField.getText() + " not found");
-                }
+                    if (iList.getModel().getSize() == 0) {
+                        JOptionPane.showMessageDialog(null, searchField.getText() + " not found");
+                    }
 
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "You must be an accountant to search items");
+                }
             }
 
             });
@@ -83,26 +93,32 @@ public class InvoiceGUI implements FocusListener {
             public void actionPerformed(ActionEvent evt) {
                 try{
                     CustomerOrder selectedOrder = (CustomerOrder) iList.getSelectedValue();
-                    //checks if invoice exists
-                    if(invoiceDatabase.invoiceAlreadyExists(selectedOrder.getOrderID())) {
-                        for (CustomerProfile customer : customerProfileDatabase.getAllProfiles()) {
-                            if (selectedOrder.getCustomerID() == customer.getCustomerID()) {
-                                //ensures customer has enough balance
-                                if (customer.getBalance() >= (float) selectedOrder.getPrice()) {
-                                    customer.setBalance(customer.getBalance() - (float) selectedOrder.getPrice());
-                                    Invoice invoice = new Invoice(selectedOrder);
-                                    invoiceDatabase.addInvoice(invoice);
-                                    InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
-                                    mainWindowGUI.setJPanel(dis.getPanel(),"Customer Invoice Management/View Invoice");
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Customer Does not have enough balance");
+                    if(dataBase.getCurrentUser().getRole() == EnumUserRoles.ACCOUNTANT) {
+                        //checks if invoice exists
+                        if (invoiceDatabase.invoiceAlreadyExists(selectedOrder.getOrderID())) {
+                            for (CustomerProfile customer : customerProfileDatabase.getAllProfiles()) {
+                                if (selectedOrder.getCustomerID() == customer.getCustomerID()) {
+                                    //ensures customer has enough balance
+                                    if (customer.getBalance() >= (float) selectedOrder.getPrice()) {
+                                        customer.setBalance(customer.getBalance() - (float) selectedOrder.getPrice());
+                                        Invoice invoice = new Invoice(selectedOrder);
+                                        invoiceDatabase.addInvoice(invoice);
+                                        InvoiceDisplayGUI dis = new InvoiceDisplayGUI(invoice);
+                                        mainWindowGUI.setJPanel(dis.getPanel(), "Customer Invoice Management/View Invoice");
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Customer Does not have enough balance");
+                                    }
                                 }
                             }
                         }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Invoice already created for this customer order");
+                        }
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Invoice already created for this customer order");
+                        JOptionPane.showMessageDialog(null, "You must be an accountant user to create invoices");
                     }
+
                 }
                 catch(IndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, "Please Select a customer order");
