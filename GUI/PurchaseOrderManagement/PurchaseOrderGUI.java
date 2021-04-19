@@ -45,6 +45,8 @@ public class PurchaseOrderGUI implements ActionListener {
     private String searchBarPrompt = "Search by Vendor Name";
     private String searchLabel = "Search for Vendor:";
     private String selectedLabel = "Selected Vendor:";
+    private String viewButton = "View Purchase Orders";
+    private String hideButton = "Hide Purchase Orders";
     private int vendorID;
     private String vendorName;
 
@@ -163,16 +165,20 @@ public class PurchaseOrderGUI implements ActionListener {
             }
         } else if (userAction == btnViewPO) {
             if (vendorSelected) {
-                if (purchaseOrderDatabase.containsVendor(vendorID)) {
-                    setUpVendorPOs();
-                    btnViewPO.setText("Hide Purchase Orders");
+                if (btnViewPO.getText().equals(viewButton)) {
+                    if (purchaseOrderDatabase.containsVendor(vendorID)) {
+                        setUpVendorPOs();
+                        btnViewPO.setText(hideButton);
+                    } else {
+                        DialogDisplay.displayError(vendorName + " does not have any Purchase Orders");
+                    }
                 } else {
-                    DialogDisplay.displayError(vendorName + " does not have any Purchase Orders");
+                    btnViewPO.setText(viewButton);
+                    purchaseOrderModel.clearModel();
                 }
             } else {
                 DialogDisplay.displayError("Please select a Vendor first");
             }
-            purchaseOrderModel.clearModel();
         } else if (userAction == btnMainMenu) {
             mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
         } else if (userAction == btnLogOut) {

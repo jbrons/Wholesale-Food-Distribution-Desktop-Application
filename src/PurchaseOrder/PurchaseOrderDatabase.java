@@ -25,7 +25,13 @@ public class PurchaseOrderDatabase {
     }
 
     public void add(Integer vendorId, PurchaseOrder purchaseOrder) {
-        Vector<PurchaseOrder> newPOs = new Vector<>();
+        Vector<PurchaseOrder> newPOs;
+        if (purchaseOrders.get(vendorId) == null) {
+            newPOs = new Vector<>();
+        } else {
+            newPOs = purchaseOrders.get(vendorId);
+        }
+        
         newPOs.add(purchaseOrder);
         purchaseOrders.put(vendorId, newPOs);
         purchaseOrder.updateBalance(vendorId);

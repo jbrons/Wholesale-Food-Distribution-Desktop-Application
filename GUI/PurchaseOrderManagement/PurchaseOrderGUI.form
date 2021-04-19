@@ -83,13 +83,9 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="ced69" class="javax.swing.JList" binding="lstPurchaseOrders">
+              <component id="9ccc9" class="javax.swing.JList" binding="lstPurchaseOrders">
                 <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <selectionBackground color="-11833681"/>
-                  <selectionMode value="0"/>
-                </properties>
+                <properties/>
               </component>
             </children>
           </scrollpane>
