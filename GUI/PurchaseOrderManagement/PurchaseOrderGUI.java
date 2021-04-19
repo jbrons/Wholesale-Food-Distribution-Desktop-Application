@@ -165,7 +165,7 @@ public class PurchaseOrderGUI implements ActionListener {
             @Override
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
-                if (lstItems.isEnabled()) {
+                if (!itemModel.isEmpty()) {
                     int index = lstItems.locationToIndex(e.getPoint());
                     Rectangle cellBounds = lstItems.getCellBounds(index, index);
                     if (cellBounds.contains(e.getPoint())) {

@@ -23,6 +23,9 @@ public class PurchaseOrder {
     public PurchaseOrder() {
         setPurchaseID();
         updateBalance();
+
+        items.put(2, new Item(2, 1, "potato", 12,
+                "sweet potato", "12/12/2020", 3, "pound", 8));
     }
 
     public boolean addItem(Item item) {

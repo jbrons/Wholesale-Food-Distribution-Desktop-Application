@@ -14,6 +14,8 @@ public class PurchaseOrderDatabase {
 
     private PurchaseOrderDatabase() {
         purchaseOrders = new HashMap<>();
+        
+        purchaseOrders.put(1, new PurchaseOrder());
     }
 
     public static PurchaseOrderDatabase getInstance() {
