@@ -116,11 +116,14 @@ public class PurchaseOrder {
 
     @Override
     public String toString() {
-        String details = "";
+        String details = "<html>";
         String nL = "<br>";
         for (Map.Entry<PurchaseOrderDetails, Item> item : purchaseOrder.entrySet()) {
-            details += item.getValue().getName() + nL + item.getKey().toString();
+            details += "Item Name: " + item.getValue().getName() + nL + item.getKey().toString();
         }
-        return details + totalCost;
+        details += "Total Cost: " + totalCost + "</html>";
+
+        System.out.println(details);
+        return details;
     }
 }

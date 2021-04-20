@@ -7,11 +7,13 @@ import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.PurchaseOrder.PurchaseOrder;
 import src.PurchaseOrder.PurchaseOrderDatabase;
+import src.Vendor.DateValidator;
 import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 /**
@@ -51,17 +53,17 @@ public class CreatePurchaseOrderGUI implements ActionListener {
     private String vendorName;
     private String selectedLabel = "Selected Vendor:";
 
-    public CreatePurchaseOrderGUI(JPanel pnlPurchaseOrder, int vendorID, String vendorName) {
+    public CreatePurchaseOrderGUI(JPanel pnlPurchaseOrder, Vector<Item> vendorItems, String vendorName) {
         mainWindowGUI = MainWindowGUI.getInstance();
-        mainWindowGUI.setTitle("Create Purchase Order");
+        mainWindowGUI.setTitle("Purchase Order Management");
 
         this.pnlPurchaseOrder = pnlPurchaseOrder;
-        this.vendorID = vendorID;
+        this.vendorItems = vendorItems;
         this.vendorName = vendorName;
+        this.vendorID = vendorItems.get(0).getVendorId();
 
         setUpGUI();
         addListeners();
-
     }
 
     private void setUpGUI() {
@@ -84,12 +86,11 @@ public class CreatePurchaseOrderGUI implements ActionListener {
              */
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!itemModel.isEmpty()) {
-                    int index = lstItems.getSelectedIndex();
-                    Item item = vendorItems.get(index);
-                    lstItems.clearSelection();
-                    mainWindowGUI.setJPanel(new ItemPOInfo(getPanel(), purchaseOrder, item).getPanel());
-                }
+                System.out.println("Clicked");
+                int index = lstItems.getSelectedIndex();
+                Item item = vendorItems.get(index);
+                lstItems.clearSelection();
+                mainWindowGUI.setJPanel(new ItemPOInfo(getPanel(), purchaseOrder, item).getPanel());
             }
 
             /**
@@ -112,20 +113,18 @@ public class CreatePurchaseOrderGUI implements ActionListener {
              */
             @Override
             public void mouseMoved(MouseEvent e) {
-                if (!itemModel.isEmpty()) {
-                    if (purchaseOrder.isFull()) {
-                        lstItems.clearSelection();
-                        lblListInfo.setText("Cannot select any more items: Purchase Order is full");
-                        return;
-                    }
+                if (purchaseOrder.isFull()) {
+                    lstItems.clearSelection();
+                    lblListInfo.setText("Cannot select any more items: Purchase Order is full");
+                    return;
+                }
 
-                    int index = lstItems.locationToIndex(e.getPoint());
-                    Rectangle cellBounds = lstItems.getCellBounds(index, index);
-                    if (cellBounds.contains(e.getPoint())) {
-                        lstItems.setSelectedIndex(index);
-                    } else {
-                        lstItems.clearSelection();
-                    }
+                int index = lstItems.locationToIndex(e.getPoint());
+                Rectangle cellBounds = lstItems.getCellBounds(index, index);
+                if (cellBounds.contains(e.getPoint())) {
+                    lstItems.setSelectedIndex(index);
+                } else {
+                    lstItems.clearSelection();
                 }
             }
         });
@@ -176,7 +175,6 @@ public class CreatePurchaseOrderGUI implements ActionListener {
     private void setUpItemsList() {
         lstItems.setModel(itemModel.getDisplayListModel());
         lblListInfo.setText("Select 1-5 items to add to the Purchase Order");
-        vendorItems = itemsDatabase.getItemsForVendor(vendorID);
         itemModel.updateModel(vendorItems);
     }
 

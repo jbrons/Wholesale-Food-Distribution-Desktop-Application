@@ -29,9 +29,13 @@ public class DateValidator {
         return true;
     }
 
-    public boolean isFutureDate(LocalDate date) {
+    public static boolean isPastDate(LocalDate date) {
         LocalDate today = LocalDate.now();
-        return today.isBefore(date);
+        return date.isBefore(today);
+    }
+
+    public boolean isPastDate(String date) {
+        return isPastDate(getDate(date));
     }
 
     public LocalDate getDate(String date) {

@@ -52,7 +52,10 @@ public class PurchaseOrderDetails {
     @Override
     public String toString() {
         String nL = "<br>";
-        return needByDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
-                + nL + quantity + nL + subtotalCost + nL ;
+        String date = needByDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        String q = Double.toString(quantity);
+        String s = Double.toString(subtotalCost);
+
+        return "Need by Date: " + date + nL + "Quantity: " + q + nL + "Subtotal Cost: " + s + nL ;
     }
 }

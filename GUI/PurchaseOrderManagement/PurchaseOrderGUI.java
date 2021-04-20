@@ -3,14 +3,19 @@ package GUI.PurchaseOrderManagement;
 import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
+import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.PurchaseOrder.PurchaseOrder;
 import src.PurchaseOrder.PurchaseOrderDatabase;
+import src.Vendor.DateValidator;
 import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
+import java.util.stream.IntStream;
 
 /**
  *  This class implements the Vendor profile for the owner
@@ -39,6 +44,7 @@ public class PurchaseOrderGUI implements ActionListener {
 
     PurchaseOrderModel purchaseOrderModel = new PurchaseOrderModel();
     Vector<PurchaseOrder> vendorPOs = null;
+    Vector<Item> vendorItems = null;
 
     private PurchaseOrder purchaseOrder = new PurchaseOrder();
     private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
@@ -61,13 +67,50 @@ public class PurchaseOrderGUI implements ActionListener {
         mainWindowGUI = MainWindowGUI.getInstance();
         mainWindowGUI.setTitle("Purchase Order Management");
 
+       // Vector v = new Vector();
+        //v.add("<html>egg<br>12/12/2222<br>8.0<br></html>");
+
+        System.out.println("New");
+       // lstPurchaseOrders.setListData(v);
+        //lstPurchaseOrders.setListData(Ob"<html>egg<b> b>8.0<b>14<b></html>");
+
         setUpGUI();
         addListeners();
     }
 
     private void setUpGUI() {
         txtSearchBar.setText(searchBarPrompt);
-        lstPurchaseOrders.setModel(purchaseOrderModel.getDisplayListModel());
+
+        lstPurchaseOrders.setSelectionModel(new DefaultListSelectionModel() {
+            @Override
+            public void setSelectionMode(int selectionMode) {
+                super.setSelectionMode(SINGLE_SELECTION);
+            }
+
+            public void setSelectionInterval(int index0, int index01) {}
+            public void addSelectionInterval(int i, int j) {}
+
+            public void setLeadSelectionIndex(int i) {}
+            public void setAnchorSelectionIndex(int i) {}
+        });
+
+        lstPurchaseOrders.setCellRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (index % 2 != 0) {
+                    //setBackground(getBackground().darker());
+                    setBackground(Color.LIGHT_GRAY);
+                }
+
+                return c;
+            }
+
+        });
     }
 
     public JPanel getPanel()
@@ -162,8 +205,9 @@ public class PurchaseOrderGUI implements ActionListener {
             }
         } else if (userAction == btnStartPO) {
             if (vendorSelected) {
-                if (!itemsDatabase.getItemsForVendor(vendorID).isEmpty()) {
-                    mainWindowGUI.setJPanel(new CreatePurchaseOrderGUI(rootPanel, vendorID, vendorName).getPanel());
+                filterItems();
+                if (!vendorItems.isEmpty()) {
+                    mainWindowGUI.setJPanel(new CreatePurchaseOrderGUI(rootPanel, vendorItems, vendorName).getPanel());
                 } else {
                     DialogDisplay.displayError(vendorName + " does not have any items to choose from");
                 }
@@ -181,7 +225,7 @@ public class PurchaseOrderGUI implements ActionListener {
                     }
                 } else {
                     btnViewPO.setText(viewButton);
-                    purchaseOrderModel.clearModel();
+                    lstPurchaseOrders.setListData(new Vector());
                 }
             } else {
                 DialogDisplay.displayError("Please select a Vendor first");
@@ -208,9 +252,20 @@ public class PurchaseOrderGUI implements ActionListener {
         }
     }
 
+    private void filterItems() {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateValidator validator = new DateValidator(dateFormat);
+
+        vendorItems = itemsDatabase.getItemsForVendor(vendorID);
+        int i = 0;
+        while (i < vendorItems.size()) if (validator.isPastDate(vendorItems.get(i).getExpirationDate())) {
+            vendorItems.remove(i);
+        } else ++i;
+    }
+
     private void setUpVendorPOs() {
         lblListInfo.setText("Purchase Orders for " + vendorName);
         vendorPOs = purchaseOrderDatabase.getPurchaseOrders(vendorID);
-        purchaseOrderModel.updateModel(vendorPOs);
+        lstPurchaseOrders.setListData(vendorPOs);
     }
 }

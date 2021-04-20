@@ -92,10 +92,10 @@ public class ItemPOInfo implements ActionListener {
         } else {
             needByDate = validator.getDate(txtNeedByDate.getText());
             if (needByDate == null) {
-                DialogDisplay.displayError("Incorrect Last Order Date");
+                DialogDisplay.displayError("Incorrect Need by Date");
                 return false;
-            } else if (!validator.isFutureDate(needByDate)) {
-                DialogDisplay.displayError("Past Last Order Date");
+            } else if (validator.isPastDate(needByDate)) {
+                DialogDisplay.displayError("Need by Date cannot be a past date");
                 return false;
             }
         }
@@ -108,6 +108,7 @@ public class ItemPOInfo implements ActionListener {
             }
         } else {
             DialogDisplay.displayError("Quantity" + message);
+            return false;
         }
         return true;
     }
@@ -120,7 +121,6 @@ public class ItemPOInfo implements ActionListener {
             return -1;
         }
     }
-
 
     private void addListeners() {
         btnAdd.addActionListener(this);
