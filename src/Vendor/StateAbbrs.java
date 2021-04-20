@@ -1,7 +1,7 @@
 package src.Vendor;
 
 /**
- *  This enum implements the State Abbreviations used when creating
+ *  StateAbbrs implements the State Abbreviations used when creating
  *  instances of the Vendor class
  *
  * @author Jordan Bronstetter

@@ -4,28 +4,23 @@ import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import src.Item.Item;
-import src.Item.ItemsDatabase;
 import src.PurchaseOrder.PurchaseOrder;
 import src.PurchaseOrder.PurchaseOrderDatabase;
-import src.Vendor.DateValidator;
-import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Vector;
-import java.util.stream.IntStream;
+
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ * PurchaseOrderHubGUI implements the main hub for purchaser users to create and view Purchase Orders
  *
  * @author Jordan Bronstetter
- * @date 04/06/2021
+ * @date 04/07/2021
  *
  */
-public class PurchaseOrderGUI implements ActionListener {
+public class PurchaseOrderHubGUI implements ActionListener {
     private JPanel rootPanel;
     private JList lstPurchaseOrders;
     private JTextField txtSearchBar;
@@ -42,17 +37,14 @@ public class PurchaseOrderGUI implements ActionListener {
     private JLabel lblListInfo;
     private JPanel pnlList;
 
-    PurchaseOrderModel purchaseOrderModel = new PurchaseOrderModel();
-    Vector<PurchaseOrder> vendorPOs = null;
-    Vector<Item> vendorItems = null;
+    private PurchaseOrderModel purchaseOrderModel = new PurchaseOrderModel();
+    private Vector<PurchaseOrder> vendorPOs = null;
+    private static Vector<Item> vendorItems = null;
 
-    private PurchaseOrder purchaseOrder = new PurchaseOrder();
-    private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
-    private ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
-    private PurchaseOrderDatabase purchaseOrderDatabase = PurchaseOrderDatabase.getInstance();
     private MainWindowGUI mainWindowGUI;
+    private static PurchaseOrderDatabase purchaseOrderDatabase = PurchaseOrderDatabase.getInstance();
 
-    private boolean toggle = true;
+    private boolean toggleView = false;
     private boolean vendorSelected = false;
 
     private String searchBarPrompt = "Search by Vendor Name";
@@ -63,16 +55,9 @@ public class PurchaseOrderGUI implements ActionListener {
     private int vendorID;
     private String vendorName;
 
-    public PurchaseOrderGUI() {
+    public PurchaseOrderHubGUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
         mainWindowGUI.setTitle("Purchase Order Management");
-
-       // Vector v = new Vector();
-        //v.add("<html>egg<br>12/12/2222<br>8.0<br></html>");
-
-        System.out.println("New");
-       // lstPurchaseOrders.setListData(v);
-        //lstPurchaseOrders.setListData(Ob"<html>egg<b> b>8.0<b>14<b></html>");
 
         setUpGUI();
         addListeners();
@@ -80,36 +65,21 @@ public class PurchaseOrderGUI implements ActionListener {
 
     private void setUpGUI() {
         txtSearchBar.setText(searchBarPrompt);
+        lstPurchaseOrders.setModel(purchaseOrderModel.getDisplayListModel());
+        lstPurchaseOrders.setSelectionModel(new ListSelectionModel());
 
-        lstPurchaseOrders.setSelectionModel(new DefaultListSelectionModel() {
-            @Override
-            public void setSelectionMode(int selectionMode) {
-                super.setSelectionMode(SINGLE_SELECTION);
-            }
-
-            public void setSelectionInterval(int index0, int index01) {}
-            public void addSelectionInterval(int i, int j) {}
-
-            public void setLeadSelectionIndex(int i) {}
-            public void setAnchorSelectionIndex(int i) {}
-        });
+        lblListInfo.setText("");
 
         lstPurchaseOrders.setCellRenderer(new DefaultListCellRenderer() {
-
             @Override
             public Component getListCellRendererComponent(JList list, Object value, int index,
                                                           boolean isSelected, boolean cellHasFocus) {
-
                 Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
                 if (index % 2 != 0) {
-                    //setBackground(getBackground().darker());
-                    setBackground(Color.LIGHT_GRAY);
+                    setBackground(Color.lightGray);
                 }
-
                 return c;
             }
-
         });
     }
 
@@ -133,9 +103,10 @@ public class PurchaseOrderGUI implements ActionListener {
          * See the class description for {@link KeyEvent} for a definition of
          * a key typed event.
          *
+         * Sets max characters for txtSearchBar to 20
+         *
          * @param e the event to be processed
          */
-
         txtSearchBar.addKeyListener(new KeyAdapter() {
             /**
              * Invoked when a key has been typed.
@@ -156,6 +127,7 @@ public class PurchaseOrderGUI implements ActionListener {
         txtSearchBar.addFocusListener(new FocusAdapter() {
             /**
              * Invoked when a component gains the keyboard focus.
+             * Clears the searchBarPrompt when users click in the txtSearchBar
              *
              * @param e
              */
@@ -168,6 +140,8 @@ public class PurchaseOrderGUI implements ActionListener {
 
             /**
              * Invoked when a component loses the keyboard focus.
+             *
+             * Resets searchBarPrompt if user didn't type anything
              *
              * @param e
              */
@@ -196,37 +170,40 @@ public class PurchaseOrderGUI implements ActionListener {
         if (userAction == btnSelectVendor) {
             if (vendorSelected) {
                 toggleSearchInfo();
+                if (toggleView) {
+                    toggleViewInfo();
+                }
             } else {
                 vendorName = txtSearchBar.getText();
-                vendorID = PurchaseOrderLogic.selectVendor(vendorName);
+                vendorID = PurchaseOrderHub.selectVendor(vendorName);
+                purchaseOrderModel.clearModel();
                 if (vendorID > -1) {
                     toggleSearchInfo();
                 }
             }
         } else if (userAction == btnStartPO) {
             if (vendorSelected) {
-                filterItems();
-                if (!vendorItems.isEmpty()) {
-                    mainWindowGUI.setJPanel(new CreatePurchaseOrderGUI(rootPanel, vendorItems, vendorName).getPanel());
-                } else {
+                vendorItems = PurchaseOrderHub.filterItems(vendorID);
+                if (vendorItems.isEmpty()) {
                     DialogDisplay.displayError(vendorName + " does not have any items to choose from");
+                    return;
                 }
+                if (toggleView) {
+                    toggleViewInfo();
+                }
+                mainWindowGUI.setJPanel(
+                        new PurchaseOrderCreationGUI(rootPanel, vendorItems, vendorName).getPanel());
             } else {
                 DialogDisplay.displayError("Please select a Vendor first");
             }
         } else if (userAction == btnViewPO) {
             if (vendorSelected) {
-                if (btnViewPO.getText().equals(viewButton)) {
-                    if (purchaseOrderDatabase.containsVendor(vendorID)) {
-                        setUpVendorPOs();
-                        btnViewPO.setText(hideButton);
-                    } else {
-                        DialogDisplay.displayError(vendorName + " does not have any Purchase Orders");
-                    }
-                } else {
-                    btnViewPO.setText(viewButton);
-                    lstPurchaseOrders.setListData(new Vector());
+                if (!purchaseOrderDatabase.containsVendor(vendorID)) {
+                    DialogDisplay.displayError(vendorName + " does not have any Purchase Orders");
+                    return;
                 }
+                vendorPOs = PurchaseOrderHub.setUpVendorPO(purchaseOrderModel, vendorID);
+                toggleViewInfo();
             } else {
                 DialogDisplay.displayError("Please select a Vendor first");
             }
@@ -237,35 +214,30 @@ public class PurchaseOrderGUI implements ActionListener {
         }
     }
 
-    private void toggleSearchInfo() {
-        if (lblSearch.getText().equals(searchLabel)) {
-            vendorSelected = true;
-            lblSearch.setText(selectedLabel);
-            txtSearchBar.setEditable(false);
-            btnSelectVendor.setText("Select New Vendor");
-        } else {
-            vendorSelected = false;
+    public void toggleSearchInfo() {
+        if (vendorSelected) {
             lblSearch.setText(searchLabel);
             txtSearchBar.setText(searchBarPrompt);
-            txtSearchBar.setEditable(true);
+            txtSearchBar.setEditable(vendorSelected);
             btnSelectVendor.setText("Select Vendor");
+        } else {
+            lblSearch.setText(selectedLabel);
+            txtSearchBar.setEditable(vendorSelected);
+            btnSelectVendor.setText("Select New Vendor");
         }
+        vendorSelected = !vendorSelected;
     }
 
-    private void filterItems() {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateValidator validator = new DateValidator(dateFormat);
-
-        vendorItems = itemsDatabase.getItemsForVendor(vendorID);
-        int i = 0;
-        while (i < vendorItems.size()) if (validator.isPastDate(vendorItems.get(i).getExpirationDate())) {
-            vendorItems.remove(i);
-        } else ++i;
-    }
-
-    private void setUpVendorPOs() {
-        lblListInfo.setText("Purchase Orders for " + vendorName);
-        vendorPOs = purchaseOrderDatabase.getPurchaseOrders(vendorID);
-        lstPurchaseOrders.setListData(vendorPOs);
+    public void toggleViewInfo() {
+        if (toggleView) {
+            lblListInfo.setText("");
+            scpDisplayList.setVisible(false);
+            btnViewPO.setText(viewButton);
+        } else {
+            lblListInfo.setText("Purchase Orders for " + vendorName);
+            scpDisplayList.setVisible(true);
+            btnViewPO.setText(hideButton);
+        }
+        toggleView = !toggleView;
     }
 }

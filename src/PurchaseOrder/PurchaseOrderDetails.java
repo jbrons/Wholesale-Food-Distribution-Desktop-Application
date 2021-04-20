@@ -4,12 +4,12 @@ import src.Item.Item;
 import src.Item.ItemsDatabase;
 import src.Vendor.DateValidator;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ *  PurchaseOrderDetails stores and handles the details of Purchase Orders.
  *
  * @author Jordan Bronstetter
  * @date 04/06/2021
@@ -51,11 +51,12 @@ public class PurchaseOrderDetails {
 
     @Override
     public String toString() {
-        String nL = "<br>";
+        DecimalFormat df = new DecimalFormat("$#.00");
+        String format = "<br>&nbsp;&nbsp;&nbsp;";
         String date = needByDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        String q = Double.toString(quantity);
-        String s = Double.toString(subtotalCost);
+        String q = Double.toString(quantity);;
 
-        return "Need by Date: " + date + nL + "Quantity: " + q + nL + "Subtotal Cost: " + s + nL ;
+        return "Need by Date: " + date + format + "Quantity: " + q
+                + format + "Subtotal Cost: " + df.format(subtotalCost) + "<br>";
     }
 }

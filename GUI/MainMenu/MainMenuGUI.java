@@ -12,9 +12,9 @@ import GUI.OverdueInvoicesSearch.OverdueInvoicesSearchGUI;
 import GUI.ProfitSearch.ProfitSearchGUI;
 import GUI.UserManagement.UserManagementGUI;
 import GUI.CustomerProfileManager.CustomerProfileManagerGUI;
-import GUI.PurchaseOrderManagement.PurchaseOrderGUI;
+import GUI.PurchaseOrderManagement.PurchaseOrderHubGUI;
 
-import GUI.VendorManagement.VendorUI;
+import GUI.VendorManagement.VendorHubGUI;
 import src.User.EnumUserRoles;
 import src.User.UserDatabase;
 import src.Vendor.Vendor;
@@ -115,7 +115,7 @@ public class MainMenuGUI {
 
         vendorManagementButton.addActionListener(e->
         {
-            mainWindowGUI.setJPanel(new VendorUI().getPanel());
+            mainWindowGUI.setJPanel(new VendorHubGUI().getPanel());
         });
 
         itemManagementButton.addActionListener((e ->
@@ -125,7 +125,7 @@ public class MainMenuGUI {
 
         purchaseOrderManagementButton.addActionListener((e ->
         {
-            mainWindowGUI.setJPanel(new PurchaseOrderGUI().getPanel());
+            mainWindowGUI.setJPanel(new PurchaseOrderHubGUI().getPanel());
         }));
 
         logoutButton.addActionListener(e ->

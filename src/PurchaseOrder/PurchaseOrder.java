@@ -1,19 +1,15 @@
 package src.PurchaseOrder;
 
-import GUI.PurchaseOrderManagement.PurchaseOrderGUI;
-import src.Invoice.Invoice;
 import src.Item.Item;
 import src.Vendor.VendorDatabase;
 
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
-import java.util.stream.IntStream;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ *  PurchaseOrder allows purchaser users to create purchase orders for a given Vendor
+ *  Purchase Orders may contain 1-5 items listed by a given Vendor.
  *
  * @author Jordan Bronstetter
  * @date 04/06/2021
@@ -26,7 +22,7 @@ public class PurchaseOrder {
     private int purchaseID;
     private double totalCost = 0;
     private static int idCount;
-    private static int maxIDSize = 1000000;
+    private static int maxIDSize = 999999;
     private static int minimumItems = 1;
     private static int maximumItems = 5;
 
@@ -57,7 +53,7 @@ public class PurchaseOrder {
 
     private void setPurchaseID() {
         if (idCount < maxIDSize) {
-            purchaseID = idCount++;
+            purchaseID = ++idCount;
         } else {
             idCount = 1;
             purchaseID = findNewPurchaseID();
@@ -76,7 +72,11 @@ public class PurchaseOrder {
     }
 
     public boolean isFull() {
-        return purchaseOrder.size() >= 5;
+        return purchaseOrder.size() == maximumItems;
+    }
+
+    public boolean isAlmostFull() {
+        return purchaseOrder.size() == maximumItems - 1;
     }
 
     public int size() {
@@ -116,14 +116,13 @@ public class PurchaseOrder {
 
     @Override
     public String toString() {
+        DecimalFormat df = new DecimalFormat("$#.00");
         String details = "<html>";
-        String nL = "<br>";
+        String format = "<br>&nbsp;&nbsp;&nbsp;";
         for (Map.Entry<PurchaseOrderDetails, Item> item : purchaseOrder.entrySet()) {
-            details += "Item Name: " + item.getValue().getName() + nL + item.getKey().toString();
+            details += "Item Name: " + item.getValue().getName() + format + item.getKey().toString();
         }
-        details += "Total Cost: " + totalCost + "</html>";
-
-        System.out.println(details);
+        details += "Total Cost: " + df.format(totalCost) + "</html>";
         return details;
     }
 }

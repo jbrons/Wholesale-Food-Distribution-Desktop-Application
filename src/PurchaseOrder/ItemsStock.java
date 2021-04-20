@@ -3,14 +3,14 @@ package src.PurchaseOrder;
 import java.util.HashMap;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ *  ItemsStock keeps inventory of all out-of-stock items.
+ *  It implements a singleton design pattern so that all purchaser users share the same stock.
  *
  * @author Jordan Bronstetter
  * @date 04/06/2021
  *
  */
-public class ItemsStock{
+public class ItemsStock {
     private static ItemsStock stockInstance = null;
     private HashMap<Integer, Double> stock;
     private int outOfStock = 0;
@@ -42,5 +42,9 @@ public class ItemsStock{
 
     public boolean isInInventory(int id) {
         return stock.containsKey(id);
+    }
+
+    public int size() {
+        return stock.size();
     }
 }

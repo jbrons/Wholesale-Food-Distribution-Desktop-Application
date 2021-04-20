@@ -3,11 +3,10 @@ package GUI.PurchaseOrderManagement;
 import javax.swing.*;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ *  DialogDisplay implements a variety of static dialogs for displaying alerts, errors, messages, and questions.
  *
  * @author Jordan Bronstetter
- * @date 04/06/2021
+ * @date 04/03/2021
  *
  */
 public class DialogDisplay {

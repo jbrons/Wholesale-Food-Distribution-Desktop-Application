@@ -7,8 +7,9 @@ import java.util.Vector;
 import java.util.stream.IntStream;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ *  PurchaseOrderDatabase implements a database to store and handle all the Purchase Orders,
+ *  mapping them to their respective Vendor ID.
+ *  It implements a singleton design pattern so that all purchaser users share the same database.
  *
  * @author Jordan Bronstetter
  * @date 04/06/2021
@@ -50,6 +51,14 @@ public class PurchaseOrderDatabase {
           return purchaseOrders.get(vendorId);
         }
         return new Vector<PurchaseOrder>();
+    }
+
+    public boolean deletePurchaseOrders(int vendorId) {
+        if (containsVendor(vendorId)) {
+           purchaseOrders.remove(vendorId);
+           return true;
+        }
+        return false;
     }
 
     public boolean containsItem(int itemId, int vendorId) {

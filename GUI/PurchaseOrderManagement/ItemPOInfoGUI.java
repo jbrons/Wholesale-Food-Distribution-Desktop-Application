@@ -1,6 +1,7 @@
 package GUI.PurchaseOrderManagement;
 
 import GUI.MainWindow.MainWindowGUI;
+import src.Vendor.ParseStrings;
 import src.Item.Item;
 import src.PurchaseOrder.PurchaseOrder;
 import src.PurchaseOrder.PurchaseOrderDetails;
@@ -8,26 +9,21 @@ import src.Vendor.DateValidator;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ * ItemPOInfo implements a GUI page  for purchase users to add the Purchase Order Details to a Purchase Order
  *
  * @author Jordan Bronstetter
- * @date 04/06/2021
+ * @date 04/09/2021
  *
  */
-public class ItemPOInfo implements ActionListener {
+public class ItemPOInfoGUI implements ActionListener {
     private JPanel rootPanel;
     private JFormattedTextField txtNeedByDate;
     private JFormattedTextField txtQuantity;
@@ -41,8 +37,6 @@ public class ItemPOInfo implements ActionListener {
     private double quantity;
     private int vendorId;
 
-    private NumberFormat numberFormat = NumberFormat.getInstance();
-    private NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private DateValidator validator = new DateValidator(dateFormat);
 
@@ -51,7 +45,7 @@ public class ItemPOInfo implements ActionListener {
     private MainWindowGUI mainWindowGUI;
     private Item item;
 
-    public ItemPOInfo(JPanel pnlPurchaseOrder, PurchaseOrder purchaseOrder, Item item) {
+    public ItemPOInfoGUI(JPanel pnlPurchaseOrder, PurchaseOrder purchaseOrder, Item item) {
         mainWindowGUI = MainWindowGUI.getInstance();
         mainWindowGUI.setTitle("Purchase Order Management");
 
@@ -67,22 +61,16 @@ public class ItemPOInfo implements ActionListener {
     private void setUpGUI() {
         String dateFormat2 = "##/##/####";
 
-        txtNeedByDate.setFormatterFactory(new DefaultFormatterFactory(formatter(dateFormat2, '-')));
-        txtQuantity.setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
+        txtNeedByDate.setFormatterFactory(
+                new DefaultFormatterFactory(ParseStrings.formatter(dateFormat2, '-')));
+        txtQuantity.setFormatterFactory(new DefaultFormatterFactory(ParseStrings.getNumberFormatter()));
     }
 
-
-    private MaskFormatter formatter(String format, char placeHolder) {
-        MaskFormatter formatter = null;
-        try {
-            formatter = new MaskFormatter(format);
-            formatter.setPlaceholderCharacter(placeHolder);
-        } catch (ParseException e) {
-            System.out.println("Format Error");
-        }
-        return formatter;
-    }
-
+    /**
+     * Checks if all the inputs are valid and returns false at the first invalid input
+     *
+     * @return false if there are invalid inputs, otherwise true
+     * */
     private boolean checkInputs() {
         String message = " cannot be blank";
 
@@ -101,7 +89,7 @@ public class ItemPOInfo implements ActionListener {
         }
 
         if (!txtQuantity.getText().isEmpty()) {
-            quantity = getNumber(txtQuantity.getText());
+            quantity = ParseStrings.getNumber(txtQuantity.getText());
             if (quantity <= 0) {
                 DialogDisplay.displayError("Quantity must be greater than 0");
                 return false;
@@ -111,15 +99,6 @@ public class ItemPOInfo implements ActionListener {
             return false;
         }
         return true;
-    }
-
-    private double getNumber(String numStr) {
-        try {
-            Number number = numberFormat.parse(numStr);
-            return number.doubleValue();
-        } catch (ParseException e) {
-            return -1;
-        }
     }
 
     private void addListeners() {

@@ -2,7 +2,7 @@ package src.Vendor;
 import java.time.LocalDate;
 
 /**
- *  This class implements the Vendor profile for the owner
+ *  Vendor implements the Vendor profile for the owner
  *  and purchaser users to create, update, and delete Vendors
  *
  * @author Jordan Bronstetter
@@ -10,18 +10,42 @@ import java.time.LocalDate;
  *
  */
 public class Vendor extends Profile {
-    LocalDate seasonalDiscDate;
-    static int id = 0;
+    private LocalDate seasonalDiscDate;
+    private static int id = 0;
+    private static int maxIDSize = 999999;
+
     public Vendor(String fullName, String streetAddress, String city, StateAbbrs state, String phoneNum,
                   double balance, double lastPaidAmount, LocalDate lastOrderDate, LocalDate seasonalDiscDate) {
-        super(++id, fullName, streetAddress, city, state, phoneNum, balance, lastPaidAmount, lastOrderDate);
+        super(setId(), fullName, streetAddress, city, state, phoneNum, balance, lastPaidAmount, lastOrderDate);
         setSeasonalDiscDate(seasonalDiscDate);
     }
 
     public Vendor(String fullName, String streetAddress, String city,
                   StateAbbrs state, String phoneNum, LocalDate lastOrderDate, LocalDate seasonalDiscDate) {
-        super(++id, fullName, streetAddress, city, state, phoneNum, lastOrderDate);
+        super(setId(), fullName, streetAddress, city, state, phoneNum, lastOrderDate);
         setSeasonalDiscDate(seasonalDiscDate);
+
+    }
+
+    private static int setId() {
+        if (id < maxIDSize) {
+            ++id;
+        } else {
+            findNewId();
+        }
+        return id;
+    }
+
+    private static int findNewId() {
+        id = 1;
+        while (VendorDatabase.getInstance().searchVendorDatabase(id) != -1) {
+            ++id;
+        }
+        if (id < maxIDSize) {
+            return id;
+        } else {
+            return -1;
+        }
     }
 
     public void setSeasonalDiscDate(LocalDate seasonalDiscDate) {

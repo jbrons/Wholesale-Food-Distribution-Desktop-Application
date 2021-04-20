@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *  This abstract class implements the Profile that the Vendor profile extends.
+ *  Profile implements the Profile that the Vendor profile extends.
  *  It contains all the attributes that are shared between the Customer and Vendor profiles
  *
  * @author Jordan Bronstetter

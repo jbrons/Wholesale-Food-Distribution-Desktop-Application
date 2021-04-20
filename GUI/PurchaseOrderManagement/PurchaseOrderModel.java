@@ -4,10 +4,11 @@ import GUI.VendorManagement.Model;
 import src.PurchaseOrder.PurchaseOrder;
 
 import java.util.Vector;
+import java.util.stream.IntStream;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ *  PurchaseOrderModel extends Model and implements a DefaultListModel,
+ *  focusing on updating and clearing values in the model.
  *
  * @author Jordan Bronstetter
  * @date 04/06/2021
@@ -15,15 +16,9 @@ import java.util.Vector;
  */
 public class PurchaseOrderModel extends Model {
 
-    public void updateModel(Vector<PurchaseOrder> purchaseOrders) {
-        if (!getDisplayListModel().isEmpty()) {
-            clearModel();
-        }
-
-        for (PurchaseOrder purchaseOrder : purchaseOrders) {
-            add("</body></html>" + purchaseOrder.toString() + "<br>" +
-                    purchaseOrder.getTotalCost() + "</body></html>");
-        }
+    public void updateModel(Vector<PurchaseOrder> purchaseOrders, int index) {
+        IntStream.range(index, purchaseOrders.size()).mapToObj(i ->
+                purchaseOrders.get(i).toString()).forEachOrdered(this::add);
     }
 
     public void clearModel() {

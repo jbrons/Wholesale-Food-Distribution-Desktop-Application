@@ -75,7 +75,7 @@ public class LoginGUI {
                     MainMenuGUI mainMenuGUI = new MainMenuGUI();
                     mainWindowGUI.setJPanel(mainMenuGUI.getPanel());
                     mainMenuGUI.currentDiscountsAlert();
-                } else if(currentUser.getRole() == EnumUserRoles.PURCHASER) {
+                } else if (currentUser.getRole() == EnumUserRoles.PURCHASER) {
                     MainMenuGUI mainMenuGUI = new MainMenuGUI();
                     mainWindowGUI.setJPanel(mainMenuGUI.getPanel());
                     ItemsAlert.alertStock();

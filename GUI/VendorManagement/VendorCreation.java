@@ -1,11 +1,8 @@
 package GUI.VendorManagement;
 
+import GUI.Login.LoginGUI;
 import GUI.PurchaseOrderManagement.DialogDisplay;
-import src.User.UserDatabase;
-import src.Vendor.StateAbbrs;
-import src.Vendor.VendorDatabase;
-import src.Vendor.Vendor;
-import src.Vendor.DateValidator;
+import src.Vendor.*;
 import GUI.MainWindow.MainWindowGUI;
 
 import javax.swing.*;
@@ -14,16 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.*;
 import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *  This class implements the Vendor Creation GUI for owner and purchaser users.
+ *  VendorCreation implements the Vendor Creation GUI for owner and purchaser users.
  *  It handles creating and updating the Vendor list.
  *
  * @author Jordan Bronstetter
@@ -65,11 +58,8 @@ public class VendorCreation implements ActionListener, KeyListener {
     private StateAbbrs state;
     private double balance, lastPaidAmount;
     private LocalDate lastOrderDate, seasonalDiscDate;
-    private NumberFormat numberFormat = NumberFormat.getInstance();
-    private NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private DateValidator validator = new DateValidator(dateFormat);
-    private UserDatabase database = UserDatabase.getInstance();
 
     MainWindowGUI mainWindowGUI;
 
@@ -93,11 +83,16 @@ public class VendorCreation implements ActionListener, KeyListener {
 
         txtFullName.requestFocusInWindow();
         cboState.setEditable(false);
-        txtPhoneNum.setFormatterFactory(new DefaultFormatterFactory(formatter(phoneFormat, ' ')));
-        txtBalance.setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
-        txtLastPaidAmount.setFormatterFactory(new DefaultFormatterFactory(numberFormatter));
-        txtLastOrderDate.setFormatterFactory(new DefaultFormatterFactory(formatter(dateFormat, '-')));
-        txtSeasonalDiscDate.setFormatterFactory(new DefaultFormatterFactory(formatter(dateFormat, '-')));
+        txtPhoneNum.setFormatterFactory(new DefaultFormatterFactory(
+                ParseStrings.formatter(phoneFormat, ' ')));
+
+        txtBalance.setFormatterFactory(new DefaultFormatterFactory(ParseStrings.getNumberFormatter()));
+        txtLastPaidAmount.setFormatterFactory(new DefaultFormatterFactory(ParseStrings.getNumberFormatter()));
+
+        txtLastOrderDate.setFormatterFactory(new DefaultFormatterFactory(
+                ParseStrings.formatter(dateFormat, '-')));
+        txtSeasonalDiscDate.setFormatterFactory(new DefaultFormatterFactory(
+                ParseStrings.formatter(dateFormat, '-')));
         cboState.setModel(new DefaultComboBoxModel(StateAbbrs.values()));
     }
 
@@ -134,18 +129,25 @@ public class VendorCreation implements ActionListener, KeyListener {
             name = txtFullName.getText();
         }
 
-        if (txtStreetAddress.getText().isEmpty()) {
-            DialogDisplay.displayError("Street Address" + message);
+        name = checkText(txtFullName);
+        if (name == null) {
+            DialogDisplay.displayError("Full Name" + message);
             return false;
-        } else {
-            streetAddress = txtStreetAddress.getText();
+        } else if (vendorDatabase.searchVendorDatabase(txtFullName.getText()) > -1 && vendor == null) {
+            DialogDisplay.displayError(txtFullName.getText() + " already has a profile");
+            return false;
         }
 
-        if (txtCity.getText().isEmpty()) {
+        streetAddress = checkText(txtStreetAddress);
+        if (streetAddress == null) {
+            DialogDisplay.displayError("Street Address" + message);
+            return false;
+        }
+
+        city = checkText(txtCity);
+        if (city == null) {
             DialogDisplay.displayError("City" + message);
             return false;
-        } else {
-            city = txtCity.getText();
         }
 
         if (cboState.getSelectedIndex() < 0) {
@@ -162,46 +164,58 @@ public class VendorCreation implements ActionListener, KeyListener {
             phoneNum = txtPhoneNum.getText();
         }
 
-        if (!txtBalance.getText().isEmpty()) {
-            balance = getNumber(txtBalance.getText());
-            if (balance == -1) {
-                return false;
-            }
-        } else {
-            balance = 0 ;
-        }
-
-        if (!txtLastPaidAmount.getText().isEmpty()) {
-            lastPaidAmount = getNumber(txtLastPaidAmount.getText());
-            if (lastPaidAmount == -1) {
-                return false;
-            }
-        } else {
-            lastPaidAmount = 0;
-        }
-
-        if (!txtLastOrderDate.isEditValid()) {
-            DialogDisplay.displayError("Last Order Date" + message);
+        balance = checkNumber(txtBalance);
+        if (balance == -1) {
             return false;
-        } else {
-            lastOrderDate = validator.getDate(txtLastOrderDate.getText());
-            if (lastOrderDate == null) {
-                DialogDisplay.displayError("Incorrect Last Order Date");
-                return false;
-            }
         }
 
-        if (!txtSeasonalDiscDate.isEditValid()) {
-            DialogDisplay.displayError("Seasonal Discount Start Date" + message);
+        lastPaidAmount = checkNumber(txtLastPaidAmount);
+        if (lastPaidAmount == -1) {
             return false;
-        } else {
-            seasonalDiscDate = validator.getDate(txtSeasonalDiscDate.getText());
-            if (seasonalDiscDate == null) {
-                DialogDisplay.displayError("Incorrect Seasonal Discount Start Date");
-                return false;
-            }
         }
+
+        lastOrderDate = checkDate(txtLastOrderDate);
+        if (lastOrderDate == null) {
+            DialogDisplay.displayError("Incorrect Last Order Date");
+            return false;
+        }
+
+        seasonalDiscDate = checkDate(txtSeasonalDiscDate);
+        if (seasonalDiscDate == null) {
+            DialogDisplay.displayError("Incorrect Seasonal Discount Start Date");
+            return false;
+        }
+
         return true;
+    }
+
+    private String checkText(JTextField textField) {
+        if (textField.getText().isEmpty()) {
+            return null;
+        } else {
+            return textField.getText();
+        }
+    }
+
+    private double checkNumber(JFormattedTextField textField) {
+        double number;
+        if (!textField.getText().isEmpty()) {
+            number = ParseStrings.getNumber(textField.getText());
+            if (number == -1) {
+                return -1;
+            }
+        } else {
+            number = 0;
+        }
+        return number;
+    }
+
+    private LocalDate checkDate(JFormattedTextField textField) {
+        LocalDate date = null;
+        if (textField.isEditValid()) {
+            date = validator.getDate(textField.getText());
+        }
+        return date;
     }
 
     private void updateInputs() {
@@ -239,17 +253,6 @@ public class VendorCreation implements ActionListener, KeyListener {
         }
     }
 
-    private MaskFormatter formatter(String format, char placeHolder) {
-        MaskFormatter formatter = null;
-        try {
-            formatter = new MaskFormatter(format);
-            formatter.setPlaceholderCharacter(placeHolder);
-        } catch (ParseException e) {
-            System.out.println("Format Error");
-        }
-        return formatter;
-    }
-
     /**
      * Invoked when an action occurs.
      *
@@ -276,20 +279,13 @@ public class VendorCreation implements ActionListener, KeyListener {
             }
         } else if (userAction == btnCancel) {
             closeCreationGUI();
+        } else if (userAction == btnLogOut) {
+            mainWindowGUI.setJPanel(new LoginGUI().getPanel());
         }
     }
 
     public void closeCreationGUI() {
-        mainWindowGUI.setJPanel(new VendorUI().getPanel());
-    }
-
-    private double getNumber(String numStr) {
-        try {
-            Number number = numberFormat.parse(numStr);
-            return number.doubleValue();
-        } catch (ParseException  e) {
-            return -1;
-        }
+        mainWindowGUI.setJPanel(new VendorHubGUI().getPanel());
     }
 
     /**

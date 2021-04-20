@@ -3,11 +3,10 @@ package GUI.VendorManagement;
 import javax.swing.*;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ * Model creates and handles a DefaultListModel
  *
  * @author Jordan Bronstetter
- * @date 04/06/2021
+ * @date 03/17/2021
  *
  */
 public abstract class Model {
@@ -31,6 +30,10 @@ public abstract class Model {
 
     public void clearModel() {
         getDisplayListModel().removeAllElements();
+    }
+
+    public int size() {
+        return model.size();
     }
 
     public boolean isEmpty() {

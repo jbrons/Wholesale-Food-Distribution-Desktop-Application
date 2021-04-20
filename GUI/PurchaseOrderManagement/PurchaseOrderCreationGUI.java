@@ -4,27 +4,22 @@ import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import src.Item.Item;
-import src.Item.ItemsDatabase;
 import src.PurchaseOrder.PurchaseOrder;
 import src.PurchaseOrder.PurchaseOrderDatabase;
-import src.Vendor.DateValidator;
-import src.Vendor.VendorDatabase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 /**
- *  This class implements the Vendor profile for the owner
- *  and purchaser users to create, update, and delete Vendors
+ * PurchaseOrderCreationGUI implements a GUI page for purchase users to create Purchase Orders
  *
  * @author Jordan Bronstetter
- * @date 04/06/2021
+ * @date 04/08/2021
  *
  */
-public class CreatePurchaseOrderGUI implements ActionListener {
+public class PurchaseOrderCreationGUI implements ActionListener {
     private JPanel rootPanel;
     private JButton btnLogOut;
     private JButton btnMainMenu;
@@ -44,16 +39,17 @@ public class CreatePurchaseOrderGUI implements ActionListener {
     Vector<Item> vendorItems = null;
 
     private PurchaseOrder purchaseOrder = new PurchaseOrder();
-    private VendorDatabase vendorDatabase = VendorDatabase.getInstance();
-    private ItemsDatabase itemsDatabase = ItemsDatabase.getInstance();
     private PurchaseOrderDatabase purchaseOrderDatabase = PurchaseOrderDatabase.getInstance();
     private MainWindowGUI mainWindowGUI;
 
     private int vendorID;
     private String vendorName;
-    private String selectedLabel = "Selected Vendor:";
+    private String selectedText = "Selected Vendor:";
+    private String purchaseOrderInfo = "Select 1-5 items to add to the Purchase Order";
+    private String purchaseOrderFullText = "Cannot select any more items: Purchase Order is full";
+    private String purchaseOrderStartedText = "Select next item";
 
-    public CreatePurchaseOrderGUI(JPanel pnlPurchaseOrder, Vector<Item> vendorItems, String vendorName) {
+    public PurchaseOrderCreationGUI(JPanel pnlPurchaseOrder, Vector<Item> vendorItems, String vendorName) {
         mainWindowGUI = MainWindowGUI.getInstance();
         mainWindowGUI.setTitle("Purchase Order Management");
 
@@ -82,19 +78,24 @@ public class CreatePurchaseOrderGUI implements ActionListener {
             /**
              * {@inheritDoc}
              *
+             * Calls to ItemPOInfoGUI to add Purchase Order Details to the selected item
+             *
              * @param e
              */
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Clicked");
-                int index = lstItems.getSelectedIndex();
-                Item item = vendorItems.get(index);
+                if (!purchaseOrder.isFull()) {
+                    int index = lstItems.getSelectedIndex();
+                    Item item = vendorItems.get(index);
+                    mainWindowGUI.setJPanel(new ItemPOInfoGUI(getPanel(), purchaseOrder, item).getPanel());
+                    setListInfo();
+                }
                 lstItems.clearSelection();
-                mainWindowGUI.setJPanel(new ItemPOInfo(getPanel(), purchaseOrder, item).getPanel());
             }
 
             /**
              * {@inheritDoc}
+             *
              *
              * @param e
              */
@@ -106,28 +107,36 @@ public class CreatePurchaseOrderGUI implements ActionListener {
 
         lstItems.addMouseMotionListener(new MouseMotionAdapter() {
             /**
-             * Invoked when the mouse button has been moved on a component
+             * Invoked when the mouse button has been moved on a lstItems
              * (with no buttons no down).
+             * Sets the cell the mouse point is over as selected, otherwise
+             * it clears the list selection
              *
              * @param e
              */
             @Override
             public void mouseMoved(MouseEvent e) {
-                if (purchaseOrder.isFull()) {
-                    lstItems.clearSelection();
-                    lblListInfo.setText("Cannot select any more items: Purchase Order is full");
-                    return;
-                }
+                if (!purchaseOrder.isFull()) {
+                    int index = lstItems.locationToIndex(e.getPoint());
+                    Rectangle cellBounds = lstItems.getCellBounds(index, index);
 
-                int index = lstItems.locationToIndex(e.getPoint());
-                Rectangle cellBounds = lstItems.getCellBounds(index, index);
-                if (cellBounds.contains(e.getPoint())) {
-                    lstItems.setSelectedIndex(index);
-                } else {
-                    lstItems.clearSelection();
+                    if (cellBounds.contains(e.getPoint())) {
+                        lstItems.setSelectedIndex(index);
+                        return;
+                    }
                 }
+                lstItems.clearSelection();
             }
         });
+    }
+
+    private void setListInfo() {
+        if (purchaseOrder.isAlmostFull()) {
+            lblListInfo.setText(purchaseOrderFullText);
+            lstItems.setSelectionModel(new ListSelectionModel());
+        } else if (!purchaseOrder.isEmpty()) {
+            lblListInfo.setText(purchaseOrderStartedText);
+        }
     }
 
     /**
@@ -140,7 +149,7 @@ public class CreatePurchaseOrderGUI implements ActionListener {
         Object userAction = e.getSource();
 
         if (userAction == btnSelectVendor) {
-            if (PurchaseOrderLogic.deselectVendor()) {
+            if (PurchaseOrderCreation.deselectVendor()) {
                 closeGUI();
             }
         } else if (userAction == btnCreatePO) {
@@ -149,24 +158,26 @@ public class CreatePurchaseOrderGUI implements ActionListener {
             } else {
                 purchaseOrderDatabase.add(vendorID, purchaseOrder);
                 DialogDisplay.displayMessage("Purchase Order Created");
-                itemModel.clearModel();
                 closeGUI();
             }
         } else if (userAction == btnCancelPO) {
-            int choice = PurchaseOrderLogic.cancelPurchaseOrder();
+            int choice = PurchaseOrderCreation.cancelPurchaseOrder();
             if (choice == JOptionPane.YES_OPTION) {
-                itemModel.clearModel();
                 closeGUI();
             }
         } else if (userAction == btnMainMenu) {
-            mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
+            if (PurchaseOrderCreation.deselectVendor()) {
+                mainWindowGUI.setJPanel(new MainMenuGUI().getPanel());
+            }
         } else if (userAction == btnLogOut) {
-            mainWindowGUI.setJPanel(new LoginGUI().getPanel());
+            if (PurchaseOrderCreation.deselectVendor()) {
+                mainWindowGUI.setJPanel(new LoginGUI().getPanel());
+            }
         }
     }
 
     private void setSelectedVendor() {
-        lblSearch.setText(selectedLabel);
+        lblSearch.setText(selectedText);
         txtSearchBar.setText(vendorName);
         txtSearchBar.setEditable(false);
         btnSelectVendor.setText("Select New Vendor");
@@ -174,8 +185,8 @@ public class CreatePurchaseOrderGUI implements ActionListener {
 
     private void setUpItemsList() {
         lstItems.setModel(itemModel.getDisplayListModel());
-        lblListInfo.setText("Select 1-5 items to add to the Purchase Order");
-        itemModel.updateModel(vendorItems);
+        lblListInfo.setText(purchaseOrderInfo);
+        itemModel.initializeModel(vendorItems);
     }
 
     private void closeGUI() {

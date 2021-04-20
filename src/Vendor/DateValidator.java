@@ -1,12 +1,11 @@
 package src.Vendor;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- *  This class implements a Date Validator for validating user date inputs
+ *  DateValidator implements a Date Validator for validating user date inputs
  *  for the Vendor GUI
  *
  * @author Jordan Bronstetter

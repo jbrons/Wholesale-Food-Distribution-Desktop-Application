@@ -3,8 +3,8 @@ package src.Vendor;
 import java.util.*;
 
 /**
- *  This class implements a list to store and modify all the created Vendor profiles.
- *  It uses a singleton design patter so that all users share the same list of Vendors
+ *  VendorDatabase implements a list to store and modify all the created Vendor profiles.
+ *  It uses a singleton design pattern so that all users share the same list of Vendors
  *
  * @author Jordan Bronstetter
  * @date 03/18/2021
@@ -109,6 +109,10 @@ public class VendorDatabase {
 
     public Vendor getVendor(int index) {
         return vendorDatabase.get(index);
+    }
+
+    public boolean canDelete(int index) {
+        return getVendor(index).getBalance() == 0;
     }
 
     public boolean isEmpty() {return vendorDatabase.isEmpty();}
