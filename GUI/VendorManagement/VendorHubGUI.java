@@ -103,14 +103,14 @@ public class VendorHubGUI implements ActionListener {
                 displaySelectVendor(index);
             } else {
                 DialogDisplay.displayError("No Profile Vendor found.");
+                resetSearchResults();
             }
             txtSearchBar.setText(null);
             btnGo.setEnabled(false);
-            resetSearchResults();
-
         } else if (userAction == btnViewProfiles) {
             if (viewProfiles && vendordatabase.isEmpty()) {
-                    DialogDisplay.displayError("No Vendors to view");
+                DialogDisplay.displayError("No Vendors to view");
+                resetSearchResults();
             }
             displayList();
 
@@ -122,12 +122,11 @@ public class VendorHubGUI implements ActionListener {
                 DialogDisplay.displayError("Please select a Vendor to update");
             } else {
                 mainWindowGUI.setJPanel(new VendorCreation(vendordatabase.getVendor(index)).getPanel());
-                displaySelectVendor(index);
             }
         } else if (userAction == btnDeleteProfile) {
             index = setIndex();
             if (VendorHub.deleteVendor(index)) {
-                lblListInfo.setText("");
+                resetSearchResults();
             }
         } else if (userAction == btnLogOut) {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
@@ -139,7 +138,7 @@ public class VendorHubGUI implements ActionListener {
     private void resetSearchResults() {
         if (role == EnumUserRoles.PURCHASER) {
             lblSearchResults.setText(null);
-            lblSearchResults.setBackground(Color.lightGray);
+            lblSearchResults.setBackground(Color.white);
         }
     }
 
