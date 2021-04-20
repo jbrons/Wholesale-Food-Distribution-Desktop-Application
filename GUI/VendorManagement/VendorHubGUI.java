@@ -122,7 +122,7 @@ public class VendorHubGUI implements ActionListener {
                 DialogDisplay.displayError("Please select a Vendor to update");
             } else {
                 mainWindowGUI.setJPanel(new VendorCreation(vendordatabase.getVendor(index)).getPanel());
-                displaySelectVendor();
+                displaySelectVendor(index);
             }
         } else if (userAction == btnDeleteProfile) {
             index = setIndex();
