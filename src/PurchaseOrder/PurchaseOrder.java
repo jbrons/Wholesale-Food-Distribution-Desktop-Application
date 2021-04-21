@@ -122,7 +122,7 @@ public class PurchaseOrder {
         for (Map.Entry<PurchaseOrderDetails, Item> item : purchaseOrder.entrySet()) {
             details += "Item Name: " + item.getValue().getName() + format + item.getKey().toString();
         }
-        details += "Total Cost: " + df.format(totalCost) + "</html>";
+        details += "Total Cost: " + df.format(getTotalCost()) + "</html>";
         return details;
     }
 }
