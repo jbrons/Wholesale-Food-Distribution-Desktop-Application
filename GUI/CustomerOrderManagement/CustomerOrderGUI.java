@@ -303,7 +303,7 @@ public class CustomerOrderGUI {
             return false;
         } else if (order.getItemCount() >= 5) {
             // Check order has 5 items
-            JOptionPane.showMessageDialog(null, "This order has 5 items");
+            JOptionPane.showMessageDialog(null, "Maximum of five items are allowed! ");
             return false;
         }
 
@@ -315,7 +315,7 @@ public class CustomerOrderGUI {
             quantity = Double.parseDouble(textQuantity.getText());
 
             if (quantity <= 0) {
-                JOptionPane.showMessageDialog(null, "Please input positive quantity");
+                JOptionPane.showMessageDialog(null, "Quantity can't be 0 or less than 0!! ");
                 return false;
             }
 
