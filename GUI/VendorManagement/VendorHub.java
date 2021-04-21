@@ -23,8 +23,14 @@ public class VendorHub {
 
         if (option == JOptionPane.YES_OPTION) {
             index = getIndex(input);
+            if (index == -1) {
+                DialogDisplay.displayError("Not a valid ID.");
+            }
         } else if (option == JOptionPane.NO_OPTION) {
             index = vendorDatabase.getIndex(input);
+            if (index == -1) {
+                DialogDisplay.displayError("No Profile Vendor found.");
+            }
         }
         return index;
     }
@@ -36,11 +42,8 @@ public class VendorHub {
             try {
                 int vendorId = Integer.parseInt(input);
                 index = vendorDatabase.getIndex(vendorId);
-            } catch (NumberFormatException ex) {
-                DialogDisplay.displayError("Not a valid ID.");
-            }
-        } else {
-            DialogDisplay.displayError("Not a valid ID.");
+                return index;
+            } catch (NumberFormatException ex) {}
         }
         return index;
     }

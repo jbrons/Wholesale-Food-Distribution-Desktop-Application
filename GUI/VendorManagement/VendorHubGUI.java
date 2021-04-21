@@ -101,7 +101,6 @@ public class VendorHubGUI implements ActionListener {
             if (index > -1) {
                 displaySelectVendor(index);
             } else {
-                DialogDisplay.displayError("No Profile Vendor found.");
                 resetSearchResults();
             }
             txtSearchBar.setText(null);
