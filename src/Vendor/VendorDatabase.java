@@ -116,5 +116,6 @@ public class VendorDatabase {
     }
 
     public boolean isEmpty() {return vendorDatabase.isEmpty();}
+
     public int size() { return vendorDatabase.size();}
 }

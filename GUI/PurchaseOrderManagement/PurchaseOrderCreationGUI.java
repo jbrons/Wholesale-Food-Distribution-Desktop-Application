@@ -21,23 +21,26 @@ import java.util.Vector;
  */
 public class PurchaseOrderCreationGUI implements ActionListener {
     private JPanel rootPanel;
-    private JButton btnLogOut;
-    private JButton btnMainMenu;
     private JPanel pnlFormatDisplay;
+
     private JScrollPane scpDisplayList;
     private JList lstItems;
-    private JButton btnCancelPO;
+
+    private JButton btnSelectVendor;
     private JButton btnCreatePO;
+    private JButton btnCancelPO;
+    private JButton btnMainMenu;
+    private JButton btnLogOut;
+
     private JTextField txtSearchBar;
+
     private JLabel lblListInfo;
     private JLabel lblSearch;
-    private JButton btnSelectVendor;
-
-    private JPanel pnlPurchaseOrder;
 
     ItemModel itemModel = new ItemModel();
     Vector<Item> vendorItems = null;
 
+    private JPanel pnlPurchaseOrder;
     private PurchaseOrder purchaseOrder = new PurchaseOrder();
     private PurchaseOrderDatabase purchaseOrderDatabase = PurchaseOrderDatabase.getInstance();
     private MainWindowGUI mainWindowGUI;

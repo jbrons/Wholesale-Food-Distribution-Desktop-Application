@@ -14,7 +14,7 @@ import javax.swing.*;
  *
  */
 public class VendorHub {
-    private static VendorDatabase vendordatabase = VendorDatabase.getInstance();
+    private static VendorDatabase vendorDatabase = VendorDatabase.getInstance();
 
     public static int getSearchResults(String input) {
         int index = -1;
@@ -24,7 +24,7 @@ public class VendorHub {
         if (option == JOptionPane.YES_OPTION) {
             index = getIndex(input);
         } else if (option == JOptionPane.NO_OPTION) {
-            index = vendordatabase.getIndex(input);
+            index = vendorDatabase.getIndex(input);
         }
         return index;
     }
@@ -35,7 +35,7 @@ public class VendorHub {
         if (input.length() <= idLength) {
             try {
                 int vendorId = Integer.parseInt(input);
-                index = vendordatabase.getIndex(vendorId);
+                index = vendorDatabase.getIndex(vendorId);
             } catch (NumberFormatException ex) {
                 DialogDisplay.displayError("Not a valid ID.");
             }
@@ -50,16 +50,16 @@ public class VendorHub {
             DialogDisplay.displayMessage("Please select a Vendor to delete");
             return false;
         }
-        if (vendordatabase.canDelete(index)) {
-            int vendorId = vendordatabase.getVendor(index).getId();
+        if (vendorDatabase.canDelete(index)) {
+            int vendorId = vendorDatabase.getVendor(index).getId();
             if (PurchaseOrderDatabase.getInstance().containsVendor(vendorId)) {
                 if (!deleteVendorPO()) {
                     return false;
                 }
                 PurchaseOrderDatabase.getInstance().
-                        deletePurchaseOrders(vendordatabase.getVendor(index).getId());
+                        deletePurchaseOrders(vendorDatabase.getVendor(index).getId());
             }
-            vendordatabase.deleteVendor(index);
+            vendorDatabase.deleteVendor(index);
             VendorModel.getInstance().remove(index);
             DialogDisplay.displayMessage("Vendor removed.");
             return true;

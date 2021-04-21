@@ -19,7 +19,6 @@ import java.util.Vector;
 public class PurchaseOrderHub {
     private static VendorDatabase vendorDatabase = VendorDatabase.getInstance();
     private static Vector<Item> vendorItems = null;
-
     private static String searchBarPrompt = "Search by Vendor Name";
 
     public static int selectVendor(String name) {
@@ -53,9 +52,8 @@ public class PurchaseOrderHub {
         return vendorItems;
     }
 
-    public static Vector<PurchaseOrder> setUpVendorPO(PurchaseOrderModel purchaseOrderModel, int vendorID) {
+    public static void setUpVendorPO(PurchaseOrderModel purchaseOrderModel, int vendorID) {
         Vector<PurchaseOrder> vendorPOs = PurchaseOrderDatabase.getInstance().getPurchaseOrders(vendorID);
         purchaseOrderModel.updateModel(vendorPOs, purchaseOrderModel.size());
-        return vendorPOs;
     }
 }

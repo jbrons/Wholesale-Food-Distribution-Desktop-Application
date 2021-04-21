@@ -4,14 +4,12 @@ import GUI.Login.LoginGUI;
 import GUI.MainMenu.MainMenuGUI;
 import GUI.MainWindow.MainWindowGUI;
 import src.Item.Item;
-import src.PurchaseOrder.PurchaseOrder;
 import src.PurchaseOrder.PurchaseOrderDatabase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
-
 
 /**
  * PurchaseOrderHubGUI implements the main hub for purchaser users to create and view Purchase Orders
@@ -28,8 +26,6 @@ public class PurchaseOrderHubGUI implements ActionListener {
     private JLabel lblSearch;
     private JButton btnMainMenu;
     private JButton btnLogOut;
-    private JButton btnCreatePO;
-    private JButton btnCancelPO;
     private JButton btnStartPO;
     private JButton btnViewPO;
     private JScrollPane scpDisplayList;
@@ -38,7 +34,6 @@ public class PurchaseOrderHubGUI implements ActionListener {
     private JPanel pnlList;
 
     private PurchaseOrderModel purchaseOrderModel = new PurchaseOrderModel();
-    private Vector<PurchaseOrder> vendorPOs = null;
     private static Vector<Item> vendorItems = null;
 
     private MainWindowGUI mainWindowGUI;
@@ -47,13 +42,13 @@ public class PurchaseOrderHubGUI implements ActionListener {
     private boolean toggleView = false;
     private boolean vendorSelected = false;
 
+    private int vendorID;
+    private String vendorName;
     private String searchBarPrompt = "Search by Vendor Name";
     private String searchLabel = "Search for Vendor:";
     private String selectedLabel = "Selected Vendor:";
     private String viewButton = "View Purchase Orders";
     private String hideButton = "Hide Purchase Orders";
-    private int vendorID;
-    private String vendorName;
 
     public PurchaseOrderHubGUI() {
         mainWindowGUI = MainWindowGUI.getInstance();
@@ -171,7 +166,7 @@ public class PurchaseOrderHubGUI implements ActionListener {
             if (vendorSelected) {
                 toggleSearchInfo();
                 if (toggleView) {
-                    toggleViewInfo();
+                    toggleViewInfo(vendorName);
                 }
             } else {
                 vendorName = txtSearchBar.getText();
@@ -189,7 +184,7 @@ public class PurchaseOrderHubGUI implements ActionListener {
                     return;
                 }
                 if (toggleView) {
-                    toggleViewInfo();
+                    toggleViewInfo(vendorName);
                 }
                 mainWindowGUI.setJPanel(
                         new PurchaseOrderCreationGUI(rootPanel, vendorItems, vendorName).getPanel());
@@ -202,8 +197,8 @@ public class PurchaseOrderHubGUI implements ActionListener {
                     DialogDisplay.displayError(vendorName + " does not have any Purchase Orders");
                     return;
                 }
-                vendorPOs = PurchaseOrderHub.setUpVendorPO(purchaseOrderModel, vendorID);
-                toggleViewInfo();
+                PurchaseOrderHub.setUpVendorPO(purchaseOrderModel, vendorID);
+                toggleViewInfo(vendorName);
             } else {
                 DialogDisplay.displayError("Please select a Vendor first");
             }
@@ -228,7 +223,7 @@ public class PurchaseOrderHubGUI implements ActionListener {
         vendorSelected = !vendorSelected;
     }
 
-    public void toggleViewInfo() {
+    public void toggleViewInfo(String vendorName) {
         if (toggleView) {
             lblListInfo.setText("");
             scpDisplayList.setVisible(false);

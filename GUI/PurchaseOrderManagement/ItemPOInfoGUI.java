@@ -25,6 +25,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class ItemPOInfoGUI implements ActionListener {
     private JPanel rootPanel;
+    private JPanel pnlPurchaseOrder;
+
     private JFormattedTextField txtNeedByDate;
     private JFormattedTextField txtQuantity;
     private JLabel lblNeedByDate;
@@ -39,11 +41,9 @@ public class ItemPOInfoGUI implements ActionListener {
 
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private DateValidator validator = new DateValidator(dateFormat);
-
-    private JPanel pnlPurchaseOrder;
     private PurchaseOrder purchaseOrder;
-    private MainWindowGUI mainWindowGUI;
     private Item item;
+    private MainWindowGUI mainWindowGUI;
 
     public ItemPOInfoGUI(JPanel pnlPurchaseOrder, PurchaseOrder purchaseOrder, Item item) {
         mainWindowGUI = MainWindowGUI.getInstance();

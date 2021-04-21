@@ -1,7 +1,5 @@
 package src.PurchaseOrder;
 
-import src.Item.Item;
-import src.Item.ItemsDatabase;
 import src.Vendor.DateValidator;
 
 import java.text.DecimalFormat;
@@ -16,6 +14,9 @@ import java.time.format.DateTimeFormatter;
  *
  */
 public class PurchaseOrderDetails {
+
+    private static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
     private LocalDate needByDate = null;
     private double quantity;
     private double subtotalCost;
@@ -25,9 +26,6 @@ public class PurchaseOrderDetails {
         setQuantity(quantity);
         calculateSubtotalCost(purchasingPrice);
     }
-
-    private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-    private DateValidator validator = new DateValidator(dateFormat);
 
     public LocalDate getNeedByDate() {
         return needByDate;

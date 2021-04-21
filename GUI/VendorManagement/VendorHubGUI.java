@@ -48,8 +48,8 @@ public class VendorHubGUI implements ActionListener {
     private int searchIndex = -1;
     private EnumUserRoles role;
 
-    VendorDatabase vendordatabase = VendorDatabase.getInstance();
-    VendorModel vendorModel = VendorModel.getInstance();
+    private static VendorDatabase vendordatabase = VendorDatabase.getInstance();
+    private static VendorModel vendorModel = VendorModel.getInstance();
     MainWindowGUI mainWindowGUI;
 
     public VendorHubGUI() {
@@ -96,7 +96,6 @@ public class VendorHubGUI implements ActionListener {
                 DialogDisplay.displayError("No Vendors to view");
                 return;
             }
-
             String input = txtSearchBar.getText();
             index = VendorHub.getSearchResults(input);
             if (index > -1) {
@@ -111,22 +110,23 @@ public class VendorHubGUI implements ActionListener {
             if (viewProfiles && vendordatabase.isEmpty()) {
                 DialogDisplay.displayError("No Vendors to view");
                 resetSearchResults();
+            } else {
+                displayList();
             }
-            displayList();
-
         } else if (userAction == btnCreateProfile) {
-            mainWindowGUI.setJPanel(new VendorCreation().getPanel());
+            mainWindowGUI.setJPanel(new VendorCreationGUI().getPanel());
         } else if (userAction == btnUpdateProfile) {
             index = setIndex();
             if (index < 0) {
                 DialogDisplay.displayError("Please select a Vendor to update");
             } else {
-                mainWindowGUI.setJPanel(new VendorCreation(vendordatabase.getVendor(index)).getPanel());
+                mainWindowGUI.setJPanel(new VendorCreationGUI(vendordatabase.getVendor(index)).getPanel());
             }
         } else if (userAction == btnDeleteProfile) {
             index = setIndex();
             if (VendorHub.deleteVendor(index)) {
                 resetSearchResults();
+                displayList();
             }
         } else if (userAction == btnLogOut) {
             mainWindowGUI.setJPanel(new LoginGUI().getPanel());
