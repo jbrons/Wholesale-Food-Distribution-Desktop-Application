@@ -54,7 +54,7 @@ In [Sprint 2](https://git.wayne.edu/gt2533/group2/-/tree/master#sprint-2-functio
 - Display the item profile details in a list of the searched for item
 - Display a list of items in the system, including their product, purchase, and selling information
 
-#### Sprint 2 Functionalities
+## Sprint 2 Functionalities
 
 
 #### Feature 5: Purchase Order
